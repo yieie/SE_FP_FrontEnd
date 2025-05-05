@@ -3,9 +3,11 @@ abstract class AnnEvent {
 }
 
 class Get10Announcement extends AnnEvent {
-  const Get10Announcement();
+  final int getpage;
+  const Get10Announcement(this.getpage);
 }
 
 class GetDetailAnnouncement extends AnnEvent {
-  const GetDetailAnnouncement();
+  final int getaid;
+  const GetDetailAnnouncement(this.getaid);
 }

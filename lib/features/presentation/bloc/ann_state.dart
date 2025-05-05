@@ -4,9 +4,10 @@ import 'package:front_end/features/domain/entity/Announcement.dart';
 
 abstract class AnnState extends Equatable{
   final List<Announcement> ? announcements;
+  final Announcement ? announcementDetail;
   final DioException ? error;
 
-  const AnnState({this.announcements, this.error});
+  const AnnState({this.announcements,this.announcementDetail ,this.error});
 
   @override
   List<Object> get props => [announcements!, error!];
@@ -17,7 +18,14 @@ class AnnouncementLoading extends AnnState{
 }
 
 class AnnouncementDone extends AnnState {
-  const AnnouncementDone(List<Announcement> announcement) : super(announcements: announcement);
+  final int currentPage;
+  const AnnouncementDone(List<Announcement> announcement, {required this.currentPage}) : super(announcements: announcement);
+}
+
+
+class AnnouncementDetailDone extends AnnState {
+  final int aid;
+  const AnnouncementDetailDone(Announcement announcement, {required this.aid}) : super(announcementDetail: announcement);
 }
 
 class AnnouncementError extends AnnState{
