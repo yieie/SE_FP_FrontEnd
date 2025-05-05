@@ -71,9 +71,7 @@ class DetailAnnPage extends StatelessWidget{
         if(state is AnnouncementDone){
           //需要加上UI
           //使用上方的測試假資料 不需寫file以及圖片
-          //https://www.youtube.com/watch?v=7V_P6dovixg&t=1655s 可參考26:28~26:46秒使用ListView
           //可參考上學期的code
-          //先寫出一頁就好不用換頁
         }
         return SizedBox();
       }
