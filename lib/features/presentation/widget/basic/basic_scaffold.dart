@@ -30,6 +30,7 @@ class BasicScaffold extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(width: 1120,height: 40,),
+              //Nav
               SizedBox(
                 width: 1120,
                 child: Row(
@@ -100,9 +101,32 @@ class BasicScaffold extends StatelessWidget {
                     ]
                   )
               ), 
-              SizedBox(width: 1120,height: 40,),
+              SizedBox(width: 1120,height: 20,),
+
+              //body
+              Expanded(
+                child: SingleChildScrollView(
+                  child: child,
+                ),
+              ),
+
+              //footer
               Container(
-                child: child,
+                width: double.infinity,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Color(0xFFFEE425)
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/NUKlogo.png"),
+                    SizedBox(width: 40),
+                    Text(
+                      '© 2025 國立高雄大學 軟體工程課程專案 | Developed by：陳冠霖、張卜驊、黃羿禎、涂哲偉、黃政諭、熊竣蔚、張哲與'
+                    )
+                  ], 
+                ),
               )
             ]
           ),
