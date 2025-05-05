@@ -61,7 +61,7 @@ class SignupReqParams extends Student{
       'phone': phone,
       'department': department,
       'grade': grade,
-      'usertype': 'student' 
+      'userType': 'student' 
     };
   }
 }

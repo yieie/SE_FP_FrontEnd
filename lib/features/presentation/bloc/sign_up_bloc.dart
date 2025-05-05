@@ -14,7 +14,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState>{
       emit(SignUpLoading(event.signupReq));
       try{
         print('📦 Request Body: ${event.signupReq.toJson()}');
-        await _signUpUseCase(params: event.signupReq);
+        await _signUpUseCase(params: event.signupReq, password: event.signupReq.password);
         emit(SignUpSuccess(event.signupReq));
       }on DioException catch(e){
         emit(SignUpFailure(e,event.signupReq));
