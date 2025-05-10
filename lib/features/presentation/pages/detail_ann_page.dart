@@ -69,6 +69,7 @@ class DetailAnnPage extends StatelessWidget{
           return const Center(child: Icon(Icons.refresh));
         }
         if(state is AnnouncementDone){
+          return const Center(child: Icon(Icons.refresh));
           //需要加上UI
           //使用上方的測試假資料 不需寫file以及圖片
           //可參考上學期的code
