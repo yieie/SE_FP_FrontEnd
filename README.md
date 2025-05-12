@@ -1,4 +1,7 @@
-### 執行專案前請先執行setup.bat
+### 執行專案前請先執行
+```
+flutter pub run build_runner build
+```
 
 ## Dart sdk 版本衝突解決方法
 
