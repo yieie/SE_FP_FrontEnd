@@ -15,15 +15,15 @@ Future<void> main() async{
 }
 
 //正式版
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return  MaterialApp.router(
-      routerConfig: webRouter,
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
+//class MyApp extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    return  MaterialApp.router(
+//     routerConfig: webRouter,
+//      debugShowCheckedModeBanner: false,
+//    );
+//  }
+//}
 
 /*
 測試用架構
@@ -32,11 +32,23 @@ class MyApp extends StatelessWidget {
 記得把上方class註解起來
 
  */
-// class MyApp extends StatelessWidget {
-//   @override
+ //class MyApp extends StatelessWidget {
+//  @override
 //   Widget build(BuildContext context) {
 //     return  MaterialApp(
-//       home: SignUpPage(),
+//       //home: SignUpPage(),
+//       home: HomeWithAnnPage(),
 //     );
-//   }
+//  }
 // }
+
+//正式版
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return  MaterialApp.router(
+     routerConfig: webRouter,
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
