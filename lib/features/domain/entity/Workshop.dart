@@ -1,0 +1,21 @@
+import 'package:front_end/features/domain/entity/identity/Lecturer.dart';
+
+class Workshop {
+  final String ? wsid;
+  final String ? time;
+  final String ? topic;
+  final String ? amount; //可報名總人數
+  final String ? registered; //已報名人數
+  final String ? lecturerName;
+  final String ? lecturerTitle;
+
+  const Workshop({
+    this.wsid,
+    this.time,
+    this.topic,
+    this.amount,
+    this.registered,
+    this.lecturerName,
+    this.lecturerTitle
+  });
+}
