@@ -18,8 +18,8 @@ class WorkshopModel extends Workshop {
       wsid: json['wsid'],
       time: json['time'],
       topic: json['topic'],
-      amount: json['amount'],
-      registered: json['registered'],
+      amount: json['maxAmount'],
+      registered: json['currentAmount'],
       lecturerName: json['lectureName'],
       lecturerTitle: json['lectureTitle']
     );
