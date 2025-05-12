@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/route/web_route.dart';
+import 'package:front_end/features/presentation/bloc/auth_bloc.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
 import 'package:front_end/features/presentation/pages/sign_up_page.dart';
 import 'package:front_end/injection_container.dart';
 Future<void> main() async{
   await initializeDependencies();
-  runApp(MyApp());
+  runApp(
+    BlocProvider(
+      create: (_) => AuthBloc(),
+      child:  MyApp()
+  ));
 }
 
 //正式版

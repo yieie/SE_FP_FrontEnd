@@ -8,8 +8,11 @@ import 'package:front_end/features/domain/repositories/ann_repository.dart';
 import 'package:front_end/features/domain/repositories/auth_repository.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_detail_announcement.dart';
+import 'package:front_end/features/domain/usecases/sign_in.dart';
 import 'package:front_end/features/domain/usecases/sign_up.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/sign_in_bloc.dart';
 import 'package:front_end/features/presentation/bloc/sign_up_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -49,12 +52,18 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SignUpUseCase>(
     SignUpUseCase(sl())
   );
+  sl.registerSingleton<SignInUseCase>(
+    SignInUseCase(sl())
+  );
 
   sl.registerFactory<AnnBloc>(
     ()=> AnnBloc(sl(), sl())
   );
   sl.registerFactory<SignUpBloc>(
     () => SignUpBloc(sl())
+  );
+  sl.registerFactory<SignInBloc>(
+    () => SignInBloc(sl(),AuthBloc())
   );
 }
 

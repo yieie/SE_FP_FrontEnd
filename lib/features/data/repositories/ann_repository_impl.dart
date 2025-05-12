@@ -12,6 +12,7 @@ class AnnRepositoryImpl implements AnnRepository{
 
   AnnRepositoryImpl(this._annApiService);
   
+  //一次拿10筆公告
   @override
   Future<DataState<List<AnnouncementModel>>> get10announcement(int page) async {
     final httpResponse = await _annApiService.get10announcement(page: page);
@@ -33,8 +34,9 @@ class AnnRepositoryImpl implements AnnRepository{
     }
   }
   
+  //拿取單筆公告詳細資料
   @override
-  Future<DataState<Announcement>> getdetailannouncement(int aid)  async {
+  Future<DataState<AnnouncementModel>> getdetailannouncement(int aid)  async {
     final httpResponse = await _annApiService.getdetailannouncement(aid: aid);
     try{
       if(httpResponse.response.statusCode == HttpStatus.ok){

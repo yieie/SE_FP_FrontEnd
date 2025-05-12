@@ -12,6 +12,7 @@
 .swiftpm/
 migrate_working_dir/
 pubspec.lock
+*.g.dart
 
 # IntelliJ related
 *.iml

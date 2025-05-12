@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth_state.dart';
+import 'package:front_end/features/presentation/widget/attendee/attendee_nav.dart';
+import 'package:front_end/features/presentation/widget/basic/basic_nav.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
+import 'package:front_end/features/presentation/widget/student/student_nav.dart';
 import 'package:go_router/go_router.dart';
 
 class BasicScaffold extends StatelessWidget {
@@ -9,6 +15,8 @@ class BasicScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authstate = context.watch<AuthBloc>().state;
+    print(authstate);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
       body: Container(
@@ -31,90 +39,18 @@ class BasicScaffold extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(width: 1120,height: 40,child: Container(color: Colors.black,),),
+              
               //Nav
-              SizedBox(
-                width: 1120,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 150,
-                        height: 100,
-                        child: Image.asset("assets/images/weblogo.png"),
-                      ),
-                      Spacer(),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 17.5),
-                        child: TextButton(
-                          child: Text("工作坊資訊",
-                          style: TextStyle(
-                            color: Colors.white,
-                            letterSpacing: 3.2,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16
-                          ),
-                          ),
-                          onPressed: (){},
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 17.5),
-                        child: TextButton(
-                          child: Text("歷年作品",
-                          style: TextStyle(
-                            color: Colors.white,
-                            letterSpacing: 3.2,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16
-                          ),
-                          ),
-                          onPressed: (){},
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 17.5),
-                        child: TextButton(
-                          child: Text("登入",
-                            style: TextStyle(
-                              color: Colors.white,
-                              letterSpacing: 3.2,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16
-                            )
-                          ),
-                          onPressed: (){},
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 17.5),
-                        child: TextButton(
-                          child: Text("註冊",
-                            style: TextStyle(
-                              color: Colors.white,
-                              letterSpacing: 3.2,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16
-                            ),
-                          ),
-                          onPressed: (){
-                            context.go('/register');
-                          },
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 17.5),
-                        width: 160,
-                        height: 48,
-                        child: BasicWebButton(
-                          backgroundColor: Color(0xFFF96D4E),
-                          title: '立刻報名',
-                          fontSize: 16,
-                          onPressed: (){}
-                        )
-                      ),
-                    ]
-                  )
-              ), 
+              if(authstate is Unauthenticated || authstate is AuthInitial)
+                buildBasicNav(context),
+              if(authstate.usertype == "student")
+                StudentNav(),
+              if(authstate.usertype == "attendee")
+                AttendeeNav(),
+              // if(authstate.usertype == "admin")
+              // if(authstate.usertype == "teacher")
+              // if(authstate.usertype == "judge")
+              // if(authstate.usertype == "lecturer")
               SizedBox(width: 1120,height: 20,),
 
               //body

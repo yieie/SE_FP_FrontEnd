@@ -38,6 +38,7 @@ class _SignUpPageState extends State<SignUpPage>{
     phoneCtrl.dispose();
     passwordCtrl.dispose();
     passwordCheckCtrl.dispose();
+    super.dispose();
   }
 
   @override
