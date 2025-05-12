@@ -8,12 +8,12 @@ import 'package:front_end/features/presentation/bloc/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth_event.dart';
 import 'package:front_end/features/presentation/bloc/sign_in_event.dart';
 import 'package:front_end/features/presentation/bloc/sign_in_state.dart';
+import 'package:front_end/injection_container.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState>{
   final SignInUseCase _signInUseCase;
-  final AuthBloc authBloc;
 
-  SignInBloc(this._signInUseCase, this.authBloc) : super(SignInInitial()){
+  SignInBloc(this._signInUseCase) : super(SignInInitial()){
     on<SubminSignIn> (onSubmitSignIn);
 
   }
@@ -25,7 +25,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState>{
     final datastate = await _signInUseCase(params: event.signinReq);
 
     if(datastate is DataSuccess && datastate.data!.success){
-      authBloc.add(LoggedIn(usertype: datastate.data!.usertype!, uid: event.signinReq.account));
       emit(SignInSuccess(datastate.data!));
     }
 

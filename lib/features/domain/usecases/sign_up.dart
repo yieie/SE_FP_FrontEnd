@@ -1,7 +1,7 @@
 
 import 'package:front_end/cores/resources/data_state.dart';
 import 'package:front_end/cores/usecase/usecase.dart';
-import 'package:front_end/features/domain/entity/ResponseMessage.dart';
+import 'package:front_end/cores/resources/ResponseMessage.dart';
 import 'package:front_end/features/domain/entity/identity/Student.dart';
 import 'package:front_end/features/domain/repositories/auth_repository.dart';
 

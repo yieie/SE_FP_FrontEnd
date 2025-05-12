@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:front_end/features/domain/entity/ResponseMessage.dart';
+import 'package:front_end/cores/resources/ResponseMessage.dart';
 import 'package:front_end/features/domain/entity/SignInReqParams.dart';
 
 class SignInState extends Equatable{

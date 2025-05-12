@@ -2,9 +2,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:front_end/cores/resources/ResponseMessage.dart';
 import 'package:front_end/cores/resources/data_state.dart';
 import 'package:front_end/features/data/datasources/remote/auth_api_service.dart';
-import 'package:front_end/features/data/models/response_message.dart';
 import 'package:front_end/features/data/models/sign_in_req_param.dart';
 import 'package:front_end/features/data/models/sign_up_req_param.dart';
 import 'package:front_end/features/domain/entity/SignInReqParams.dart';
@@ -18,7 +18,7 @@ class AuthRepositoryImpl implements AuthRepository{
 
   //註冊
   @override
-  Future<DataState<ResponseMessageModel>> signUp(Student student, String password) async {
+  Future<DataState<ResponseMessage>> signUp(Student student, String password) async {
     final signupReq = SignupReqParams(
       uid: student.uid,
       password: password,
@@ -52,7 +52,7 @@ class AuthRepositoryImpl implements AuthRepository{
 
   //登入
   @override
-  Future<DataState<ResponseMessageModel>> signIn(SignInReqParams signinReq) async {
+  Future<DataState<ResponseMessage>> signIn(SignInReqParams signinReq) async {
     try{
       final httpResponse= await _authApiService.signIn(SignInReqParamModel.fromEntity(signinReq));
 

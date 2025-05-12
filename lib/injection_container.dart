@@ -56,6 +56,9 @@ Future<void> initializeDependencies() async {
     SignInUseCase(sl())
   );
 
+  sl.registerFactory<AuthBloc>(
+    ()=> AuthBloc()
+  );
   sl.registerFactory<AnnBloc>(
     ()=> AnnBloc(sl(), sl())
   );
@@ -63,7 +66,7 @@ Future<void> initializeDependencies() async {
     () => SignUpBloc(sl())
   );
   sl.registerFactory<SignInBloc>(
-    () => SignInBloc(sl(),AuthBloc())
+    () => SignInBloc(sl())
   );
 }
 

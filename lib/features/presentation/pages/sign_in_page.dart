@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/domain/entity/SignInReqParams.dart';
 import 'package:front_end/features/presentation/bloc/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth_event.dart';
 import 'package:front_end/features/presentation/bloc/sign_in_bloc.dart';
 import 'package:front_end/features/presentation/bloc/sign_in_event.dart';
 import 'package:front_end/features/presentation/bloc/sign_in_state.dart';
@@ -35,7 +36,7 @@ class _SignInPageState extends State<SignInPage>{
   Widget build(BuildContext context) {
     
     return BlocProvider<SignInBloc>(
-      create: (context) => SignInBloc(sl(), AuthBloc()),
+      create: (context) => SignInBloc(sl()),
       child: BasicScaffold(
         child: _buildBody(context)
       )
@@ -43,12 +44,17 @@ class _SignInPageState extends State<SignInPage>{
   }
 
   _buildBody(BuildContext context) {
-    return BlocBuilder<SignInBloc,SignInState>(
+    return BlocListener<SignInBloc, SignInState>(
+      listener: (context, state){
+        if(state is SignInSuccess){
+            context.read<AuthBloc>().add(LoggedIn(usertype: state.responseMessage!.extraData?['userType'], uid: accountCtrl.text));
+            context.go('/homeWithAnn/1');
+        }
+      },
+      child:BlocBuilder<SignInBloc,SignInState>(
       builder: (context,state){
 
-        if(state is SignInSuccess){
-            context.go('/homeWithAnn');
-        }
+        
         if(state is SignInLoading){
           return const Center(child: CupertinoActivityIndicator());
         }
@@ -66,6 +72,7 @@ class _SignInPageState extends State<SignInPage>{
         }
         return SizedBox();
       }
+    )
     );
   }
 
