@@ -7,15 +7,22 @@ import 'package:go_router/go_router.dart';
 
 
 final GoRouter webRouter = GoRouter(
-  initialLocation: '/homeWithAnn',
+  initialLocation: '/homeWithAnn/1',
   routes: [
     /*
     =================Nav=========================
     */
     GoRoute(
-      path: '/homeWithAnn',
+      path: '/homeWithAnn/:page',
       name: 'homeWithAnn',
-      builder: (context, state) => HomeWithAnnPage()
+      builder: (context, state){
+        final pageStr = state.pathParameters['page'];
+
+        final page = int.tryParse(pageStr ?? '') ?? 1;
+        print(page);
+        return HomeWithAnnPage(page: page);
+      } 
+      
     ),
     // GoRoute(
     //   path: '/workshops',
@@ -48,5 +55,5 @@ final GoRouter webRouter = GoRouter(
       }
     ),
 
-  ],
+  ]
 );
