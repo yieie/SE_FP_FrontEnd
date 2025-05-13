@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/resources/data_state.dart';
 import 'package:front_end/features/domain/usecases/sign_in.dart';
-import 'package:front_end/features/presentation/bloc/auth_bloc.dart';
-import 'package:front_end/features/presentation/bloc/auth_event.dart';
-import 'package:front_end/features/presentation/bloc/sign_in_event.dart';
-import 'package:front_end/features/presentation/bloc/sign_in_state.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_event.dart';
+import 'package:front_end/features/presentation/bloc/auth/sign_in_event.dart';
+import 'package:front_end/features/presentation/bloc/auth/sign_in_state.dart';
 import 'package:front_end/injection_container.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState>{

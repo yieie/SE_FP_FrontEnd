@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:front_end/features/presentation/bloc/auth_bloc.dart';
-import 'package:front_end/features/presentation/bloc/auth_event.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_event.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:go_router/go_router.dart';
 

@@ -2,18 +2,23 @@
 import 'package:dio/dio.dart';
 import 'package:front_end/features/data/datasources/remote/ann_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/auth_api_service.dart';
+import 'package:front_end/features/data/datasources/remote/workshop_api_service.dart';
 import 'package:front_end/features/data/repositories/ann_repository_impl.dart';
 import 'package:front_end/features/data/repositories/auth_repository_impl.dart';
+import 'package:front_end/features/data/repositories/workshop_repository_impl.dart';
 import 'package:front_end/features/domain/repositories/ann_repository.dart';
 import 'package:front_end/features/domain/repositories/auth_repository.dart';
+import 'package:front_end/features/domain/repositories/workshop_repository.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_detail_announcement.dart';
+import 'package:front_end/features/domain/usecases/get_workshop.dart';
 import 'package:front_end/features/domain/usecases/sign_in.dart';
 import 'package:front_end/features/domain/usecases/sign_up.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
-import 'package:front_end/features/presentation/bloc/auth_bloc.dart';
-import 'package:front_end/features/presentation/bloc/sign_in_bloc.dart';
-import 'package:front_end/features/presentation/bloc/sign_up_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/sign_in_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/sign_up_bloc.dart';
+import 'package:front_end/features/presentation/bloc/workshop/workshop_list_event.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -35,12 +40,16 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<AnnApiService>(AnnApiService(sl()));
   sl.registerSingleton<AuthApiService>(AuthApiService(sl()));
+  sl.registerSingleton<WorkshopApiService>(WorkshopApiService(sl()));
 
   sl.registerSingleton<AnnRepository>(
     AnnRepositoryImpl(sl())
   );
   sl.registerSingleton<AuthRepository>(
     AuthRepositoryImpl(sl())
+  );
+  sl.registerSingleton<WorkshopRepository>(
+    WorkshopRepositoryImpl(sl())
   );
 
   sl.registerSingleton<Get10AnnouncementUseCase>(
@@ -54,6 +63,9 @@ Future<void> initializeDependencies() async {
   );
   sl.registerSingleton<SignInUseCase>(
     SignInUseCase(sl())
+  );
+  sl.registerSingleton<GetWorkshopUseCase>(
+    GetWorkshopUseCase(sl())
   );
 
   sl.registerFactory<AuthBloc>(
