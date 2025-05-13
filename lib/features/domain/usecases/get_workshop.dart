@@ -3,10 +3,10 @@ import 'package:front_end/cores/usecase/usecase.dart';
 import 'package:front_end/features/domain/entity/Workshop.dart';
 import 'package:front_end/features/domain/repositories/workshop_repository.dart';
 
-class GetWorkshop implements UseCase<DataState<List<Workshop>>, void>{
+class GetWorkshopUseCase implements UseCase<DataState<List<Workshop>>, void>{
   final WorkshopRepository _workshopRepository;
 
-  GetWorkshop(this._workshopRepository);
+  GetWorkshopUseCase(this._workshopRepository);
   
   @override
   Future<DataState<List<Workshop>>> call({void params}) {

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:front_end/cores/constants/constants.dart';
-import 'package:front_end/features/data/models/response_message.dart';
+import 'package:front_end/cores/resources/ResponseMessage.dart';
 import 'package:front_end/features/data/models/sign_in_req_param.dart';
 import 'package:front_end/features/data/models/sign_up_req_param.dart';
 import 'package:front_end/features/data/models/workshop.dart';
@@ -13,7 +13,9 @@ abstract class WorkshopApiService {
   factory WorkshopApiService(Dio dio) = _WorkshopApiService;
 
   //路徑需確認API文件
-  @POST('')
-  Future<HttpResponse<List<WorkshopModel>>> getWorkshop();
+  @POST('/workshop/getWorkshopList.php')
+  Future<HttpResponse<ResponseMessage<WorkshopModel>>> getWorkshop();
 
+  // @POST('')
+  // Future<HttpResponse<ResponseMessage>> registerforWorkshop();
 }

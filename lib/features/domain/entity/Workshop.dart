@@ -4,8 +4,8 @@ class Workshop {
   final String ? wsid;
   final String ? time;
   final String ? topic;
-  final String ? amount; //可報名總人數
-  final String ? registered; //已報名人數
+  final int ? amount; //可報名總人數
+  final int ? registered; //已報名人數
   final String ? lecturerName;
   final String ? lecturerTitle;
 

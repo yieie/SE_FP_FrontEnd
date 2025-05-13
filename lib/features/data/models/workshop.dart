@@ -6,8 +6,8 @@ class WorkshopModel extends Workshop {
     String ? wsid,
     String ? time,
     String ? topic,
-    String ? amount,
-    String ? registered,
+    int ? amount,
+    int ? registered,
     String ? lecturerName,
     String ? lecturerTitle
   });
