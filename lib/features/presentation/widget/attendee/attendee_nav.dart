@@ -79,7 +79,9 @@ class _AttendeeNavState extends State<AttendeeNav>{
                     fontSize: 16
                   ),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    context.go('/workshops');
+                  },
                 ),
               ),
               Container(

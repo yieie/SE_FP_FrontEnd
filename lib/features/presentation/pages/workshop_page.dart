@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/features/data/datasources/remote/workshop_api_service.dart';
 import 'package:front_end/features/domain/entity/Workshop.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_list_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
@@ -43,8 +45,8 @@ class _WorkshopPageState extends State<WorkshopPage>{
           return const Center(child: Icon(Icons.refresh));
         }
         if(state is WorkshopListDone) {
-          final workshop = state.workshop ?? [];
-
+          final workshop = state.workshop;
+          final authState = context.watch<AuthBloc>().state;
           return SizedBox(
             width: 1120,
             height: 600,
@@ -88,23 +90,29 @@ class _WorkshopPageState extends State<WorkshopPage>{
                               child: Text(workshop[index].time ?? "無時間", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                             ),
                             Expanded(
-                              flex: 6,
+                              flex: 4,
                               child: Text("${workshop[index].lecturerName} / ${workshop[index].lecturerTitle}", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                             ),
-                            Expanded(
-                              flex: 2,
-                              child: SizedBox(
-                                height: 30,
-                                child: BasicWebButton(
-                                  title: workshop[index].amount! > workshop[index].registered! ? "報名" : "已額滿",
-                                  fontSize: 16,
-                                  backgroundColor: workshop[index].amount! > workshop[index].registered! ? Color(0xFF76C919) : Color(0xFFF96D4E),
-                                  onPressed: (){
-                                    print("報名工作坊${workshop[index].wsid}");
-                                  }
+                            if(authState is Authenticated)
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 30,
+                                  child: BasicWebButton(
+                                    title: workshop[index].amount! > workshop[index].registered! ? "報名" : "已額滿",
+                                    fontSize: 16,
+                                    backgroundColor: workshop[index].amount! > workshop[index].registered! ? Color(0xFF76C919) : Color(0xFFF96D4E),
+                                    onPressed: (){
+                                      print("報名工作坊${workshop[index].wsid}");
+                                    }
+                                  )
                                 )
                               )
-                            )
+                            else
+                              Expanded(
+                                flex: 2,
+                                child: Text("登入後即可報名",style: TextStyle(color: Colors.grey.shade800,fontSize: 16))
+                              )
                           ],
                         ),
                       );
