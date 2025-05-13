@@ -36,14 +36,14 @@ class _WorkshopPageState extends State<WorkshopPage>{
   Widget _buildBody(BuildContext context){
     return BlocBuilder<WorkshopBloc,WorkshopState>(
       builder: (context, state) {
-        // if(state is WorkshopListInitial){
-        //   return const Center(child: CupertinoActivityIndicator());
-        // }
+        if(state is WorkshopListInitial){
+          return const Center(child: CupertinoActivityIndicator());
+        }
         if(state is WorkshopListError) {
           return const Center(child: Icon(Icons.refresh));
         }
-        if(state is WorkshopListInitial) {
-          final workshop = test;
+        if(state is WorkshopListDone) {
+          final workshop = state.workshop ?? [];
 
           return SizedBox(
             width: 1120,
