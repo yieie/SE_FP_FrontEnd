@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
+import 'package:go_router/go_router.dart';
 
 class BasicScaffold extends StatelessWidget {
   final Widget child;
@@ -29,65 +30,79 @@ class BasicScaffold extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: 1120,height: 40,),
+              SizedBox(width: 1120,height: 40,child: Container(color: Colors.black,),),
+              //Nav
               SizedBox(
                 width: 1120,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 170,
-                        height: 120,
-                        margin: EdgeInsets.symmetric(horizontal: 25),
+                        width: 150,
+                        height: 100,
                         child: Image.asset("assets/images/weblogo.png"),
                       ),
                       Spacer(),
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 25),
-                        child: Text("工作坊資訊",
-                        style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 3.2,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16
-                        ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 25),
-                        child: Text("歷年作品",
-                        style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 3.2,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16
-                        ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 25),
-                        child: Text("登入",
-                          style: TextStyle(
-                            color: Colors.white,
-                            letterSpacing: 3.2,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16
-                          )
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 25),
-                        child: Text("註冊",
+                        margin: EdgeInsets.symmetric(horizontal: 17.5),
+                        child: TextButton(
+                          child: Text("工作坊資訊",
                           style: TextStyle(
                             color: Colors.white,
                             letterSpacing: 3.2,
                             fontWeight: FontWeight.bold,
                             fontSize: 16
                           ),
+                          ),
+                          onPressed: (){},
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 25),
+                        margin: EdgeInsets.symmetric(horizontal: 17.5),
+                        child: TextButton(
+                          child: Text("歷年作品",
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 3.2,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16
+                          ),
+                          ),
+                          onPressed: (){},
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 17.5),
+                        child: TextButton(
+                          child: Text("登入",
+                            style: TextStyle(
+                              color: Colors.white,
+                              letterSpacing: 3.2,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                            )
+                          ),
+                          onPressed: (){},
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 17.5),
+                        child: TextButton(
+                          child: Text("註冊",
+                            style: TextStyle(
+                              color: Colors.white,
+                              letterSpacing: 3.2,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                            ),
+                          ),
+                          onPressed: (){
+                            context.go('/register');
+                          },
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 17.5),
                         width: 160,
                         height: 48,
                         child: BasicWebButton(
@@ -100,9 +115,32 @@ class BasicScaffold extends StatelessWidget {
                     ]
                   )
               ), 
-              SizedBox(width: 1120,height: 40,),
+              SizedBox(width: 1120,height: 20,),
+
+              //body
+              Expanded(
+                child: SingleChildScrollView(
+                  child: child,
+                ),
+              ),
+
+              //footer
               Container(
-                child: child,
+                width: double.infinity,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Color(0xFFFEE425)
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/NUKlogo.png"),
+                    SizedBox(width: 40),
+                    Text(
+                      '© 2025 國立高雄大學 軟體工程課程專案 | Developed by：陳冠霖、張卜驊、黃羿禎、涂哲偉、黃政諭、熊竣蔚、張哲與'
+                    )
+                  ], 
+                ),
               )
             ]
           ),

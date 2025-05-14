@@ -47,7 +47,7 @@ Future<void> initializeDependencies() async {
     GetDetailAnnouncementUseCase(sl())
   );
   sl.registerSingleton<SignUpUseCase>(
-    SignUpUseCase()
+    SignUpUseCase(sl())
   );
 
   sl.registerFactory<AnnBloc>(

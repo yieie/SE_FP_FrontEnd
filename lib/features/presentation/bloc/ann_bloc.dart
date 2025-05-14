@@ -15,11 +15,11 @@ class AnnBloc extends Bloc<AnnEvent,AnnState>{
   }
 
   void onGet10Announcement(Get10Announcement event, Emitter<AnnState> emit) async {
-    final dataState = await _get10announcementUseCase();
+    final dataState = await _get10announcementUseCase(params: event.getpage);
 
     if(dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(
-        AnnouncementDone(dataState.data!)
+        AnnouncementDone(dataState.data!,currentPage: event.getpage)
       );
     }
 
@@ -31,11 +31,11 @@ class AnnBloc extends Bloc<AnnEvent,AnnState>{
   }
 
   void onGetDetailAnnouncement(GetDetailAnnouncement event, Emitter<AnnState> emit) async {
-    final dataState = await _getDetailAnnouncementUseCase();
+    final dataState = await _getDetailAnnouncementUseCase(params: event.getaid);
 
     if(dataState is DataSuccess && dataState.data != null){
       emit(
-        AnnouncementDone([dataState.data!])
+        AnnouncementDetailDone(dataState.data!, aid: event.getaid)
       );
     }
 

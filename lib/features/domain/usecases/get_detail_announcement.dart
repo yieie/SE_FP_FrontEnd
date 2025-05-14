@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:front_end/cores/resources/data_state.dart';
 import 'package:front_end/cores/usecase/usecase.dart';
 import 'package:front_end/features/domain/entity/Announcement.dart';
