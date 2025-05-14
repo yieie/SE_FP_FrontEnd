@@ -3,6 +3,7 @@ import 'package:front_end/cores/route/web_route.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
 import 'package:front_end/features/presentation/pages/sign_up_page.dart';
 import 'package:front_end/injection_container.dart';
+import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 Future<void> main() async{
   await initializeDependencies();
   runApp(MyApp());
@@ -26,18 +27,18 @@ Future<void> main() async{
 記得把上方class註解起來
 
  */
- //class MyApp extends StatelessWidget {
-//  @override
-//   Widget build(BuildContext context) {
-//     return  MaterialApp(
-//       //home: SignUpPage(),
-//       home: HomeWithAnnPage(),
-//     );
-//  }
-// }
+ class MyApp extends StatelessWidget {
+ @override
+  Widget build(BuildContext context) {
+  return  MaterialApp(
+     //home: SignUpPage(),
+  home:DetailAnnPage(aid:101),
+    );
+   }
+  }
 
 //正式版
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp.router(
@@ -45,4 +46,4 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
     );
   }
-}
+}*/
