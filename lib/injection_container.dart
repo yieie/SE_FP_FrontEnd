@@ -18,7 +18,6 @@ import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_up_bloc.dart';
-import 'package:front_end/features/presentation/bloc/workshop/workshop_list_event.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;

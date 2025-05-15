@@ -7,10 +7,6 @@ import 'package:front_end/features/presentation/bloc/ann_event.dart';
 import 'package:front_end/features/presentation/bloc/ann_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
 import 'package:front_end/injection_container.dart';
-
-
-
-import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:go_router/go_router.dart';
 
 

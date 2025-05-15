@@ -4,10 +4,7 @@ import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/widget/attendee/attendee_nav.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_nav.dart';
-import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:front_end/features/presentation/widget/student/student_nav.dart';
-import 'package:front_end/injection_container.dart';
-import 'package:go_router/go_router.dart';
 
 class BasicScaffold extends StatelessWidget {
   final Widget child;

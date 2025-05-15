@@ -1,5 +1,4 @@
 import 'package:front_end/features/domain/entity/Workshop.dart';
-import 'package:front_end/features/domain/entity/identity/Lecturer.dart';
 
 class WorkshopModel extends Workshop {
   const WorkshopModel({

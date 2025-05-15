@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/route/web_route.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_event.dart';
-import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
-import 'package:front_end/features/presentation/pages/sign_up_page.dart';
 import 'package:front_end/injection_container.dart';
 final authBloc = sl<AuthBloc>();
 Future<void> main() async{

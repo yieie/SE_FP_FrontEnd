@@ -1,5 +1,3 @@
-import 'package:front_end/features/domain/entity/identity/Lecturer.dart';
-
 class Workshop {
   final String ? wsid;
   final String ? time;
