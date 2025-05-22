@@ -7,5 +7,5 @@ abstract class WorkshopRepository {
 
   Future<DataState<List<int>>> getWorkshopParticipation(String uid);
 
-  Future<DataState<ResponseMessage>> joinWorkshop(String uid, String wsid);
+  Future<DataState<ResponseMessage>> joinWorkshop(String uid, int wsid);
 }

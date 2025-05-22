@@ -7,6 +7,6 @@ class GetWorkshopParticipation extends WorkshopParticipationEvent{
 
 class JoinWorkshop extends WorkshopParticipationEvent{
   final String uid;
-  final String wsid;
+  final int wsid;
   JoinWorkshop({required this.uid, required this.wsid});
 }

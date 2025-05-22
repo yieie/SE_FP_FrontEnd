@@ -1,14 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/resources/data_state.dart';
 import 'package:front_end/features/domain/usecases/get_workshop_participation.dart';
+import 'package:front_end/features/domain/usecases/join_workshop.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_event.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_state.dart';
 
 class WorkshopParticipationBloc extends Bloc<WorkshopParticipationEvent,WorkshopParticipationState>{
   final GetWorkshopParticipationUseCase _getWorkshopParticipation;
+  final JoinWorkshopUseCase _joinWorkshop;
 
-  WorkshopParticipationBloc(this._getWorkshopParticipation) : super(ParticipationInitial()){
+  WorkshopParticipationBloc(this._getWorkshopParticipation, this._joinWorkshop) : super(ParticipationInitial()){
     on<GetWorkshopParticipation> (onGetWorkshopParticipation);
+    on<JoinWorkshop> (onJoinWorkshop);
   }
 
   void onGetWorkshopParticipation(GetWorkshopParticipation event, Emitter<WorkshopParticipationState> emit) async {
@@ -23,6 +26,26 @@ class WorkshopParticipationBloc extends Bloc<WorkshopParticipationEvent,Workshop
     if(datastate is DataFailed){
       emit(
         ParticipationError(error: datastate.error!)
+      );
+    }
+  }
+
+  void onJoinWorkshop(JoinWorkshop event, Emitter<WorkshopParticipationState> emit) async {
+    emit(
+      JoinSubmitting(uid: event.uid, wsid: event.wsid)
+    );
+
+    final datastate = await _joinWorkshop(params: event.uid, wsid: event.wsid);
+
+    if(datastate is DataSuccess){
+      emit(
+        JoinSuccess()
+      );
+    }
+
+    if(datastate is DataFailed){
+      emit(
+        JoinError(error: datastate.error!)
       );
     }
   }

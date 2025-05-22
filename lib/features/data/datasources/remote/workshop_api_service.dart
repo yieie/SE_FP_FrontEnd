@@ -10,13 +10,14 @@ part 'workshop_api_service.g.dart';
 abstract class WorkshopApiService {
   factory WorkshopApiService(Dio dio) = _WorkshopApiService;
 
-  //路徑需確認API文件
   @POST('/workshop/getWorkshopList.php')
   Future<HttpResponse<ResponseMessage<WorkshopModel>>> getWorkshop();
 
-  @POST('/workshop/getAttendedWorkshop.php')
-  Future<HttpResponse<ResponseMessage>> getWorkshopParticipation();
+  @GET('/workshop/getAttendedWorkshop.php')
+  Future<HttpResponse<ResponseMessage>> getWorkshopParticipation({
+    @Query("uId") String? uid,
+  });
 
   @POST('/workshop/signUp.php')
-  Future<HttpResponse<ResponseMessage>> joinWorkshop();
+  Future<HttpResponse<ResponseMessage>> joinWorkshop(@Body() Map<String, dynamic> body);
 }

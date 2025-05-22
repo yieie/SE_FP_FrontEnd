@@ -60,7 +60,7 @@ class _WorkshopPageState extends State<WorkshopPage>{
           return const Center(child: Icon(Icons.refresh));
         }
         if(state is WorkshopListDone) {
-          final workshops = state.workshop;
+          final workshops = test;
           
           if(isLoggedIn){
             return BlocBuilder<WorkshopParticipationBloc, WorkshopParticipationState>(
@@ -115,6 +115,7 @@ class _WorkshopPageState extends State<WorkshopPage>{
             child: ListView.builder(
             itemCount: workshops.length,
             itemBuilder: (context, index){
+              final bool vacancy = (workshops[index].amount! > workshops[index].registered!);
               return Container(
                   margin: EdgeInsets.only(top: 5,bottom: 5),
                   child: Row(
@@ -141,15 +142,13 @@ class _WorkshopPageState extends State<WorkshopPage>{
                               title: "已報名",
                               fontSize: 16,
                               backgroundColor: Color(0x99D9D9D9),
-                              onPressed: (){},
+                              onPressed: null,
                             ) :
                             BasicWebButton(
-                              title: workshops[index].amount! > workshops[index].registered! ? "報名" : "已額滿",
+                              title: vacancy ? "報名" : "已額滿",
                               fontSize: 16,
-                              backgroundColor: workshops[index].amount! > workshops[index].registered! ? Color(0xFF76C919) : Color(0xFFF96D4E),
-                              onPressed: (){
-                                print("報名工作坊${workshops[index].wsid}");
-                              }
+                              backgroundColor: vacancy ? Color(0xFF76C919) : Color(0xFFF96D4E),
+                              onPressed: vacancy ? () => context.read<WorkshopParticipationBloc>().add(JoinWorkshop(uid: authState.uid, wsid: workshops[index].wsid!)) : null,
                             )
                           )
                         )

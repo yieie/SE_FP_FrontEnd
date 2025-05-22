@@ -35,7 +35,7 @@ class WorkshopRepositoryImpl extends WorkshopRepository{
 
   @override
   Future<DataState<List<int>>> getWorkshopParticipation(String uid) async {
-    final httpResponse = await  _workshopApiService.getWorkshopParticipation();
+    final httpResponse = await  _workshopApiService.getWorkshopParticipation(uid: uid);
 
     try{
       if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
@@ -56,8 +56,8 @@ class WorkshopRepositoryImpl extends WorkshopRepository{
   }
 
   @override
-  Future<DataState<ResponseMessage>> joinWorkshop(String uid, String wsid) async {
-    final httpResponse = await  _workshopApiService.joinWorkshop();
+  Future<DataState<ResponseMessage>> joinWorkshop(String uid, int wsid) async {
+    final httpResponse = await  _workshopApiService.joinWorkshop({"uId": uid, "workshopId": wsid});
 
     try{
       if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){

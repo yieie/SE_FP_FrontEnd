@@ -13,6 +13,7 @@ import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_detail_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_workshop.dart';
 import 'package:front_end/features/domain/usecases/get_workshop_participation.dart';
+import 'package:front_end/features/domain/usecases/join_workshop.dart';
 import 'package:front_end/features/domain/usecases/sign_in.dart';
 import 'package:front_end/features/domain/usecases/sign_up.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
@@ -73,6 +74,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetWorkshopParticipationUseCase>(
     GetWorkshopParticipationUseCase(sl())
   );
+  sl.registerSingleton<JoinWorkshopUseCase>(
+    JoinWorkshopUseCase(sl())
+  );
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -90,7 +94,7 @@ Future<void> initializeDependencies() async {
     () => WorkshopBloc(sl())
   );
   sl.registerFactory<WorkshopParticipationBloc>(
-    () => WorkshopParticipationBloc(sl())
+    () => WorkshopParticipationBloc(sl(),sl())
   );
 }
 
