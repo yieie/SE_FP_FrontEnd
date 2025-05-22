@@ -62,7 +62,7 @@ class _WorkshopPageState extends State<WorkshopPage>{
           return Text(handleDioError(state.error!),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
         }
         if(state is WorkshopListDone) {
-          final workshops = test;
+          final workshops = state.workshop;
           
           if(isLoggedIn){
             return BlocBuilder<WorkshopParticipationBloc, WorkshopParticipationState>(
