@@ -39,7 +39,7 @@ class WorkshopRepositoryImpl extends WorkshopRepository{
 
     try{
       if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
-        return DataSuccess(httpResponse.data.extraData?['workshopId']);
+        return DataSuccess((httpResponse.data.extraData?['workshopId'] as List).cast<int>());
       }else {
         return DataFailed(
           DioException(
