@@ -88,6 +88,7 @@ class _WorkshopPageState extends State<WorkshopPage>{
                     duration: const Duration(seconds: 2),
                   );
                 }
+                return SizedBox();
               },
             );
           } 
