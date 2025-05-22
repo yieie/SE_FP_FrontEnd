@@ -12,6 +12,7 @@ import 'package:front_end/features/presentation/bloc/workshop/workshop_participa
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_event.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
+import 'package:front_end/features/presentation/widget/basic/basic_toast.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:front_end/injection_container.dart';
 
@@ -69,8 +70,24 @@ class _WorkshopPageState extends State<WorkshopPage>{
                 final registeredIds = regState is ParticipationLoaded
                     ? regState.participation
                     : <int>[];
-
-                return _buildWorkshopList(workshops, registeredIds);
+                if(state is ParticipationInitial){
+                  return const Center(child: CupertinoActivityIndicator());
+                }
+                if (regState is ParticipationError) {
+                  return Text(handleDioError(regState.error),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
+                }
+                if (regState is JoinError) {
+                  return Text(handleDioError(regState.error),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
+                }
+                if (regState is ParticipationLoaded) {
+                  return _buildWorkshopList(workshops, registeredIds);
+                }
+                if(regState is JoinSuccess){
+                  BasicToast.show(
+                    context, "報名成功",
+                    duration: const Duration(seconds: 2),
+                  );
+                }
               },
             );
           } 
