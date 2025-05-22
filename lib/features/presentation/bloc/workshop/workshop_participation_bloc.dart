@@ -4,6 +4,7 @@ import 'package:front_end/features/domain/usecases/get_workshop_participation.da
 import 'package:front_end/features/domain/usecases/join_workshop.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_event.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_state.dart';
+import 'package:front_end/features/presentation/widget/basic/basic_toast.dart';
 
 class WorkshopParticipationBloc extends Bloc<WorkshopParticipationEvent,WorkshopParticipationState>{
   final GetWorkshopParticipationUseCase _getWorkshopParticipation;
@@ -38,8 +39,10 @@ class WorkshopParticipationBloc extends Bloc<WorkshopParticipationEvent,Workshop
     final datastate = await _joinWorkshop(params: event.uid, wsid: event.wsid);
 
     if(datastate is DataSuccess){
+      final upatedList = await _getWorkshopParticipation(params: event.uid);
+      emit(JoinSuccess());
       emit(
-        JoinSuccess()
+        ParticipationLoaded(participation: upatedList.data!)
       );
     }
 

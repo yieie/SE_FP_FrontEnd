@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/data/models/announcement.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/ann_event.dart';
@@ -49,7 +50,7 @@ class HomeWithAnnPage extends StatelessWidget{
         return const Center(child: CupertinoActivityIndicator());
       }
       if (state is AnnouncementError) {
-        return const Center(child: Icon(Icons.refresh));
+        return Text(handleDioError(state.error!),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
       }
       if (state is AnnouncementDone) {
         

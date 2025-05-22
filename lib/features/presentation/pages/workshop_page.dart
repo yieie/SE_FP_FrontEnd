@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/domain/entity/Workshop.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
@@ -57,7 +58,7 @@ class _WorkshopPageState extends State<WorkshopPage>{
           return const Center(child: CupertinoActivityIndicator());
         }
         if(state is WorkshopListError) {
-          return const Center(child: Icon(Icons.refresh));
+          return Text(handleDioError(state.error!),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
         }
         if(state is WorkshopListDone) {
           final workshops = test;
