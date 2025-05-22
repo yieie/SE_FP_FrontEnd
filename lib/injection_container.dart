@@ -12,12 +12,16 @@ import 'package:front_end/features/domain/repositories/workshop_repository.dart'
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_detail_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_workshop.dart';
+import 'package:front_end/features/domain/usecases/get_workshop_participation.dart';
 import 'package:front_end/features/domain/usecases/sign_in.dart';
 import 'package:front_end/features/domain/usecases/sign_up.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_up_bloc.dart';
+import 'package:front_end/features/presentation/bloc/workshop/workshop_list_bloc.dart';
+import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_bloc.dart';
+import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_event.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -66,6 +70,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetWorkshopUseCase>(
     GetWorkshopUseCase(sl())
   );
+  sl.registerSingleton<GetWorkshopParticipationUseCase>(
+    GetWorkshopParticipationUseCase(sl())
+  );
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -78,6 +85,12 @@ Future<void> initializeDependencies() async {
   );
   sl.registerFactory<SignInBloc>(
     () => SignInBloc(sl())
+  );
+  sl.registerFactory<WorkshopBloc>(
+    () => WorkshopBloc(sl())
+  );
+  sl.registerFactory<WorkshopParticipationBloc>(
+    () => WorkshopParticipationBloc(sl())
   );
 }
 

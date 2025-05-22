@@ -1,5 +1,5 @@
 class Workshop {
-  final String ? wsid;
+  final int ? wsid;
   final String ? time;
   final String ? topic;
   final int ? amount; //可報名總人數

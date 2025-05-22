@@ -21,7 +21,7 @@ class AnnouncementModel extends Announcement{
 
   factory AnnouncementModel.fromJson(Map<String, dynamic> json){
     return AnnouncementModel(
-      aid: int.parse(json['aId']),
+      aid: json['aId'],
       title: json['title'] ?? "",
       content: json['content'] ?? "",
       time: json['publishDate'] ?? "",

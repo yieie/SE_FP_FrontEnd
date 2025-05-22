@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:front_end/cores/constants/constants.dart';
 import 'package:front_end/cores/resources/ResponseMessage.dart';
-import 'package:front_end/features/data/models/sign_in_req_param.dart';
-import 'package:front_end/features/data/models/sign_up_req_param.dart';
 import 'package:front_end/features/data/models/workshop.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -16,6 +14,9 @@ abstract class WorkshopApiService {
   @POST('/workshop/getWorkshopList.php')
   Future<HttpResponse<ResponseMessage<WorkshopModel>>> getWorkshop();
 
-  // @POST('')
-  // Future<HttpResponse<ResponseMessage>> registerforWorkshop();
+  @POST('/workshop/getAttendedWorkshop.php')
+  Future<HttpResponse<ResponseMessage>> getWorkshopParticipation();
+
+  @POST('/workshop/signUp.php')
+  Future<HttpResponse<ResponseMessage>> joinWorkshop();
 }
