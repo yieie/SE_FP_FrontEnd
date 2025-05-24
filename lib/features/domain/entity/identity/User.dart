@@ -1,10 +1,3 @@
-/*
-
-User is super class
--uid
-
-
-*/
 
 abstract class User {
   final String ? uid;

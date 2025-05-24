@@ -1,0 +1,31 @@
+import 'package:front_end/features/domain/entity/identity/Attendee.dart';
+
+class AttendeeModel extends Attendee{
+  AttendeeModel({
+    required super.uid,
+    super.name,
+    super.email,
+    super.sexual,
+    super.phone,
+    super.department,
+    super.grade,
+    super.studentCard,
+    super.teamID,
+    super.workID
+  });
+
+  factory AttendeeModel.fromJson(Map<String, dynamic> json) {
+    return AttendeeModel(
+      uid: json['uId'] as String,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+      sexual: json['sexual'] as String?,
+      phone: json['phone'] as String?,
+      department: json['studentInfo']['phone'] as String?,
+      grade: json['studentInfo']['grade'] as String?,
+      studentCard: json['attendeeInfo']['studentCard'] as String?,
+      teamID: json['attendeeInfo']['teamId'] as String?,
+      workID: json['attendeeInfo']['workId'] as String?
+    );
+  }
+}
