@@ -7,7 +7,7 @@ import 'package:front_end/features/data/datasources/remote/workshop_api_service.
 import 'package:front_end/features/data/models/workshop.dart';
 import 'package:front_end/features/domain/repositories/workshop_repository.dart';
 
-class WorkshopRepositoryImpl extends WorkshopRepository{
+class WorkshopRepositoryImpl implements WorkshopRepository{
   final WorkshopApiService _workshopApiService;
 
   WorkshopRepositoryImpl(this._workshopApiService);

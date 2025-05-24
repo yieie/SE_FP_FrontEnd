@@ -9,7 +9,7 @@ import 'package:front_end/features/data/models/identity/user_model_factory.dart'
 import 'package:front_end/features/domain/entity/identity/User.dart';
 import 'package:front_end/features/domain/repositories/user_management_repository.dart';
 
-class UserManagementRepositoryimpl extends UserManagementRepository {
+class UserManagementRepositoryimpl implements UserManagementRepository {
   final UserManagementApiService _userManagementApiService;
 
   UserManagementRepositoryimpl(this._userManagementApiService);
