@@ -50,8 +50,7 @@ class BasicScaffold extends StatelessWidget {
                   // if(authstate.usertype == "teacher")
                   // if(authstate.usertype == "judge")
                   // if(authstate.usertype == "lecturer")
-                  SizedBox(width: 1120,height: 20,),
-
+                  
                   //body
                   Expanded(
                     child: SingleChildScrollView(
