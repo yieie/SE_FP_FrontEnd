@@ -32,7 +32,7 @@ import 'package:front_end/features/presentation/bloc/competition/sign_up_competi
 import 'package:front_end/features/presentation/bloc/user_management/search_user_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_bloc.dart';
-// import 'package:front_end/mock/response.dart';
+import 'package:front_end/mock/mock_response.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -51,7 +51,7 @@ Future<void> initializeDependencies() async {
   );
   
  //攔截回應測試json解析是否正確
-  // dio.interceptors.add(mockInterceptor()); 
+  dio.interceptors.add(mockInterceptor()); 
  
 
   
