@@ -18,6 +18,6 @@ abstract class AnnApiService {
 
   @GET('/ann/getAnnDetails.php')
   Future<HttpResponse< ResponseMessage<AnnouncementModel>>> getdetailannouncement({
-    @Query("aid") int ? aid
+    @Query("aId") int ? aid
   });
 }

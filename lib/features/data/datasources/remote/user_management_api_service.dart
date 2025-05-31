@@ -10,5 +10,5 @@ abstract class UserManagementApiService {
   factory UserManagementApiService(Dio dio) = _UserManagementApiService;
 
   @GET('/profile/getUserInfo.php')
-  Future<HttpResponse<ResponseMessage>> searchUserbyUID(@Query("uid") String uid);
+  Future<HttpResponse<ResponseMessage>> searchUserbyUID(@Query("uId") String uid);
 }
