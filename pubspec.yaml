@@ -55,6 +55,8 @@ dev_dependencies:
   retrofit_generator: ^8.0.3
   build_runner: ^2.4.8
   json_serializable: ^6.7.1
+  image_picker:
+  file_picker: 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -68,6 +70,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/images/sdgs/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

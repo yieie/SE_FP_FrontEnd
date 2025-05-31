@@ -86,7 +86,9 @@ Widget buildBasicNav(BuildContext context){
               backgroundColor: Color(0xFFF96D4E),
               title: '立刻報名',
               fontSize: 16,
-              onPressed: (){}
+              onPressed: (){
+                context.go('signupCompetition');
+              }
             )
           ),
         ]
