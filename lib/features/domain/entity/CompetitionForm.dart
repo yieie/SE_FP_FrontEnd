@@ -1,18 +1,33 @@
-import 'package:front_end/features/domain/entity/identity/Attendee.dart';
-import 'package:front_end/features/domain/entity/Project.dart';
-import 'package:front_end/features/domain/entity/identity/Teacher.dart';
-import 'package:front_end/features/domain/entity/Team.dart';
+import 'package:file_picker/file_picker.dart';
+
 
 class CompetitionForm {
-  final Team team;
-  final Project project;
-  final List<Attendee> attendees;
-  final Teacher teacher;
+  final String ? teamName;
+  final String ? type;
+  final String ? leader;
+  final List<({String studentID, PlatformFile idCard})> ? members;
+  final String ? teacherID;
+
+  final String ? workName;
+  final String ? abstract;
+  final String ? sdgs;
+  final PlatformFile ? introductionFile;
+  final PlatformFile ? consentFile;
+  final PlatformFile ? affidavitFile;
+  final List<String> ? url;
 
   const CompetitionForm({
-    required this.team,
-    required this.project,
-    required this.attendees,
-    required this.teacher
+    this.teamName,
+    this.type,
+    this.leader,
+    this.members,
+    this.teacherID,
+    this.workName,
+    this.abstract,
+    this.sdgs,
+    this.introductionFile,
+    this.consentFile,
+    this.affidavitFile,
+    this.url
   });
 }
