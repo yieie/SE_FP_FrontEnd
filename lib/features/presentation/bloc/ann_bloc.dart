@@ -31,6 +31,7 @@ class AnnBloc extends Bloc<AnnEvent,AnnState>{
   }
 
   void onGetDetailAnnouncement(GetDetailAnnouncement event, Emitter<AnnState> emit) async {
+    emit(AnnouncementLoading());
     final dataState = await _getDetailAnnouncementUseCase(params: event.getaid);
 
     if(dataState is DataSuccess && dataState.data != null){
