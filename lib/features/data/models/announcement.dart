@@ -24,7 +24,7 @@ class AnnouncementModel extends Announcement{
       aid: json['aId'],
       title: json['title'] ?? "",
       content: json['content'] ?? "",
-      time: json['publishDate'] ?? "",
+      time: json['time'] ?? "",
       posterUrl: json['posterUrls'] != null
         ? List<String>.from(json['posterUrls'])
         : [],
