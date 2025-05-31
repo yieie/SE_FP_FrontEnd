@@ -19,9 +19,11 @@ class ResponseMessage<T> {
   factory ResponseMessage.fromJson(Map<String, dynamic> json, T Function(Map<String, dynamic>) fromJsonT){
     return ResponseMessage<T>(
       success: json['success'] as bool, 
-      data: json['data'] is List<dynamic>
+      data: json['data'] is List
         ? (json['data'] as List).map<T>((item) => fromJsonT(item as Map<String, dynamic>)).toList()
-        : [],  // 如果 'data' 不是 List，則返回空列表,
+        : json['data'] is Map<String, dynamic>
+            ? [fromJsonT(json['data'] as Map<String, dynamic>)]
+            : [],
       errorMessage: json['error'] as String? ?? "",
       extraData: _parseExtraData(json)
     );
