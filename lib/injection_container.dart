@@ -32,6 +32,7 @@ import 'package:front_end/features/presentation/bloc/competition/sign_up_competi
 import 'package:front_end/features/presentation/bloc/user_management/search_user_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_bloc.dart';
+// import 'package:front_end/mock/response.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -48,36 +49,10 @@ Future<void> initializeDependencies() async {
       error: true,            // 是否打印錯誤信息
     ),
   );
- /*  
+  
  //攔截回應測試json解析是否正確
-  dio.interceptors.add(InterceptorsWrapper(
-    onRequest: (options, handler) {
-      print('🚀 [Mock] intercepting request: ${options.uri}');
-      if (options.uri.path.contains('getUserInfo.php')) {
-        print('🧪 Intercepting: ${options.uri}');
-        // 攔截，直接回假資料
-        return handler.resolve(Response(
-          requestOptions: options,
-          statusCode: 200,
-          data: {
-            "success": true,
-            "uId": "a1115526",
-            "name": "陳小明",
-            "email": "a1115526@gmail.com",
-            "phone": "0912345678",
-            "sexual": "男",
-            "userType": "student",
-            "studentInfo": {
-              "department": "資訊工程學系",
-              "grade": "大五"
-            },
-          },
-        ));
-      }
-      return handler.next(options);
-    },
-  )); 
-  */
+  // dio.interceptors.add(mockInterceptor()); 
+ 
 
   
   sl.registerSingleton<Dio>(dio);

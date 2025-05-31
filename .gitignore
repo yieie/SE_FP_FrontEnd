@@ -13,6 +13,7 @@
 migrate_working_dir/
 pubspec.lock
 *.g.dart
+mock/
 
 # IntelliJ related
 *.iml
