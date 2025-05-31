@@ -9,7 +9,7 @@ class AnnouncementModel extends Announcement{
     String ? uid,
     List<String> ? posterUrl,
     List<({String fileName, String fileUrl})> ? file
-  }): super(//有改
+  }): super(
     aid: aid,
     title: title,
     content: content,
