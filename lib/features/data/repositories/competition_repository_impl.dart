@@ -7,6 +7,7 @@ import 'package:front_end/cores/resources/ResponseMessage.dart';
 import 'package:front_end/cores/resources/data_state.dart';
 import 'package:front_end/features/data/datasources/remote/competition_api_service.dart';
 import 'package:front_end/features/data/models/competitionForm.dart';
+import 'package:front_end/features/data/models/team_with_project.dart';
 import 'package:front_end/features/domain/entity/CompetitionForm.dart';
 import 'package:front_end/features/domain/repositories/competition_repository.dart';
 
@@ -93,6 +94,30 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
       if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
         
         return DataSuccess(httpResponse.data);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions
+          )
+        );
+      }
+    } on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
+  
+  //要注意後端有沒有把資料包在data內，如果沒有要用Extradata解析
+  @override
+  Future<DataState<TeamWithProjectModel>> getCompetitionInfoByUID(String uid) async {
+    try{
+      final httpResponse = await _competitionApiService.getCompetitionInfoByUID(uid);
+
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        final teamwithproject = TeamWithProjectModel.fromJson(httpResponse.data.extraData!);
+        return DataSuccess(teamwithproject);
       }else {
         return DataFailed(
           DioException(

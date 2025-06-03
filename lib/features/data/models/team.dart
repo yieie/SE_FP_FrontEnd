@@ -1,24 +1,27 @@
+import 'package:front_end/features/data/models/identity/attendee.dart';
+import 'package:front_end/features/data/models/identity/teacher.dart';
 import 'package:front_end/features/domain/entity/Team.dart';
+import 'package:front_end/features/domain/entity/identity/Teacher.dart';
 
 class TeamModel extends Team{
   const TeamModel({
-    String ? teamID,
-    String ? name,
-    String ? type,
-    String ? leader,
-    String ? rank,
-    String ? teacher
+    super.teamID,
+    super.name,
+    super.type,
+    super.rank,
+    super.teacher,
+    super.members
   });
   
   //待確認API文件json欄位
   factory TeamModel.fromJson(Map<String, dynamic> json){
     return TeamModel(
-      teamID: json['tid'],
-      name: json['name'],
-      type: json['type'],
-      leader: json['leader'],
+      teamID: json['tid'], //沒有這個欄位
+      name: json['teaminfo']['teamName'],
+      type: json['teaminfo']['teamType'],
       rank: json['rank'],
-      teacher: json['uid']
+      teacher: TeacherModel.fromJson(json['advisorInfo']),
+      members: json['memberInfo'].map((json) => AttendeeModel.fromJson(json)).toList()
     );
   }
   
@@ -27,7 +30,6 @@ class TeamModel extends Team{
       'tid': teamID,
       'name': name,
       'type': type,
-      'leader' : leader,
       'rank' : rank,
       'uid' : teacher
     };
