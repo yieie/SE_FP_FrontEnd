@@ -37,7 +37,7 @@ class BasicScaffold extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width: 1120,height: 40,child: Container(color: Colors.black,),),
+                  SizedBox(width: 1120,height: 40),
                   
                   //Nav
                   if(authstate is Unauthenticated || authstate is AuthInitial)
