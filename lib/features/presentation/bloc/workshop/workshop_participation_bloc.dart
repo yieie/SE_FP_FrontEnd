@@ -36,7 +36,7 @@ class WorkshopParticipationBloc extends Bloc<WorkshopParticipationEvent,Workshop
       JoinSubmitting(uid: event.uid, wsid: event.wsid)
     );
 
-    final datastate = await _joinWorkshop(params: event.uid, wsid: event.wsid);
+    final datastate = await _joinWorkshop(uid: event.uid, wsid: event.wsid);
 
     if(datastate is DataSuccess){
       final upatedList = await _getWorkshopParticipation(params: event.uid);
