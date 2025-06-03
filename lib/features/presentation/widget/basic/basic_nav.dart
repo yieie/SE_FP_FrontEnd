@@ -10,11 +10,9 @@ Widget buildBasicNav(BuildContext context){
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: 150,
-            height: 100,
-            child: Image.asset("assets/images/weblogo.png"),
-          ),
+          IconButton(
+            onPressed: ()=>context.go('/homeWithAnn/1'), 
+            icon: Image.asset("assets/images/weblogo.png",width: 150,height: 100,)),
           Spacer(),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 17.5),
