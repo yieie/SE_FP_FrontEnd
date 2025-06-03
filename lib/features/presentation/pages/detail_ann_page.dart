@@ -80,7 +80,7 @@ class DetailAnnPage extends StatelessWidget{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Image.network(url)
+                        Image.network(url,width: 500,)
                       ],
                     ),
                   )
