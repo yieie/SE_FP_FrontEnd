@@ -5,7 +5,7 @@ InterceptorsWrapper mockInterceptor({bool enabled = false}) {
     onRequest: (options, handler) {
       print('🚀 [Mock] intercepting request: ${options.uri}');
 
-      if (options.uri.path.contains('getAnnDetails.php')) {
+      if (options.uri.path.contains('getAnnDetails.php') && enabled) {
         print('🧪 Intercepting: ${options.uri}');
 
         return handler.resolve(Response(
