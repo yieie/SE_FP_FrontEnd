@@ -21,7 +21,7 @@ class WorkshopModel extends Workshop {
 
   factory WorkshopModel.fromJson(Map<String, dynamic> json){
     return WorkshopModel(
-      wsid: json['id'],
+      wsid: json['wsId'],
       time: json['date'],
       topic: json['topic'],
       amount: json['maxAmount'],
