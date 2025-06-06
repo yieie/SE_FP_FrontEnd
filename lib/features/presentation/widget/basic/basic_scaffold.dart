@@ -4,6 +4,7 @@ import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/widget/attendee/attendee_nav.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_nav.dart';
+import 'package:front_end/features/presentation/widget/judge/judge_nav.dart';
 import 'package:front_end/features/presentation/widget/student/student_nav.dart';
 
 class BasicScaffold extends StatelessWidget {
@@ -48,7 +49,8 @@ class BasicScaffold extends StatelessWidget {
                     AttendeeNav(),
                   // if(authstate.usertype == "admin")
                   // if(authstate.usertype == "teacher")
-                  // if(authstate.usertype == "judge")
+                  if(authstate.usertype == "judge")
+                    JudgeNav(),
                   // if(authstate.usertype == "lecturer")
                   
                   //body
