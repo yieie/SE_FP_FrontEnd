@@ -1,6 +1,6 @@
 
 
-import 'package:front_end/features/domain/entity/Student.dart';
+import 'package:front_end/features/domain/entity/identity/Student.dart';
 
 class SignupReqParams extends Student{
   final String? password;
@@ -33,7 +33,7 @@ class SignupReqParams extends Student{
         email: email ?? this.email,
         sexual: sexual ?? this.sexual,
         phone: phone ?? this.phone,
-        department: department ?? this.department, // 修改這裡
+        department: department ?? this.department,
         grade: grade ?? this.grade,
     );
   }

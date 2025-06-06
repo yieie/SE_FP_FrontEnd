@@ -1,21 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/data/models/announcement.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/ann_event.dart';
 import 'package:front_end/features/presentation/bloc/ann_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
 import 'package:front_end/injection_container.dart';
-
-
-
-import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:go_router/go_router.dart';
+
 
 class HomeWithAnnPage extends StatelessWidget{
   final int page;
-  HomeWithAnnPage({super.key,this.page = 1});
+  HomeWithAnnPage({super.key,required this.page});
+
 
   //測試假資料
   final List<AnnouncementModel> test2 = [
@@ -35,6 +34,7 @@ class HomeWithAnnPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AnnBloc>(
+      key: ValueKey(page), 
       create: (context) => sl()..add(Get10Announcement(page)),
       child: BasicScaffold(
       child: _buildBody(context)
@@ -50,16 +50,13 @@ class HomeWithAnnPage extends StatelessWidget{
         return const Center(child: CupertinoActivityIndicator());
       }
       if (state is AnnouncementError) {
-        return const Center(child: Icon(Icons.refresh));
+        return Text(handleDioError(state.error!),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
       }
       if (state is AnnouncementDone) {
-        final test = state.announcements ?? [];
-        final total = test.length;
-        final totalPages = (total / 10).ceil();
-        final currentPage = page;
-        final start = (currentPage - 1) * 10;
-        final end = (start + 10 < total) ? start + 10 : total;
-        final currentList = test.sublist(start, end);
+        
+        final currentList = state.announcementList?.announcements ?? [];
+        final totalPages = state.announcementList?.totalPages ?? 0;
+        final currentPage = state.announcementList?.page ?? 0;
 
         int? selectedIndex;
 
@@ -76,7 +73,7 @@ class HomeWithAnnPage extends StatelessWidget{
                     "最新公告",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const Divider(thickness: 1),
+                  const Divider(thickness: 2, color: Colors.black,),
                   Expanded(
                     child: ListView.builder(
                       itemCount: currentList.length,
@@ -125,12 +122,7 @@ class HomeWithAnnPage extends StatelessWidget{
                         icon: const Icon(Icons.chevron_left),
                         onPressed: currentPage > 1
                             ? () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeWithAnnPage(page: currentPage - 1),
-                                  ),
-                                );
+                                context.pushReplacement('/homeWithAnn/${currentPage - 1}');
                               }
                             : null,
                       ),
@@ -139,12 +131,7 @@ class HomeWithAnnPage extends StatelessWidget{
                         icon: const Icon(Icons.chevron_right),
                         onPressed: currentPage < totalPages
                             ? () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeWithAnnPage(page: currentPage + 1),
-                                  ),
-                                );
+                                context.pushReplacement('/homeWithAnn/${currentPage + 1}');
                               }
                             : null,
                       ),

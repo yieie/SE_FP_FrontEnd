@@ -8,6 +8,7 @@ class BasicTextfield extends StatelessWidget{
   final String ? errorText;
   final Color ? errorBorderColor;
   final ValueChanged<String>? onChanged;
+  final int? maxLines;
   
 
   const BasicTextfield({
@@ -17,13 +18,15 @@ class BasicTextfield extends StatelessWidget{
     this.borderColor,
     this.errorText,
     this.errorBorderColor,
-    this.onChanged
+    this.onChanged,
+    this.maxLines
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
         controller: controller,
+        maxLines: maxLines ?? 1,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

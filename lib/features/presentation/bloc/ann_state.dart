@@ -1,16 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:front_end/features/domain/entity/Announcement.dart';
+import 'package:front_end/features/domain/entity/AnnouncementList.dart';
 
 abstract class AnnState extends Equatable{
-  final List<Announcement> ? announcements;
+  final AnnouncementList ? announcementList;
   final Announcement ? announcementDetail;
   final DioException ? error;
 
-  const AnnState({this.announcements,this.announcementDetail ,this.error});
+  const AnnState({this.announcementList,this.announcementDetail ,this.error});
 
   @override
-  List<Object> get props => [announcements!, error!];
+  List<Object?> get props => [announcementList,announcementDetail, error];
 }
 
 class AnnouncementLoading extends AnnState{
@@ -19,13 +20,19 @@ class AnnouncementLoading extends AnnState{
 
 class AnnouncementDone extends AnnState {
   final int currentPage;
-  const AnnouncementDone(List<Announcement> announcement, {required this.currentPage}) : super(announcements: announcement);
+  const AnnouncementDone(AnnouncementList announcementList, {required this.currentPage}) : super(announcementList: announcementList);
+
+  @override
+  List<Object?> get props => [announcementList, currentPage];
 }
 
 
 class AnnouncementDetailDone extends AnnState {
   final int aid;
   const AnnouncementDetailDone(Announcement announcement, {required this.aid}) : super(announcementDetail: announcement);
+
+  @override
+  List<Object?> get props => [announcementDetail, aid];
 }
 
 class AnnouncementError extends AnnState{

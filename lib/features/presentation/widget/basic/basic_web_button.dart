@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BasicWebButton extends StatelessWidget{
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String title;
   final double ? height;
   final double ? width;

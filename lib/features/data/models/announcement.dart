@@ -6,10 +6,10 @@ class AnnouncementModel extends Announcement{
     String ? title,
     String ? content,
     String ? time,
-    String ?uid,
+    String ? uid,
     List<String> ? posterUrl,
     List<({String fileName, String fileUrl})> ? file
-  }): super(//有改
+  }): super(
     aid: aid,
     title: title,
     content: content,
@@ -19,22 +19,24 @@ class AnnouncementModel extends Announcement{
     file: file
   );
 
-  factory AnnouncementModel.fromJson(Map < String, dynamic> map){
+  factory AnnouncementModel.fromJson(Map<String, dynamic> json){
     return AnnouncementModel(
-      //aid:  map['aid'] ?? "",
-      aid: map['aid'] != null ? int.tryParse(map['aid'].toString()) : null,//有改
+      aid: json['aId'],
+      title: json['title'] ?? "",
+      content: json['content'] ?? "",
+      time: json['time'] ?? "",
+      posterUrl: json['posterUrls'] != null
+        ? List<String>.from(json['posterUrls'])
+        : [],
 
-      title: map['title'] ?? "",
-      content: map['content'] ?? "",
-      time: map['time'] ?? "",
-      uid: map['uid'] ?? "",
-
-      //posterUrl: map['posterUrls'] ?? ""
-      posterUrl: map['posterUrls'] != null
-        ? List<String>.from(map['posterUrls'])
-        : []//有改
-
-      //file: map['']
+      file: json['files'] != null 
+        ? (json['files'] as List).map<({String fileName, String fileUrl})>((item){
+          return (
+            fileName: item['name'] as String? ?? "",
+            fileUrl: item['url'] as String? ?? ""
+          );
+        }).toList()
+        :[]
     );
 
   }

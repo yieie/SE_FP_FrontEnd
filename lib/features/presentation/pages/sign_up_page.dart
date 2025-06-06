@@ -3,14 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/constants/constants.dart';
+import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/data/models/sign_up_req_param.dart';
-import 'package:front_end/features/presentation/bloc/sign_up_event.dart';
+import 'package:front_end/features/presentation/bloc/auth/sign_up_event.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_dropdownButtonFormField.dart';
 import 'package:front_end/injection_container.dart';
-import 'package:front_end/features/presentation/bloc/sign_up_bloc.dart';
-import 'package:front_end/features/presentation/bloc/sign_up_state.dart';
+import 'package:front_end/features/presentation/bloc/auth/sign_up_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/sign_up_state.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -38,6 +39,7 @@ class _SignUpPageState extends State<SignUpPage>{
     phoneCtrl.dispose();
     passwordCtrl.dispose();
     passwordCheckCtrl.dispose();
+    super.dispose();
   }
 
   @override
@@ -58,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage>{
           return const Center(child: CupertinoActivityIndicator());
         }
         if(state is SignUpFailure){
-          return const Center(child: Icon(Icons.refresh));
+          return Text(handleDioError(state.error!),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
         }
         if(state is SignUpInitial){
           return _buildSignUpForm(context);

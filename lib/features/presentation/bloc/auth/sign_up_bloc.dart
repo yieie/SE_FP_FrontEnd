@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/features/data/models/sign_up_req_param.dart';
 import 'package:front_end/features/domain/usecases/sign_up.dart';
-import 'package:front_end/features/presentation/bloc/sign_up_event.dart';
-import 'package:front_end/features/presentation/bloc/sign_up_state.dart';
+import 'package:front_end/features/presentation/bloc/auth/sign_up_event.dart';
+import 'package:front_end/features/presentation/bloc/auth/sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState>{
   final SignUpUseCase _signUpUseCase;
