@@ -1,6 +1,7 @@
 import 'package:front_end/features/presentation/pages/attendee/sign_up_competition_page.dart';
 import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
+import 'package:front_end/features/presentation/pages/judge/project_view_list_page.dart';
 import 'package:front_end/features/presentation/pages/sign_in_page.dart';
 import 'package:front_end/features/presentation/pages/sign_up_page.dart';
 import 'package:front_end/features/presentation/pages/workshop_page.dart';
@@ -61,6 +62,16 @@ final GoRouter webRouter = GoRouter(
       name: 'signupCompetition',
       builder: (context, state)=> SignUpCompetitionPage()
     ),
+    GoRoute(
+      path: '/projectviewlist/:page',
+      name: 'projectviewlist',
+      builder: (context, state){
+        final pageStr = state.pathParameters['page'];
 
+        final page = int.tryParse(pageStr ?? '') ?? 1;
+        print(page);
+        return ProjectViewListPage(page: page);
+      } 
+    ),
   ]
 );

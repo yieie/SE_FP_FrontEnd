@@ -48,7 +48,11 @@ class _SignInPageState extends State<SignInPage>{
       listener: (context, state){
         if(state is SignInSuccess){
             context.read<AuthBloc>().add(LoggedIn(usertype: state.responseMessage!.extraData?['userType'], uid: accountCtrl.text));
-            context.go('/homeWithAnn/1');
+            if(state.responseMessage!.extraData?['userType'] == "judge"){
+              context.go('/projectviewlist/1');
+            }else{
+              context.go('/homeWithAnn/1');
+            }
         }
       },
       child:BlocBuilder<SignInBloc,SignInState>(
