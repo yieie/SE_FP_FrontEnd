@@ -10,8 +10,8 @@ import 'package:front_end/features/presentation/pages/past_project_list_page.dar
 
 import 'package:front_end/features/presentation/pages/teacher/teacher_project_view_list.dart';
 
+import 'package:front_end/features/presentation/pages/admin/project_verify_list_page.dart';
 import 'package:front_end/injection_container.dart';
-
 
 
 final authBloc = sl<AuthBloc>();
@@ -43,7 +43,8 @@ Future<void> main() async{
        //home: SignUpPage(),
       //home: HomeWithAnnPage(),
 
-       home: TeacherViewProjectPage(),
+       //home: TeacherViewProjectPage(),
+       home: ProjectVerifyListPage(),
      );
   }
  }
