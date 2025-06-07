@@ -19,8 +19,8 @@ class ScoreRepositoryImpl implements ScoreRepository {
     try{
       if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
         TeamWithProjectListModel teamWithProjectListModel = TeamWithProjectListModel(
-          page: httpResponse.data.extraData?['page'],
-          totalPages: httpResponse.data.extraData?['totalPages'],
+          page: httpResponse.data.extraData?['page'] ,
+          totalPages: httpResponse.data.extraData?['totalPage'],
           teamwithprojectlist: httpResponse.data.data!
           );
         return DataSuccess(teamWithProjectListModel);
