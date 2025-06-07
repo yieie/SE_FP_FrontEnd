@@ -23,7 +23,7 @@ String handleDioError(DioException e) {
           return '伺服器發生錯誤（$statusCode），請稍後再試。';
         }
       }
-      return '伺服器回應錯誤，狀態碼未知。';
+      return '伺服器回應錯誤，${e.message}';
 
     case DioExceptionType.cancel:
       return '請求已被取消。';
