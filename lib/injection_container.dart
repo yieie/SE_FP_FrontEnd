@@ -3,23 +3,28 @@ import 'package:dio/dio.dart';
 import 'package:front_end/features/data/datasources/remote/ann_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/auth_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/competition_api_service.dart';
+import 'package:front_end/features/data/datasources/remote/score_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/user_management_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/workshop_api_service.dart';
 import 'package:front_end/features/data/repositories/ann_repository_impl.dart';
 import 'package:front_end/features/data/repositories/auth_repository_impl.dart';
 import 'package:front_end/features/data/repositories/competition_repository_impl.dart';
+import 'package:front_end/features/data/repositories/score_repository_impl.dart';
 import 'package:front_end/features/data/repositories/user_management_repository_impl.dart';
 import 'package:front_end/features/data/repositories/workshop_repository_impl.dart';
 import 'package:front_end/features/domain/repositories/ann_repository.dart';
 import 'package:front_end/features/domain/repositories/auth_repository.dart';
 import 'package:front_end/features/domain/repositories/competition_repository.dart';
+import 'package:front_end/features/domain/repositories/score_repository.dart';
 import 'package:front_end/features/domain/repositories/user_management_repository.dart';
 import 'package:front_end/features/domain/repositories/workshop_repository.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_detail_announcement.dart';
+import 'package:front_end/features/domain/usecases/get_score_list.dart';
 import 'package:front_end/features/domain/usecases/get_workshop.dart';
 import 'package:front_end/features/domain/usecases/get_workshop_participation.dart';
 import 'package:front_end/features/domain/usecases/join_workshop.dart';
+import 'package:front_end/features/domain/usecases/scoring_team.dart';
 import 'package:front_end/features/domain/usecases/search_user_by_uid.dart';
 import 'package:front_end/features/domain/usecases/sign_in.dart';
 import 'package:front_end/features/domain/usecases/sign_up.dart';
@@ -29,6 +34,8 @@ import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_up_bloc.dart';
 import 'package:front_end/features/presentation/bloc/competition/sign_up_competition_bloc.dart';
+import 'package:front_end/features/presentation/bloc/score/score_list_bloc.dart';
+import 'package:front_end/features/presentation/bloc/score/score_list_event.dart';
 import 'package:front_end/features/presentation/bloc/user_management/search_user_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_bloc.dart';
@@ -62,6 +69,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<WorkshopApiService>(WorkshopApiService(sl()));
   sl.registerSingleton<UserManagementApiService>(UserManagementApiService(sl()));
   sl.registerSingleton<CompetitionApiService>(CompetitionApiService(sl()));
+  sl.registerSingleton<ScoreApiService>(ScoreApiService(sl()));
 
   sl.registerSingleton<AnnRepository>(
     AnnRepositoryImpl(sl())
@@ -77,6 +85,9 @@ Future<void> initializeDependencies() async {
   );
   sl.registerSingleton<CompetitionRepository>(
     CompetitionRepositoryImpl(sl())
+  );
+  sl.registerSingleton<ScoreRepository>(
+    ScoreRepositoryImpl(sl())
   );
 
   sl.registerSingleton<Get10AnnouncementUseCase>(
@@ -106,6 +117,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SignUpCompetitionUseCase>(
     SignUpCompetitionUseCase(sl())
   );
+  sl.registerSingleton<GetScoreListUseCase>(
+    GetScoreListUseCase(sl())
+  );
+  sl.registerSingleton<ScoringTeamUseCase>(
+    ScoringTeamUseCase(sl())
+  );
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -130,5 +147,8 @@ Future<void> initializeDependencies() async {
   );
   sl.registerFactory<SignUpCompetitionBloc>(
     () => SignUpCompetitionBloc(sl(),sl())
+  );
+  sl.registerFactory<ScoreListBloc>(
+    () => ScoreListBloc(sl(),sl())
   );
 }
