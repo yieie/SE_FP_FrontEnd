@@ -24,7 +24,8 @@ class WorkshopRepositoryImpl implements WorkshopRepository{
             error: httpResponse.response.statusCode,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }
@@ -46,7 +47,8 @@ class WorkshopRepositoryImpl implements WorkshopRepository{
             error: httpResponse.response.statusCode,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }
@@ -68,7 +70,8 @@ class WorkshopRepositoryImpl implements WorkshopRepository{
             error: httpResponse.response.statusCode,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }

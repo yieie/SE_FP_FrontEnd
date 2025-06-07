@@ -28,7 +28,8 @@ class UserManagementRepositoryimpl implements UserManagementRepository {
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }

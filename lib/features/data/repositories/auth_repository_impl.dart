@@ -40,7 +40,8 @@ class AuthRepositoryImpl implements AuthRepository{
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }
@@ -64,7 +65,8 @@ class AuthRepositoryImpl implements AuthRepository{
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }
