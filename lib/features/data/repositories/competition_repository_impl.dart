@@ -30,7 +30,8 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }
@@ -56,7 +57,7 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
           affidavit.bytes!,
           filename: affidavit.name,
         ),
-        'wordId': workid,
+        'workId': workid,
       });
       final httpResponse = await _competitionApiService.uploadFiles(formData);
 
@@ -69,7 +70,8 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }
@@ -100,7 +102,8 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }
@@ -124,7 +127,8 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             type: DioExceptionType.badResponse,
-            requestOptions: httpResponse.response.requestOptions
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
           )
         );
       }
