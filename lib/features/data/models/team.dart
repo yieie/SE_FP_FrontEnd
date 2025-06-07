@@ -13,15 +13,14 @@ class TeamModel extends Team{
     super.members
   });
   
-  //待確認API文件json欄位
   factory TeamModel.fromJson(Map<String, dynamic> json){
     return TeamModel(
-      teamID: json['tid'], //沒有這個欄位
-      name: json['teaminfo']['teamName'],
-      type: json['teaminfo']['teamType'],
+      teamID: json['teamId'] ?? '', 
+      name: json['teaminfo']?['teamName'] ?? json['teamName'] ?? '',
+      type: json['teaminfo']?['teamType'] ?? json['teamType'] ?? '',
       rank: json['rank'],
-      teacher: TeacherModel.fromJson(json['advisorInfo']),
-      members: json['memberInfo'].map((json) => AttendeeModel.fromJson(json)).toList()
+      teacher: json['advisorInfo'] != null ? TeacherModel.fromJson(json['advisorInfo']) : null,
+      members:  json['memberInfo']?.map((json) => AttendeeModel.fromJson(json)).toList() 
     );
   }
   
