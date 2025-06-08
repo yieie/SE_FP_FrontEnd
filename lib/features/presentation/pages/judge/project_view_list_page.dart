@@ -101,8 +101,8 @@ class ProjectViewListPage extends StatelessWidget{
                             onExit: (_) => setState(() => selectedIndex = null),
                             child: GestureDetector(
                               onTap: () {
-                                context.go('/projectViewDetail/${teamlist[index].team.teamID}');
-                                print("你選的是：${teamlist[index].team.name}和${teamlist[index].team.teamID}");//測試用
+                                context.go('/projectViewDetail/${teamlist[index].team.teamID}/${teamlist[index].project.workID}');
+                                print("你選的是：${teamlist[index].project.workID}和${teamlist[index].team.teamID}");//測試用
                               },
               
               

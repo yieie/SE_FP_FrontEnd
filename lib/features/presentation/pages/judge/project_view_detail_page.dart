@@ -18,7 +18,8 @@ import 'package:web/web.dart' as web;
 
 class ProjectViewDetailPage extends StatefulWidget{
   final String teamid;
-  const ProjectViewDetailPage({super.key, required this.teamid});
+  final String workid;
+  const ProjectViewDetailPage({super.key, required this.teamid,required this.workid});
 
   @override
   _ProjectViewDetailPageState createState() => _ProjectViewDetailPageState();
@@ -238,10 +239,8 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                         height: 40,
                         child: BasicWebButton(
                           onPressed: () {
-                            //後端沒傳workID過來 先用member欄位傳
                             if(authState is Authenticated){
-                              final workid = state.teamWithProject.team.members![0].workID!;
-                              context.read<ScoreTeamBloc>().add(SubmitScoreEvent(score: totalScore, workid: workid, judgeid: authState.uid ));
+                              context.read<ScoreTeamBloc>().add(SubmitScoreEvent(score: totalScore, workid: widget.workid, judgeid: authState.uid ));
                             }
                           },
                           title: '送出評分',
