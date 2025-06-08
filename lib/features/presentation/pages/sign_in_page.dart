@@ -59,7 +59,11 @@ class _SignInPageState extends State<SignInPage>{
             if(state is Authenticated){
               if(state.usertype == 'judge'){
                 context.go('/projectViewList/1');
-              }else{
+              }
+              else if(state.usertype == 'admin'){
+                context.go('/overview');
+              }
+              else{
                 context.go('/homeWithAnn/1');
               }
             }
