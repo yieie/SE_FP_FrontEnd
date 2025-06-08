@@ -48,6 +48,7 @@ Future<void> main() async{
       //home: HomeWithAnnPage(),
 
        //home: TeacherViewProjectPage(),
+       home: TeacherProjectViewDetailPage(),
 
        //home: ProjectVerifyListPage(),
 
@@ -55,9 +56,9 @@ Future<void> main() async{
 
        //home:  TeamInfoPage(),
 
-       //home: TeacherProjectViewDetailPage(),
+      
 
-       home: PastProjectDetailPage(),
+       //home: PastProjectDetailPage(),
      );
   }
  }
