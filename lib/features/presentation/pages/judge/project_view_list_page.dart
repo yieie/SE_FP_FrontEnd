@@ -39,7 +39,7 @@ class ProjectViewListPage extends StatelessWidget{
         if(state is ScoreListError){
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(handleDioError(state.error!)),
+              content: Text(handleDioError(state.error)),
             ),
           );
         }
@@ -101,7 +101,7 @@ class ProjectViewListPage extends StatelessWidget{
                             onExit: (_) => setState(() => selectedIndex = null),
                             child: GestureDetector(
                               onTap: () {
-                                // context.go('/detailAnn/${teamlist[index] ?? 0}');
+                                context.go('/projectViewDetail/${teamlist[index].team.teamID}');
                                 print("你選的是：${teamlist[index].team.name}和${teamlist[index].team.teamID}");//測試用
                               },
               

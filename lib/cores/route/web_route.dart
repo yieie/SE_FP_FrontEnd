@@ -7,6 +7,7 @@ import 'package:front_end/features/presentation/pages/admin/announcement_manage_
 import 'package:front_end/features/presentation/pages/attendee/sign_up_competition_page.dart';
 import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
+import 'package:front_end/features/presentation/pages/judge/project_view_detail_page.dart';
 import 'package:front_end/features/presentation/pages/judge/project_view_list_page.dart';
 import 'package:front_end/features/presentation/pages/profile_manage_page.dart';
 import 'package:front_end/features/presentation/pages/sign_in_page.dart';
@@ -85,6 +86,26 @@ final GoRouter webRouter = GoRouter(
         final page = int.tryParse(pageStr ?? '') ?? 1;
         print(page);
         return ProjectViewListPage(page: page);
+      } ,
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'judge') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
+    ),
+    GoRoute(
+      path: '/projectViewDetail/:teamid',
+      name: 'projectViewDetail',
+      builder: (context, state){
+        final teamid = state.pathParameters['teamid'];
+        if(teamid != null){
+          print(teamid);
+          return ProjectViewDetailPage(teamid: teamid);
+        }else{
+          return ProjectViewListPage(page: 1); 
+        }
       } ,
       redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;
