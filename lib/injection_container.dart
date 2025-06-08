@@ -1,17 +1,20 @@
 
 import 'package:dio/dio.dart';
+import 'package:front_end/features/data/datasources/remote/admin_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/ann_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/auth_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/competition_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/score_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/user_management_api_service.dart';
 import 'package:front_end/features/data/datasources/remote/workshop_api_service.dart';
+import 'package:front_end/features/data/repositories/admin_repository_impl.dart';
 import 'package:front_end/features/data/repositories/ann_repository_impl.dart';
 import 'package:front_end/features/data/repositories/auth_repository_impl.dart';
 import 'package:front_end/features/data/repositories/competition_repository_impl.dart';
 import 'package:front_end/features/data/repositories/score_repository_impl.dart';
 import 'package:front_end/features/data/repositories/user_management_repository_impl.dart';
 import 'package:front_end/features/data/repositories/workshop_repository_impl.dart';
+import 'package:front_end/features/domain/repositories/admin_repository.dart';
 import 'package:front_end/features/domain/repositories/ann_repository.dart';
 import 'package:front_end/features/domain/repositories/auth_repository.dart';
 import 'package:front_end/features/domain/repositories/competition_repository.dart';
@@ -20,6 +23,7 @@ import 'package:front_end/features/domain/repositories/user_management_repositor
 import 'package:front_end/features/domain/repositories/workshop_repository.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_detail_announcement.dart';
+import 'package:front_end/features/domain/usecases/get_overview.dart';
 import 'package:front_end/features/domain/usecases/get_score_list.dart';
 import 'package:front_end/features/domain/usecases/get_workshop.dart';
 import 'package:front_end/features/domain/usecases/get_workshop_participation.dart';
@@ -29,6 +33,7 @@ import 'package:front_end/features/domain/usecases/search_user_by_uid.dart';
 import 'package:front_end/features/domain/usecases/sign_in.dart';
 import 'package:front_end/features/domain/usecases/sign_up.dart';
 import 'package:front_end/features/domain/usecases/sign_up_competition.dart';
+import 'package:front_end/features/presentation/bloc/admin/overview_bloc.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_bloc.dart';
@@ -70,6 +75,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<UserManagementApiService>(UserManagementApiService(sl()));
   sl.registerSingleton<CompetitionApiService>(CompetitionApiService(sl()));
   sl.registerSingleton<ScoreApiService>(ScoreApiService(sl()));
+  sl.registerSingleton<AdminApiService>(AdminApiService(sl()));
 
   sl.registerSingleton<AnnRepository>(
     AnnRepositoryImpl(sl())
@@ -88,6 +94,9 @@ Future<void> initializeDependencies() async {
   );
   sl.registerSingleton<ScoreRepository>(
     ScoreRepositoryImpl(sl())
+  );
+  sl.registerSingleton<AdminRepository>(
+    AdminRepositoryImpl(sl())
   );
 
   sl.registerSingleton<Get10AnnouncementUseCase>(
@@ -123,6 +132,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<ScoringTeamUseCase>(
     ScoringTeamUseCase(sl())
   );
+  sl.registerSingleton<GetOverviewUseCase>(
+    GetOverviewUseCase(sl())
+  );
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -150,5 +162,8 @@ Future<void> initializeDependencies() async {
   );
   sl.registerFactory<ScoreListBloc>(
     () => ScoreListBloc(sl(),sl())
+  );
+  sl.registerFactory<OverviewBloc>(
+    () => OverviewBloc(sl())
   );
 }
