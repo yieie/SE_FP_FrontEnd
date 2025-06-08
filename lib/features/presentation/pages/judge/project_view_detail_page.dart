@@ -25,6 +25,11 @@ class ProjectViewDetailPage extends StatefulWidget{
 }
 
 class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
+  double score1=-1;
+  double score2=-1;
+  double score3=-1;
+  double score4=-1;
+  double totalScore=-1;
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
@@ -35,7 +40,7 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
     }
   }
 
-  Future<Map<String, dynamic>?> _showInputDialog(BuildContext context) async {
+  Future<Map<String, dynamic>?> _showInputDialog(BuildContext context,String teamType) async {
     final TextEditingController controller1 = TextEditingController();
     final TextEditingController controller2 = TextEditingController();
     final TextEditingController controller3 = TextEditingController();
@@ -52,29 +57,33 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('創新與特色：35%'),
+                    Text(teamType == '創意發想組' ? '創新與特色：35%' : '產品及服務內容創新性：35%',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                     TextField(
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(labelText: '請輸入數字'),
                       controller: controller1,
                     ),
-                    Text('實用價值與技術、服務獨特性：35%'),
+                    SizedBox(height: 10,),
+                    Text(teamType == '創意發想組'?'實用價值與技術、服務獨特性：35%':'市場可行性：35%',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                     TextField(
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(labelText: '請輸入數字'),
                       controller: controller2,
                     ),
-                    Text('創意實作可行性：25%'),
+                    SizedBox(height: 10,),
+                    Text(teamType == '創意發想組'?'創意實作可行性：25%':'未來發展性：25%',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                     TextField(
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(labelText: '請輸入數字'),
                       controller: controller3,
                     ),
-                    Text('其他：5%'),
+                    SizedBox(height: 10,),
+                    Text('其他：5%',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                     TextField(
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       keyboardType: TextInputType.number,
@@ -99,19 +108,32 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                 ),
                 TextButton(
                   onPressed: () {
-                    if ([controller1, controller2, controller3, controller4]
-                        .any((c) => c.text.trim().isEmpty)) {
+                    final scores = [
+                      int.tryParse(controller1.text),
+                      int.tryParse(controller2.text),
+                      int.tryParse(controller3.text),
+                      int.tryParse(controller4.text),
+                    ];
+
+                    if (scores.any((s) => s == null)) {
                       setState(() {
-                        errorText = '所有欄位都要填寫';
+                        errorText = '所有欄位都要填寫且必須是數字';
+                      });
+                      return;
+                    }
+
+                    if (scores.any((s) => s! < 0 || s > 100)) {
+                      setState(() {
+                        errorText = '每個分數必須在 0 到 100 之間';
                       });
                       return;
                     }
 
                     Navigator.pop(dialogContext, {
-                      'score1': int.parse(controller1.text),
-                      'score2': int.parse(controller2.text),
-                      'score3': int.parse(controller3.text),
-                      'score4': int.parse(controller4.text),
+                      'score1': scores[0],
+                      'score2': scores[1],
+                      'score3': scores[2],
+                      'score4': scores[3],
                     });
                   },
                   child: Text('確認'),
@@ -141,7 +163,8 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
     );
   }
 
-  Widget _buildBody(context){
+  Widget _buildBody(BuildContext context){
+    final authState = context.read<AuthBloc>().state;
     return BlocListener<ScoreTeamBloc, ScoreTeamState>(
       listener: (context, state){
          if(state is ScoreFailure){
@@ -164,36 +187,93 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
               content: Text('評分成功，將重導至評分列表'),
             ),
           );
-          context.go('projectViewList/1');
+          context.go('/projectViewList/1');
         }
       },
       child: BlocBuilder<ScoreTeamBloc, ScoreTeamState>(
         builder: (context, state){
           if(state is ScoreLoaed){
             final ScrollController _scrollController = ScrollController();
+            final teamType = state.teamWithProject.team.type;
             final memberList = state.teamWithProject.team.members!.map((e) => '${e.department} ${e.name}').join('\t');
-            final yturl = state.teamWithProject.project.url!.firstWhere(
+            final String? yturl = state.teamWithProject.project.url!.firstWhere(
                           (url) => url.contains('youtube.com') || url.contains('youtu.be'),
                           orElse: () => '',
                         );
-            final githuburl = state.teamWithProject.project.url!.firstWhere(
+            final String? githuburl = state.teamWithProject.project.url!.firstWhere(
                             (url) => url.contains('github.com'),
                             orElse: () => '',);
             final List<int> sdgs = state.teamWithProject.project.sdgs!.split(',').map((e) => int.parse(e.trim())).toList();
+            
             return SizedBox(
               width: 1120,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 60,
-                    height: 40,
-                    child: BasicWebButton(
-                      onPressed: () async {
-                        final result = await _showInputDialog(context);
-                      },
-                      title: '評分',
-                      backgroundColor: Color(0xFFF96D4E),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if(score1 != -1 && score2 != -1 && score3 != -1 && score4 != -1)...[
+                        Container(
+                          margin: EdgeInsets.all(5),
+                          child: Text(teamType == '創意發想組' ? 
+                          '創新與特色：$score1 / 35%\t\t'
+                          '實用價值與技術、服務獨特性：$score2 / 35%' 
+                          '\n創意實作可行性：$score3 / 25%\t\t'
+                          '其他：$score4 / 5%'  
+                          :
+                          '產品及服務內容創新性：$score1 / 35%\n'
+                          '市場可行性：$score2 / 35%' 
+                          '\n未來發展性：$score3 / 25%\t\t'
+                          '其他：$score4 / 5%'
+                          ,style: TextStyle(fontSize: 16)),
+                        ),
+                        SizedBox(width: 10,),
+                        Container(
+                          margin: EdgeInsets.all(5),
+                          child: Text('總分：$totalScore',style: TextStyle(fontSize: 20))
+                        ),
+                        SizedBox(
+                        width: 150,
+                        height: 40,
+                        child: BasicWebButton(
+                          onPressed: () {
+                            //後端沒傳workID過來 先用member欄位傳
+                            if(authState is Authenticated){
+                              final workid = state.teamWithProject.team.members![0].workID!;
+                              context.read<ScoreTeamBloc>().add(SubmitScoreEvent(score: totalScore, workid: workid, judgeid: authState.uid ));
+                            }
+                          },
+                          title: '送出評分',
+                          fontSize: 16,
+                        ),
+                      ),
+                      ],
+                      SizedBox(
+                        width: 150,
+                        height: 40,
+                        child: BasicWebButton(
+                          onPressed: () async {
+                            final result = await _showInputDialog(context,teamType!);
+                            if (result != null) {
+                              print("使用者輸入了：$result");
+                              setState(() {
+                                score1 = double.parse((result['score1'] * 0.35).toStringAsFixed(2));
+                                score2 = double.parse((result['score2'] * 0.35).toStringAsFixed(2));
+                                score3 = double.parse((result['score3'] * 0.25).toStringAsFixed(2));
+                                score4 = double.parse((result['score4'] * 0.05).toStringAsFixed(2));
+                                totalScore = score1+score2+score3+score4;
+                              });
+                            }else{
+                              print('使用者沒有輸入分數');
+                            }
+                          },
+                          title: totalScore == -1 ? '評分' : '再次評分',
+                          backgroundColor: Color(0xFFF96D4E),
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
                   Container(
                     margin: EdgeInsets.all(5),
@@ -226,8 +306,8 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                       children: [
                         Text('Youtube影片'),
                         TextButton(
-                          onPressed: () => _launchURL(yturl),
-                          child: Text(yturl),
+                          onPressed: () => yturl != null ? _launchURL(yturl) : null,
+                          child: Text(yturl ?? '無YT'),
                         ),
                       ],
                     )
@@ -239,8 +319,8 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                       children: [
                         Text('GitHub連結'),
                         TextButton(
-                          onPressed: () => _launchURL(githuburl),
-                          child: Text(githuburl),
+                          onPressed: () => githuburl != null ? _launchURL(githuburl) : null,
+                          child: Text(githuburl ?? '無github'),
                         ),
                       ],
                     )
@@ -285,7 +365,7 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                       onPressed: () {
                         web.window.open(state.teamWithProject.project.introductionFile!, '_blank');
                       },
-                      child: Text('${state.teamWithProject.project.workID}作品說明書'),
+                      child: Text('${widget.teamid}作品說明書'),
                     ),
                   ),
                   Container(
@@ -294,7 +374,7 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                       onPressed: () {
                         web.window.open(state.teamWithProject.project.affidavitFile!, '_blank');
                       },
-                      child: Text('${state.teamWithProject.project.workID}提案切結書'),
+                      child: Text('${widget.teamid}提案切結書'),
                     ),
                   ),
                   Container(
@@ -303,7 +383,7 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                       onPressed: () {
                         web.window.open(state.teamWithProject.project.consentFile!, '_blank');
                       },
-                      child: Text('${state.teamWithProject.project.workID}個資同意書'),
+                      child: Text('${widget.teamid}個資同意書'),
                     ),
                   ),
                 ],

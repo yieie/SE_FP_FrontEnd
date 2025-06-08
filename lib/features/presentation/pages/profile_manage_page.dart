@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:front_end/cores/constants/constants.dart';
 import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/domain/entity/identity/Judge.dart';
 import 'package:front_end/features/domain/entity/identity/Lecturer.dart';
@@ -11,6 +12,7 @@ import 'package:front_end/features/presentation/bloc/user_management/search_user
 import 'package:front_end/features/presentation/bloc/user_management/search_user_event.dart';
 import 'package:front_end/features/presentation/bloc/user_management/search_user_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
+import 'package:front_end/features/presentation/widget/basic/basic_web_dropdownButtonFormField.dart';
 import 'package:front_end/injection_container.dart';
 
 class ProfileManagePage extends StatefulWidget {
@@ -22,6 +24,9 @@ class ProfileManagePage extends StatefulWidget {
 }
 
 class _ProfileManagePageState extends State<ProfileManagePage>{
+  final TextEditingController _nameCtrl = TextEditingController();
+  final String? _sexualCtrl='';
+  final TextEditingController _phoneCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final authState = context.read<AuthBloc>().state;
@@ -280,16 +285,59 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
               child: Text('系所',style: TextStyle(fontWeight: FontWeight.bold),),
             ),
             Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.withAlpha(30),
-                  border: InputBorder.none, 
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                ),
-                readOnly: true,
-                controller: TextEditingController(text:student.department)
-              ),
+              child: BasicWebDropdownbuttonFormField(
+                items: [
+                  const DropdownMenuItem<String>(
+                    value: null,
+                    enabled: false,
+                    child: Text('人文社會科學院', style: TextStyle(fontWeight: FontWeight.bold))
+                  ),
+                  ...HumanitiesAndSocialSciences.map((department) => DropdownMenuItem<String>(
+                    value: department,
+                    child: Text(department)
+                  )),
+                  const DropdownMenuItem<String>(
+                    value: null,
+                    enabled: false,
+                    child: Text('法學院', style: TextStyle(fontWeight: FontWeight.bold))
+                  ),
+                  ...Law.map((department) => DropdownMenuItem<String>(
+                    value: department,
+                    child: Text(department)
+                  )),
+                  const DropdownMenuItem<String>(
+                    value: null,
+                    enabled: false,
+                    child: Text('管理學院', style: TextStyle(fontWeight: FontWeight.bold))
+                  ),
+                  ...Management.map((department) => DropdownMenuItem<String>(
+                    value: department,
+                    child: Text(department)
+                  )),
+                  const DropdownMenuItem<String>(
+                    value: null,
+                    enabled: false,
+                    child: Text('理學院', style: TextStyle(fontWeight: FontWeight.bold))
+                  ),
+                  ...Science.map((department) => DropdownMenuItem<String>(
+                    value: department,
+                    child: Text(department)
+                  )),
+                  const DropdownMenuItem<String>(
+                    value: null,
+                    enabled: false,
+                    child: Text('工學院', style: TextStyle(fontWeight: FontWeight.bold))
+                  ),
+                  ...Enginerring.map((department) => DropdownMenuItem<String>(
+                    value: department,
+                    child: Text(department)
+                  )),
+                ],
+                hint: Text("系所"),
+                onChanged: (value) {
+                  
+                },
+            )
             ),
           ],
         ),
