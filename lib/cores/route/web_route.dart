@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/pages/admin/admin_overview_page.dart';
+import 'package:front_end/features/presentation/pages/admin/announcement_add_or_modify_page.dart';
 import 'package:front_end/features/presentation/pages/admin/announcement_manage_list_page.dart';
 import 'package:front_end/features/presentation/pages/attendee/sign_up_competition_page.dart';
 import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
@@ -126,6 +127,23 @@ final GoRouter webRouter = GoRouter(
         final page = int.tryParse(pageStr ?? '') ?? 1;
         print(page);
         return AnnouncementManageListPage(page: page);
+      },
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'admin') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
+    ),
+    GoRoute(
+      path: '/annModifyOrAdd',
+      name: 'annModifyOrAdd',
+      builder: (context, state){
+        final aidStr = state.uri.queryParameters['aid'];
+
+        final aid = int.tryParse(aidStr ?? '');
+        return AnnouncementAddOrModifyPage(aid: aid,);
       },
       redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;

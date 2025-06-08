@@ -28,9 +28,9 @@ class AnnouncementManageListPage extends StatelessWidget{
   }
 
   
-  _buildBody(context) {
+  _buildBody(BuildContext context) {
   return BlocBuilder<AnnBloc, AnnState>(
-    builder: (_, state) {
+    builder: (context, state) {
       if (state is AnnouncementLoading) {
         return const Center(child: CupertinoActivityIndicator());
       }
@@ -43,143 +43,140 @@ class AnnouncementManageListPage extends StatelessWidget{
         final totalPages = state.announcementList?.totalPages ?? 0;
         final currentPage = state.announcementList?.page ?? 0;
 
-        int? selectedIndex;
-
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Container(
-              width: 1120,
-              height: 500,
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        return  Container(
+          width: 1120,
+          height: 500,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "公告列表",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        width: 100,
-                        height: 20,
-                        child: BasicWebButton(
-                          onPressed: null,
-                          title: '新增',
-                        ),
-                      )
-                    ],
+                  Text(
+                    "公告列表",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 10,),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child:Align(
-                          alignment: Alignment.center, 
-                          child: Text("修改"),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Align(
-                          alignment: Alignment.center, 
-                          child: Text("公告ID"),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: Text('公告標題'),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text('最後修改時間'),
-                      ),
-                    ],
-                  ),
-                  const Divider(thickness: 2, color: Colors.black,),
+                  SizedBox(
+                    width: 100,
+                    height: 40,
+                    child: BasicWebButton(
+                      title: '新增',
+                      fontSize: 16,
+                      onPressed:() => context.go('/annModifyOrAdd'),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 10,),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: currentList.length,
-                      itemBuilder: (context, index) {
-                        return MouseRegion(
-                          child: GestureDetector(
-                            onTap: () {
-                              context.go('/detailAnn/${currentList[index].aid ?? 0}');
-                              print("你選的是：${currentList[index].title}和${currentList[index].aid}");//測試用
-                            },
-
-
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: IconButton(
-                                      onPressed: (){}, 
-                                      icon: Icon(Icons.edit_outlined)
-                                    )
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Align(
-                                      alignment: Alignment.center, 
-                                      child: Text("${currentList[index].aid}"),
-                                    )
-                                  ),
-                                  Expanded(
-                                    flex: 6,
-                                    child: Text(
-                                      currentList[index].title ?? '無標題',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(color: Colors.black, fontSize: 15),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      currentList[index].time ?? '無時間',
-                                      style: const TextStyle(color: Colors.black, fontSize: 15),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                    flex: 1,
+                    child:Align(
+                      alignment: Alignment.center, 
+                      child: Text("修改"),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.chevron_left),
-                        onPressed: currentPage > 1
-                            ? () {
-                                context.pushReplacement('/annManageList/${currentPage -1}');
-                              }
-                            : null,
-                      ),
-                      Text('$currentPage / $totalPages'),
-                      IconButton(
-                        icon: const Icon(Icons.chevron_right),
-                        onPressed: currentPage < totalPages
-                            ? () {
-                                context.pushReplacement('/annManageList/${currentPage +1}');
-                              }
-                            : null,
-                      ),
-                    ],
+                  Expanded(
+                    flex: 1,
+                    child: Align(
+                      alignment: Alignment.center, 
+                      child: Text("公告ID"),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 6,
+                    child: Text('公告標題'),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text('最後修改時間'),
                   ),
                 ],
               ),
-            );
-          },
+              const Divider(thickness: 2, color: Colors.black,),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: currentList.length,
+                  itemBuilder: (context, index) {
+                    return MouseRegion(
+                      child: GestureDetector(
+                        onTap: () {
+                          context.go('/detailAnn/${currentList[index].aid ?? 0}');
+                          print("你選的是：${currentList[index].title}和${currentList[index].aid}");//測試用
+                        },
+
+
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: IconButton(
+                                  onPressed: (){
+                                    context.go('/annModifyOrAdd?aid=${currentList[index].aid}');
+                                  }, 
+                                  icon: Icon(Icons.edit_outlined)
+                                )
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Align(
+                                  alignment: Alignment.center, 
+                                  child: Text("${currentList[index].aid}"),
+                                )
+                              ),
+                              Expanded(
+                                flex: 6,
+                                child: Text(
+                                  currentList[index].title ?? '無標題',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(color: Colors.black, fontSize: 15),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  currentList[index].time ?? '無時間',
+                                  style: const TextStyle(color: Colors.black, fontSize: 15),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.chevron_left),
+                    onPressed: currentPage > 1
+                        ? () {
+                            context.pushReplacement('/annManageList/${currentPage -1}');
+                          }
+                        : null,
+                  ),
+                  Text('$currentPage / $totalPages'),
+                  IconButton(
+                    icon: const Icon(Icons.chevron_right),
+                    onPressed: currentPage < totalPages
+                        ? () {
+                            context.pushReplacement('/annManageList/${currentPage +1}');
+                          }
+                        : null,
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       }
       return const SizedBox();
