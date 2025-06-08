@@ -27,10 +27,10 @@ abstract class CompetitionApiService {
   // Future<HttpResponse<ResponseMessage>> editCompetitionInfo(@Body() Map<String, dynamic> body);
 
   
-  @GET('/competition/getSignUpInfo')
+  @GET('/competition/getSignUpInfo.php')
   Future<HttpResponse<ResponseMessage>> getCompetitionInfoByUID(@Query("uId") String uid);
 
-  @GET('/competition/getSignUpInfo')
+  @GET('/competition/getSignUpInfo.php')
   Future<HttpResponse<ResponseMessage>> getCompetitionInfoByTeamID(@Query('teamId') String teamid);
 
 }
