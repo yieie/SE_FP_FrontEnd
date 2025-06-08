@@ -132,7 +132,7 @@ class AnnRepositoryImpl implements AnnRepository{
         ),
         'aId': aid,
       });
-      final httpResponse = await _annApiService.uploadAnnouncementFile(formData);
+      final httpResponse = await _annApiService.uploadAnnouncementPoster(formData);
 
       if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
         
