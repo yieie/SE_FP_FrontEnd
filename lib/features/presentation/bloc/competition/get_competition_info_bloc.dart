@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/resources/data_state.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
-import 'package:front_end/features/domain/usecases/get_competition_info.dart';
+import 'package:front_end/features/domain/usecases/get_competition_info_by_uid.dart';
 import 'package:front_end/features/presentation/bloc/competition/get_competition_info_event.dart';
 import 'package:front_end/features/presentation/bloc/competition/get_competition_info_state.dart';
 
