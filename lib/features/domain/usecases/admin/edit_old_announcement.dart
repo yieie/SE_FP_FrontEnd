@@ -24,7 +24,6 @@ class EditOldAnnouncementUseCase implements UseCase<DataState<ResponseMessage>,v
     if(essential is DataFailed){
       return essential;
     }
-
     if(deletePoster !=null){
       for(int i=0; i<deletePoster.length;i++){
         final delete = await _annRepository.deleteAnnouncementPoster(aid!, deletePoster[i]);
@@ -45,7 +44,7 @@ class EditOldAnnouncementUseCase implements UseCase<DataState<ResponseMessage>,v
 
     if(newPoster != null){
       for(int i=0;i<newPoster.length;i++){
-        final upload = await _annRepository.uploadAnnouncementPoster(newPoster[i], essential.data!.extraData!['aId']);
+        final upload = await _annRepository.uploadAnnouncementPoster(newPoster[i], aid!);
         if(upload is DataFailed){
           return upload;
         }
@@ -53,7 +52,7 @@ class EditOldAnnouncementUseCase implements UseCase<DataState<ResponseMessage>,v
     }
     if(newFile != null){
       for(int i=0;i<newFile.length;i++){
-        final upload = await _annRepository.uploadAnnouncementPoster(newFile[i], essential.data!.extraData!['aId']);
+        final upload = await _annRepository.uploadAnnouncementPoster(newFile[i], aid!);
         if(upload is DataFailed){
           return upload;
         }

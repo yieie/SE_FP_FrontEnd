@@ -156,7 +156,7 @@ class _AnnouncementAddOrModifyPageState extends State<AnnouncementAddOrModifyPag
                           if(authState is Authenticated){
                             final adminid = authState.uid;
                             if(widget.aid == null){
-                              context.read<AnnModifyAddBloc>().add(SubmitNewAnnEvent(title: titleCtrl.text, content: contentCtrl.text, poster: newPoster, file: newPoster, adminid: adminid));
+                              context.read<AnnModifyAddBloc>().add(SubmitNewAnnEvent(title: titleCtrl.text, content: contentCtrl.text, poster: newPoster, file: newFile, adminid: adminid));
                             }else{
                               context.read<AnnModifyAddBloc>().add(EditOldAnnEvent(aid: widget.aid!, title: titleCtrl.text, content: contentCtrl.text, poster: newPoster, file: newFile, deletePoster: deletePoster, deleteFile: deleteFile, adminid: adminid));
                             }
