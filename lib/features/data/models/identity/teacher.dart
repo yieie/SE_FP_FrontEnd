@@ -2,7 +2,7 @@ import 'package:front_end/features/domain/entity/identity/Teacher.dart';
 
 class TeacherModel extends Teacher{
   TeacherModel({
-    required super.uid,
+    super.uid,
     super.name,
     super.email,
     super.sexual,
@@ -14,7 +14,7 @@ class TeacherModel extends Teacher{
 
   factory TeacherModel.fromJson(Map<String, dynamic> json) {
     return TeacherModel(
-      uid: json['uId'] as String,
+      uid: json['uId'] as String?,
       name: json['name'] as String?,
       email: json['email'] as String?,
       sexual: json['sexual'] as String?,
