@@ -67,8 +67,7 @@ class _JudgeNavState extends State<JudgeNav>{
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                //要改
-                onPressed: ()=>context.go('/homeWithAnn/1'), 
+                onPressed: ()=>context.go('/projectViewList/1'), 
                 icon: Image.asset("assets/images/weblogo.png",width: 150,height: 100,)),
               Spacer(),
               Container(
@@ -84,6 +83,22 @@ class _JudgeNavState extends State<JudgeNav>{
                   ),
                   onPressed: (){
                     context.go('/homeWithAnn/1');
+                  },
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 17.5),
+                child: TextButton(
+                  child: Text("評分列表",
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 3.2,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  ),
+                  ),
+                  onPressed: (){
+                    context.go('/projectViewList/1');
                   },
                 ),
               ),
