@@ -29,6 +29,7 @@ import 'package:front_end/features/domain/usecases/get_competition_info_by_teami
 import 'package:front_end/features/domain/usecases/get_competition_info_by_uid.dart';
 import 'package:front_end/features/domain/usecases/get_detail_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_overview.dart';
+import 'package:front_end/features/domain/usecases/get_past_project.dart';
 import 'package:front_end/features/domain/usecases/get_score_list.dart';
 import 'package:front_end/features/domain/usecases/get_workshop.dart';
 import 'package:front_end/features/domain/usecases/get_workshop_participation.dart';
@@ -45,6 +46,7 @@ import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_up_bloc.dart';
 import 'package:front_end/features/presentation/bloc/competition/sign_up_competition_bloc.dart';
+import 'package:front_end/features/presentation/bloc/past_project_bloc.dart';
 import 'package:front_end/features/presentation/bloc/score/score_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/score/score_list_event.dart';
 import 'package:front_end/features/presentation/bloc/score/score_team_bloc.dart';
@@ -157,6 +159,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetCompetitionInfoByUIDUseCase>(
     GetCompetitionInfoByUIDUseCase(sl())
   );
+  sl.registerSingleton<GetPastProjectUseCase>(
+    GetPastProjectUseCase(sl())
+  );
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -193,5 +198,8 @@ Future<void> initializeDependencies() async {
   );
   sl.registerFactory<AnnModifyAddBloc>(
     () => AnnModifyAddBloc(sl(),sl())
+  );
+  sl.registerFactory<PastProjectBloc>(
+    () => PastProjectBloc(sl(),sl())
   );
 }
