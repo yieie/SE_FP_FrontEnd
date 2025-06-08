@@ -364,6 +364,9 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                       onPressed: () {
                         web.window.open(state.teamWithProject.project.introductionFile!, '_blank');
                       },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.black, 
+                      ),
                       child: Text('${widget.teamid}作品說明書'),
                     ),
                   ),
@@ -373,6 +376,9 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                       onPressed: () {
                         web.window.open(state.teamWithProject.project.affidavitFile!, '_blank');
                       },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.black, 
+                      ),
                       child: Text('${widget.teamid}提案切結書'),
                     ),
                   ),
@@ -382,6 +388,9 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                       onPressed: () {
                         web.window.open(state.teamWithProject.project.consentFile!, '_blank');
                       },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.black, 
+                      ),
                       child: Text('${widget.teamid}個資同意書'),
                     ),
                   ),
