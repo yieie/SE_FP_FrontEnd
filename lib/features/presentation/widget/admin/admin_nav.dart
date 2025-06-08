@@ -66,13 +66,13 @@ class _AdminNavState extends State<AdminNav>{
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                onPressed: ()=>context.go('/homeWithAnn/1'), 
+                onPressed: ()=>context.go('/overview'), 
                 icon: Image.asset("assets/images/weblogo.png",width: 150,height: 100,)),
               Spacer(),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 17.5),
                 child: TextButton(
-                  child: Text("工作坊資訊",
+                  child: Text("公告管理",
                   style: TextStyle(
                     color: Colors.white,
                     letterSpacing: 3.2,
@@ -80,15 +80,27 @@ class _AdminNavState extends State<AdminNav>{
                     fontSize: 16
                   ),
                   ),
-                  onPressed: (){
-                    context.go('/workshops');
-                  },
+                  onPressed: (){},
                 ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 17.5),
                 child: TextButton(
-                  child: Text("歷年作品",
+                  child: Text("工作坊管理",
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 3.2,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  ),
+                  ),
+                  onPressed: (){},
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 17.5),
+                child: TextButton(
+                  child: Text("使用者管理",
                   style: TextStyle(
                     color: Colors.white,
                     letterSpacing: 3.2,
@@ -105,11 +117,9 @@ class _AdminNavState extends State<AdminNav>{
                 height: 48,
                 child: BasicWebButton(
                   backgroundColor: Color(0xFFF96D4E),
-                  title: '立刻報名',
+                  title: '報名審核',
                   fontSize: 16,
-                  onPressed: (){
-                    context.go('/signupCompetiton');
-                  }
+                  onPressed: (){}
                 )
               ),
               GestureDetector(
