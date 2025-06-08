@@ -24,6 +24,8 @@ import 'package:front_end/features/domain/repositories/workshop_repository.dart'
 import 'package:front_end/features/domain/usecases/admin/add_new_announcement.dart';
 import 'package:front_end/features/domain/usecases/admin/edit_old_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
+import 'package:front_end/features/domain/usecases/get_competition_info_by_teamid.dart';
+import 'package:front_end/features/domain/usecases/get_competition_info_by_uid.dart';
 import 'package:front_end/features/domain/usecases/get_detail_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_overview.dart';
 import 'package:front_end/features/domain/usecases/get_score_list.dart';
@@ -44,6 +46,7 @@ import 'package:front_end/features/presentation/bloc/auth/sign_up_bloc.dart';
 import 'package:front_end/features/presentation/bloc/competition/sign_up_competition_bloc.dart';
 import 'package:front_end/features/presentation/bloc/score/score_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/score/score_list_event.dart';
+import 'package:front_end/features/presentation/bloc/score/score_team_bloc.dart';
 import 'package:front_end/features/presentation/bloc/user_management/search_user_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_bloc.dart';
@@ -144,6 +147,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<EditOldAnnouncementUseCase>(
     EditOldAnnouncementUseCase(sl())
   );
+  sl.registerSingleton<GetCompetitionInfoByTeamIDUseCase>(
+    GetCompetitionInfoByTeamIDUseCase(sl())
+  );
+  sl.registerSingleton<GetCompetitionInfoByUIDUseCase>(
+    GetCompetitionInfoByUIDUseCase(sl())
+  );
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -171,6 +180,9 @@ Future<void> initializeDependencies() async {
   );
   sl.registerFactory<ScoreListBloc>(
     () => ScoreListBloc(sl(),sl())
+  );
+  sl.registerFactory<ScoreTeamBloc>(
+    () => ScoreTeamBloc(sl(),sl())
   );
   sl.registerFactory<OverviewBloc>(
     () => OverviewBloc(sl())
