@@ -8,6 +8,7 @@ class Project {
   final String ? consentFile;
   final String ? affidavitFile;
   final List<String> ? url;
+  final double? score;
 
   const Project({
     this.workID,
@@ -17,7 +18,8 @@ class Project {
     this.introductionFile='',
     this.consentFile='',
     this.affidavitFile='',
-    this.url
+    this.url,
+    this.score
   });
 
   Project copyWith({
@@ -28,7 +30,8 @@ class Project {
     String ? introductionFile,
     String ? consentFile,
     String ? affidavitFile,
-    List<String> ? url
+    List<String> ? url,
+    double ? score
   }) {
     return Project(
       workID: workID ?? this.workID,
@@ -38,7 +41,8 @@ class Project {
       introductionFile: introductionFile ?? introductionFile,
       consentFile: consentFile ?? consentFile,
       affidavitFile: affidavitFile ?? affidavitFile,
-      url: url ?? this.url
+      url: url ?? this.url,
+      score: score ?? this.score
     );
   }
 

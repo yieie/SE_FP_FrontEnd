@@ -9,7 +9,8 @@ class ProjectModel extends Project {
     super.url,
     super.introductionFile,
     super.affidavitFile,
-    super.consentFile
+    super.consentFile,
+    super.score
   });
 
   // 待確認API文件欄位名稱
