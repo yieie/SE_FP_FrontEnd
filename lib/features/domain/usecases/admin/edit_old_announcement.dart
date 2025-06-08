@@ -52,7 +52,7 @@ class EditOldAnnouncementUseCase implements UseCase<DataState<ResponseMessage>,v
     }
     if(newFile != null){
       for(int i=0;i<newFile.length;i++){
-        final upload = await _annRepository.uploadAnnouncementPoster(newFile[i], aid!);
+        final upload = await _annRepository.uploadAnnouncementFile(newFile[i], aid!);
         if(upload is DataFailed){
           return upload;
         }
