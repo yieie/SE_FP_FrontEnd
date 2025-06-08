@@ -6,6 +6,7 @@ import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/domain/entity/SignInReqParams.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_event.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_event.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_state.dart';
@@ -44,17 +45,27 @@ class _SignInPageState extends State<SignInPage>{
   }
 
   _buildBody(BuildContext context) {
-    return BlocListener<SignInBloc, SignInState>(
-      listener: (context, state){
-        if(state is SignInSuccess){
-            context.read<AuthBloc>().add(LoggedIn(usertype: state.responseMessage!.extraData?['userType'], uid: accountCtrl.text));
-            if(state.responseMessage!.extraData?['userType'] == "judge"){
-              context.go('/projectViewList/1');
-            }else{
-              context.go('/homeWithAnn/1');
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<SignInBloc,SignInState>(
+          listener: (context, state){
+            if(state is SignInSuccess){
+                context.read<AuthBloc>().add(LoggedIn(usertype: state.responseMessage!.extraData?['userType'], uid: accountCtrl.text));
             }
-        }
-      },
+          }          
+        ),
+        BlocListener<AuthBloc,AuthState>(
+          listener: (context,state){
+            if(state is Authenticated){
+              if(state.usertype == 'judge'){
+                context.go('/projectViewList/1');
+              }else{
+                context.go('/homeWithAnn/1');
+              }
+            }
+          }
+        )
+      ],
       child:BlocBuilder<SignInBloc,SignInState>(
       builder: (context,state){
 
