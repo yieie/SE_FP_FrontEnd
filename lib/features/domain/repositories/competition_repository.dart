@@ -12,4 +12,6 @@ abstract class CompetitionRepository {
   Future<DataState<ResponseMessage>> uploadFiles(String workid, PlatformFile consent, PlatformFile introduction, PlatformFile affidavit);
   
   Future<DataState<TeamWithProject>> getCompetitionInfoByUID(String uid);
+  
+  Future<DataState<TeamWithProject>> getCompetitionInfoByTeamID(String teamid);
 }

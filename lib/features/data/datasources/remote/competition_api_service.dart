@@ -27,7 +27,10 @@ abstract class CompetitionApiService {
   // Future<HttpResponse<ResponseMessage>> editCompetitionInfo(@Body() Map<String, dynamic> body);
 
   
-  @GET('/competition/getSignUpInfoByUid')
-  Future<HttpResponse<ResponseMessage<TeamWithProjectModel>>> getCompetitionInfoByUID(@Query("uId") String uid);
+  @GET('/competition/getSignUpInfo')
+  Future<HttpResponse<ResponseMessage>> getCompetitionInfoByUID(@Query("uId") String uid);
+
+  @GET('/competition/getSignUpInfo')
+  Future<HttpResponse<ResponseMessage>> getCompetitionInfoByTeamID(@Query('teamId') String teamid);
 
 }
