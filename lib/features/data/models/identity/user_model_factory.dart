@@ -1,3 +1,4 @@
+import 'package:front_end/features/data/models/identity/admin.dart';
 import 'package:front_end/features/data/models/identity/attendee.dart';
 import 'package:front_end/features/data/models/identity/judge.dart';
 import 'package:front_end/features/data/models/identity/lecturer.dart';
@@ -18,6 +19,8 @@ class UserModelFactory {
         return JudgeModel.fromJson(json);
       case 'lecturer':
         return LecturerModel.fromJson(json);
+      case 'admin':
+        return AdminModel.fromJson(json);
       default:
         throw Exception('未知角色: ${json['userType']}');
     }
