@@ -17,7 +17,8 @@ class Member {
   final String department; //科系
   final String phone; //電話
   final String email; //信箱
-  Member(this.name, this.uid, this.grade, this.department, this.phone, this.email);
+  final String student_iD_card;//學生證
+  Member(this.name, this.uid, this.grade, this.department, this.phone, this.email,this.student_iD_card);
 }
 
 class TeamInfo {
@@ -67,9 +68,9 @@ class _TeamInfoPageState extends State<TeamInfoPage> {
       advisor_title: "老師職稱test1",
       advisor_school: "老師所屬機構test1",
       members: [
-        Member("學生1", "A111111", "大四", "資訊工程學系", "090001", "1@gmail.com"),
-        Member("學生2", "A111112", "大四", "資訊工程學系", "090002", "2@gmail.com"),
-        Member("學生3", "A111113", "大四", "資訊工程學系", "090003", "3@gmail.com"),
+        Member("學生1", "A111111", "大四", "資訊工程學系", "090001", "1@gmail.com","學生證1.jpg"),
+        Member("學生2", "A111112", "大四", "資訊工程學系", "090002", "2@gmail.com","學生證2.jpg"),
+        Member("學生3", "A111113", "大四", "資訊工程學系", "090003", "3@gmail.com","學生證3.jpg"),
       ], 
       group:"創意發想組",
       team_name:"Future seeker",
@@ -348,6 +349,11 @@ Widget build(BuildContext context) {
                             ],
                           ),
                           const SizedBox(height: 10),
+
+                          //學生證
+                          _buildInfoRow("學生證:", test[0].members[i].student_iD_card),
+                          const SizedBox(height: 10),
+
                         ],
                       ),
                   ]),

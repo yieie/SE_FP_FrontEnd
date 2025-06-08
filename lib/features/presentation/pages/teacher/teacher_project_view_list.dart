@@ -115,8 +115,6 @@ class TeacherViewProjectPage extends StatelessWidget{
         Member("電機系", "elen"),
       ],  
     ),
-
-
   ];
 
   @override

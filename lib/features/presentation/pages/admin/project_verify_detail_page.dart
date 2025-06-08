@@ -17,7 +17,8 @@ class Member {
   final String department; //科系
   final String phone; //電話
   final String email; //信箱
-  Member(this.name, this.uid, this.grade, this.department, this.phone, this.email);
+  final String student_iD_card;
+  Member(this.name, this.uid, this.grade, this.department, this.phone, this.email,this.student_iD_card);
 }
 
 class ProjectVerifyDetail {
@@ -32,7 +33,8 @@ class ProjectVerifyDetail {
   final String summary; //摘要
   final String yt_url; //youtube連結
   final String github_url; //github連結
-  final String sdgs; //sdgs
+  final List<String> sdgs;//sdgs
+  final List<String> files;//相關文件
 
   ProjectVerifyDetail({
     required this.advisor_name,
@@ -47,6 +49,7 @@ class ProjectVerifyDetail {
     required this.yt_url,
     required this.github_url,
     required this.sdgs,
+    required this.files,
   });
 }
 
@@ -65,9 +68,9 @@ class _ProjectVerifyDetailPageState extends State<ProjectVerifyDetailPage> {
       advisor_title: "老師職稱test1",
       advisor_school: "老師所屬機構test1",
       members: [
-        Member("學生1", "A111111", "大四", "資訊工程學系", "090001", "1@gmail.com"),
-        Member("學生2", "A111112", "大四", "資訊工程學系", "090002", "2@gmail.com"),
-        Member("學生3", "A111113", "大四", "資訊工程學系", "090003", "3@gmail.com"),
+        Member("學生1", "A111111", "大四", "資訊工程學系", "090001", "1@gmail.com","學生證1.jpg"),
+        Member("學生2", "A111112", "大四", "資訊工程學系", "090002", "2@gmail.com","學生證2.jpg"),
+        Member("學生3", "A111113", "大四", "資訊工程學系", "090003", "3@gmail.com","學生證3.jpg"),
       ], 
       group:"創意發想組",
       team_name:"Future seeker",
@@ -75,7 +78,8 @@ class _ProjectVerifyDetailPageState extends State<ProjectVerifyDetailPage> {
       summary: "test123456789asdfghjklqwryiopoiuy",
       yt_url: "https://123456789",
       github_url: "https://123456789",
-      sdgs: "10",
+      sdgs: ["1", "2"],
+      files: ["作品說明書.pdf", "提案切結書.pdf", "個茲同意書.pdf"],
     ),
   ];
 
@@ -261,6 +265,11 @@ class _ProjectVerifyDetailPageState extends State<ProjectVerifyDetailPage> {
                                           Expanded(flex: 7, child: _buildInfoRow("Email:", test[0].members[i].email)),
                                         ],
                                       ),
+                                      
+                                      const SizedBox(height: 10),
+
+                                      //學生證
+                                      _buildInfoRow("學生證:", test[0].members[i].student_iD_card),
                                       const SizedBox(height: 10),
                                     ],
                                   ),
@@ -380,8 +389,33 @@ class _ProjectVerifyDetailPageState extends State<ProjectVerifyDetailPage> {
                               _buildInfoRow("GitHub連結:", test[0].github_url),
                               const SizedBox(height: 10),
                               
-                              // SDGs相關
-                              _buildInfoRow("SDGs相關:", test[0].sdgs),
+                              // SDGs 相關
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "SDGs相關:",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Expanded(
+                                  child: Text(test[0].sdgs.join("  ")),
+                                  ), 
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              // 相關文件
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "相關文件:",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(test[0].files.join("\n")),
+                                ],
+                              ),
                             ],
                           ),
                         ),
