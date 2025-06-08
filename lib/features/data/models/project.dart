@@ -23,7 +23,8 @@ class ProjectModel extends Project {
       url: (json['teamInfo']?['workUrls'] != null)? List<String>.from(json['teamInfo']?['workUrls']): [],
       introductionFile: json['teamInfo']?['workintroduction'] ?? '',
       affidavitFile: json['teamInfo']?['workaffidavit'] ?? '',
-      consentFile: json['teamInfo']?['workconsent'] ?? ''
+      consentFile: json['teamInfo']?['workconsent'] ?? '',
+      score: json['score']
     );
   }
 }

@@ -19,7 +19,8 @@ import 'package:web/web.dart' as web;
 class ProjectViewDetailPage extends StatefulWidget{
   final String teamid;
   final String workid;
-  const ProjectViewDetailPage({super.key, required this.teamid,required this.workid});
+  final double score;
+  const ProjectViewDetailPage({super.key, required this.teamid,required this.workid,required this.score});
 
   @override
   _ProjectViewDetailPageState createState() => _ProjectViewDetailPageState();
@@ -214,7 +215,7 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if(score1 != -1 && score2 != -1 && score3 != -1 && score4 != -1)...[
+                      if(score1 != -1 && score2 != -1 && score3 != -1 && score4 != -1)
                         Container(
                           margin: EdgeInsets.all(5),
                           child: Text(teamType == '創意發想組' ? 
@@ -229,25 +230,25 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                           '其他：$score4 / 5%'
                           ,style: TextStyle(fontSize: 16)),
                         ),
-                        SizedBox(width: 10,),
+                      if(totalScore != -1 || widget.score != -1)
                         Container(
                           margin: EdgeInsets.all(5),
-                          child: Text('總分：$totalScore',style: TextStyle(fontSize: 20))
+                          child: Text('總分：${totalScore == -1 ? widget.score : totalScore}',style: TextStyle(fontSize: 20))
                         ),
+                      if(score1 != -1 && score2 != -1 && score3 != -1 && score4 != -1)
                         SizedBox(
-                        width: 150,
-                        height: 40,
-                        child: BasicWebButton(
-                          onPressed: () {
-                            if(authState is Authenticated){
-                              context.read<ScoreTeamBloc>().add(SubmitScoreEvent(score: totalScore, workid: widget.workid, judgeid: authState.uid ));
-                            }
-                          },
-                          title: '送出評分',
-                          fontSize: 16,
+                          width: 150,
+                          height: 40,
+                          child: BasicWebButton(
+                            onPressed: () {
+                              if(authState is Authenticated){
+                                context.read<ScoreTeamBloc>().add(SubmitScoreEvent(score: totalScore, workid: widget.workid, judgeid: authState.uid ));
+                              }
+                            },
+                            title: '送出評分',
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      ],
                       SizedBox(
                         width: 150,
                         height: 40,
@@ -272,8 +273,7 @@ class _ProjectViewDetailPageState extends State<ProjectViewDetailPage>{
                           fontSize: 16,
                         ),
                       ),
-                    ],
-                  ),
+                  ]),
                   Container(
                     margin: EdgeInsets.all(5),
                     child: Text("參賽組別：${state.teamWithProject.team.type}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),

@@ -77,7 +77,7 @@ class ProjectViewListPage extends StatelessWidget{
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
-                          flex: 2,
+                          flex: 1,
                           child: Text('參賽組別'),
                         ),
                         Expanded(
@@ -87,6 +87,10 @@ class ProjectViewListPage extends StatelessWidget{
                         Expanded(
                           flex: 4,
                           child: Text('作品名稱'),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text('分數'),
                         ),
                       ],
                     ),
@@ -101,7 +105,11 @@ class ProjectViewListPage extends StatelessWidget{
                             onExit: (_) => setState(() => selectedIndex = null),
                             child: GestureDetector(
                               onTap: () {
-                                context.go('/projectViewDetail/${teamlist[index].team.teamID}/${teamlist[index].project.workID}');
+                                if(teamlist[index].project.score != -1){
+                                  context.go('/projectViewDetail/${teamlist[index].team.teamID}/${teamlist[index].project.workID}?score=${teamlist[index].project.score!}');
+                                }else{
+                                  context.go('/projectViewDetail/${teamlist[index].team.teamID}/${teamlist[index].project.workID}');
+                                }
                                 print("你選的是：${teamlist[index].project.workID}和${teamlist[index].team.teamID}");//測試用
                               },
               
@@ -115,7 +123,7 @@ class ProjectViewListPage extends StatelessWidget{
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Expanded(
-                                      flex: 2,
+                                      flex: 1,
                                       child: Text(teamlist[index].team.type!),
                                     ),
                                     Expanded(
@@ -125,6 +133,10 @@ class ProjectViewListPage extends StatelessWidget{
                                     Expanded(
                                       flex: 4,
                                       child: Text(teamlist[index].project.name!),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(teamlist[index].project.score == -1 ? '無分數' : '${teamlist[index].project.score}'),
                                     ),
                                   ],
                                 ),

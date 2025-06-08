@@ -101,8 +101,9 @@ final GoRouter webRouter = GoRouter(
       builder: (context, state){
         final teamid = state.pathParameters['teamid'];
         final workid = state.pathParameters['workid'];
+        final score = double.tryParse(state.uri.queryParameters['score'] ?? '-1');
         if(teamid != null && workid != null){
-          return ProjectViewDetailPage(teamid: teamid, workid: workid);
+          return ProjectViewDetailPage(teamid: teamid, workid: workid,score: score!);
         }else{
           return ProjectViewListPage(page: 1); 
         }
