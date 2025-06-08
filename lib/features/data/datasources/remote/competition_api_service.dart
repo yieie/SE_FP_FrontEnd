@@ -33,4 +33,7 @@ abstract class CompetitionApiService {
   @GET('/competition/getSignUpInfo.php')
   Future<HttpResponse<ResponseMessage>> getCompetitionInfoByTeamID(@Query('teamId') String teamid);
 
+  @POST('/work/getPrevWorkList.php')
+  Future<HttpResponse<ResponseMessage<TeamWithProjectModel>>> getPastProjectList(@Body() Map<String, dynamic> body);
+
 }

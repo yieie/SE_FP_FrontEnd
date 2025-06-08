@@ -14,4 +14,6 @@ abstract class CompetitionRepository {
   Future<DataState<TeamWithProject>> getCompetitionInfoByUID(String uid);
   
   Future<DataState<TeamWithProject>> getCompetitionInfoByTeamID(String teamid);
+  
+  Future<DataState<List<TeamWithProject>>> getPastProjectList(String year, String teamType);
 }

@@ -160,4 +160,27 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
       return DataFailed(e);
     }
   }
+  
+  @override
+  Future<DataState<List<TeamWithProject>>> getPastProjectList(String year, String teamType) async {
+    try{
+      final httpResponse = await _competitionApiService.getPastProjectList({'year':year, 'teamType': teamType});
+
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        return DataSuccess(httpResponse.data.data!);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
+          )
+        );
+      }
+    } on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
 }
