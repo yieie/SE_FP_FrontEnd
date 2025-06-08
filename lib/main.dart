@@ -44,20 +44,19 @@ Future<void> main() async{
   @override
    Widget build(BuildContext context) {
      return  MaterialApp(
-       //home: SignUpPage(),
+      //home: SignUpPage(),
       //home: HomeWithAnnPage(),
 
        //home: TeacherViewProjectPage(),
        //home: TeacherProjectViewDetailPage(),
 
        //home: ProjectVerifyListPage(),
+       //home: ProjectVerifyDetailPage(),
 
-       //home:  ProjectVerifyDetailPage(),
+       //home:  TeamInfoPage(),
 
-       home:  TeamInfoPage(),
-
-      
-
+    
+       home: PastProjectListPage(),
        //home: PastProjectDetailPage(),
      );
   }
