@@ -41,6 +41,7 @@ dependencies:
   retrofit: ^4.0.3
   json_annotation: ^4.8.1
   go_router: 
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

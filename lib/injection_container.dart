@@ -21,6 +21,8 @@ import 'package:front_end/features/domain/repositories/competition_repository.da
 import 'package:front_end/features/domain/repositories/score_repository.dart';
 import 'package:front_end/features/domain/repositories/user_management_repository.dart';
 import 'package:front_end/features/domain/repositories/workshop_repository.dart';
+import 'package:front_end/features/domain/usecases/admin/add_new_announcement.dart';
+import 'package:front_end/features/domain/usecases/admin/edit_old_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_detail_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_overview.dart';
@@ -33,6 +35,7 @@ import 'package:front_end/features/domain/usecases/search_user_by_uid.dart';
 import 'package:front_end/features/domain/usecases/sign_in.dart';
 import 'package:front_end/features/domain/usecases/sign_up.dart';
 import 'package:front_end/features/domain/usecases/sign_up_competition.dart';
+import 'package:front_end/features/presentation/bloc/admin/ann_modify_add_bloc.dart';
 import 'package:front_end/features/presentation/bloc/admin/overview_bloc.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
@@ -135,6 +138,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetOverviewUseCase>(
     GetOverviewUseCase(sl())
   );
+  sl.registerSingleton<AddNewAnnouncementUseCase>(
+    AddNewAnnouncementUseCase(sl())
+  );
+  sl.registerSingleton<EditOldAnnouncementUseCase>(
+    EditOldAnnouncementUseCase(sl())
+  );
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -165,5 +174,8 @@ Future<void> initializeDependencies() async {
   );
   sl.registerFactory<OverviewBloc>(
     () => OverviewBloc(sl())
+  );
+  sl.registerFactory<AnnModifyAddBloc>(
+    () => AnnModifyAddBloc(sl(),sl())
   );
 }

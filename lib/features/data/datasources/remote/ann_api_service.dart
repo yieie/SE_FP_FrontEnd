@@ -20,4 +20,22 @@ abstract class AnnApiService {
   Future<HttpResponse< ResponseMessage<AnnouncementModel>>> getdetailannouncement({
     @Query("aId") int ? aid
   });
+  
+  @POST('/ann/addAnn.php')
+  Future<HttpResponse<ResponseMessage>> addNewAnnouncement(@Body() AnnouncementModel body);
+  
+  @POST('/upload/uploadAnnPoster.php')
+  Future<HttpResponse<ResponseMessage>> uploadAnnouncementPoster(@Body() FormData formData);
+
+  @POST('/upload/uploadAnnFile.php')
+  Future<HttpResponse<ResponseMessage>> uploadAnnouncementFile(@Body() FormData formData);
+
+  @POST('/ann/editAnn.php')
+  Future<HttpResponse<ResponseMessage>> editAnnouncement(@Body() AnnouncementModel body);
+
+  @DELETE('/ann/deleteAnnPoster.php')
+  Future<HttpResponse<ResponseMessage>> deleteAnnouncementPoster(@Query('aId') int aid,@Query('posterUrl') String url);
+
+  @DELETE('/ann/deleteAnnFile.php')
+  Future<HttpResponse<ResponseMessage>> deleteAnnouncementFile(@Query('aId') int aid,@Query('fileName') String name, @Query('fileUrl') String url);
 }
