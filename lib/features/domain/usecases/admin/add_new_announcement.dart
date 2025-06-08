@@ -31,7 +31,7 @@ class AddNewAnnouncementUseCase implements UseCase<DataState<ResponseMessage>,vo
     }
     if(file != null){
       for(int i=0;i<file.length;i++){
-        final upload = await _annRepository.uploadAnnouncementPoster(file[i], essential.data!.extraData!['aId']);
+        final upload = await _annRepository.uploadAnnouncementFile(file[i], essential.data!.extraData!['aId']);
         if(upload is DataFailed){
           return upload;
         }
