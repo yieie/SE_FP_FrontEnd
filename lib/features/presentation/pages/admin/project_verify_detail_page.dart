@@ -359,7 +359,7 @@ class _ProjectVerifyDetailPageState extends State<ProjectVerifyDetailPage> {
                               // 指導教授
                               _buildInfoRow(
                                 "指導教授:",
-                                "${test[0].advisor_school} ${test[0].advisor_name}",
+                                "${test[0].advisor_school} ${test[0].advisor_name+test[0].advisor_title}",
                               ),
                               const SizedBox(height: 10),
                               

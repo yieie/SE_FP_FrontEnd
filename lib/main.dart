@@ -9,6 +9,7 @@ import 'package:front_end/features/presentation/pages/past_project_list_page.dar
 
 
 import 'package:front_end/features/presentation/pages/teacher/teacher_project_view_list.dart';
+import 'package:front_end/features/presentation/pages/teacher/teacher_project_view_detail.dart';
 
 import 'package:front_end/features/presentation/pages/admin/project_verify_list_page.dart';
 import 'package:front_end/features/presentation/pages/admin/project_verify_detail_page.dart';
@@ -48,7 +49,8 @@ Future<void> main() async{
        //home: TeacherViewProjectPage(),
        //home: ProjectVerifyListPage(),
        //home:  ProjectVerifyDetailPage(),
-       home:  TeamInfoPage(),
+       //home:  TeamInfoPage(),
+       home: TeacherProjectViewDetailPage(),
      );
   }
  }
