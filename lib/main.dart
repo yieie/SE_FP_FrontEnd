@@ -12,6 +12,7 @@ import 'package:front_end/features/presentation/pages/teacher/teacher_project_vi
 
 import 'package:front_end/features/presentation/pages/admin/project_verify_list_page.dart';
 import 'package:front_end/features/presentation/pages/admin/project_verify_detail_page.dart';
+import 'package:front_end/features/presentation/pages/attendee/team_info_page.dart';
 import 'package:front_end/injection_container.dart';
 
 
@@ -28,12 +29,12 @@ Future<void> main() async{
 //正式版
 //class MyApp extends StatelessWidget {
 //  @override
- // Widget build(BuildContext context) {
- //   return  MaterialApp.router(
- //     routerConfig: webRouter,
- //     debugShowCheckedModeBanner: false,
- //   );
-  //}
+//  Widget build(BuildContext context) {
+//    return  MaterialApp.router(
+//      routerConfig: webRouter,
+//      debugShowCheckedModeBanner: false,
+//    );
+//  }
 //}
 
 
@@ -46,7 +47,8 @@ Future<void> main() async{
 
        //home: TeacherViewProjectPage(),
        //home: ProjectVerifyListPage(),
-       home:  ProjectVerifyDetailPage(),
+       //home:  ProjectVerifyDetailPage(),
+       home:  TeamInfoPage(),
      );
   }
  }
