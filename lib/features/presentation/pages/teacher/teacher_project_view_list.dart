@@ -19,7 +19,7 @@ class teamInfo {
   final String workName;//作品名      
   final String workAbstract;//作品摘要          
   final List<String> workUrls;//作品連結:yt和github
-  final List<int> sdgs;//sdgs
+  final String sdgs;//sdgs
   final String workIntroduction;//作品說明書 
   final String workConsent;//個資同意書     
   final String workAffidavit;//提案切結書 
@@ -92,7 +92,7 @@ final List<teacher_project_view_list> test2 = [
         "作品名稱", 
         "作品摘要",
         ["https://example.com/work1", "https://example.com/work2"],
-        [1, 2], // SDGs 列表
+        "1, 2", // SDGs 列表
         "作品說明書檔案路徑",
         "個資同意書檔案路徑",
         "提案切結書檔案路徑"
@@ -144,7 +144,7 @@ final List<teacher_project_view_list> test2 = [
         "作品名稱", 
         "作品摘要",
         ["https://example.com/work1", "https://example.com/work2"],
-        [1, 2], // SDGs 列表
+        "1, 2", // SDGs 列表
         "作品說明書檔案路徑",
         "個資同意書檔案路徑",
         "提案切結書檔案路徑"
@@ -195,7 +195,7 @@ final List<teacher_project_view_list> test2 = [
         "作品名稱", 
         "作品摘要",
         ["https://example.com/work1", "https://example.com/work2"],
-        [1, 2], // SDGs 列表
+        "1, 2", // SDGs 列表
         "作品說明書檔案路徑",
         "個資同意書檔案路徑",
         "提案切結書檔案路徑"
@@ -246,7 +246,7 @@ final List<teacher_project_view_list> test2 = [
         "作品名稱", 
         "作品摘要",
         ["https://example.com/work1", "https://example.com/work2"],
-        [1, 2], // SDGs 列表
+        "1, 2", // SDGs 列表
         "作品說明書檔案路徑",
         "個資同意書檔案路徑",
         "提案切結書檔案路徑"
@@ -297,7 +297,7 @@ final List<teacher_project_view_list> test2 = [
         "作品名稱", 
         "作品摘要",
         ["https://example.com/work1", "https://example.com/work2"],
-        [1, 2], // SDGs 列表
+        "1, 2", // SDGs 列表
         "作品說明書檔案路徑",
         "個資同意書檔案路徑",
         "提案切結書檔案路徑"
@@ -348,7 +348,7 @@ final List<teacher_project_view_list> test2 = [
         "作品名稱", 
         "作品摘要",
         ["https://example.com/work1", "https://example.com/work2"],
-        [1, 2], // SDGs 列表
+        "1, 2", // SDGs 列表
         "作品說明書檔案路徑",
         "個資同意書檔案路徑",
         "提案切結書檔案路徑"
@@ -399,7 +399,7 @@ final List<teacher_project_view_list> test2 = [
         "作品名稱", 
         "作品摘要",
         ["https://example.com/work1", "https://example.com/work2"],
-        [1, 2], // SDGs 列表
+        "1, 2", // SDGs 列表
         "作品說明書檔案路徑",
         "個資同意書檔案路徑",
         "提案切結書檔案路徑"

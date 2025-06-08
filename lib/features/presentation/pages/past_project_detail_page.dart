@@ -169,10 +169,10 @@ Widget build(BuildContext context) {
                     children: [
                       const Text(
                         "作品摘要:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      Text(test[0].summary),
+                      Text(test[0].summary,style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -191,11 +191,11 @@ Widget build(BuildContext context) {
                     children: [
                       const Text(
                         "SDGs相關:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 4),
                       Expanded(
-                      child: Text(test[0].sdgs.join("  ")),
+                      child: Text(test[0].sdgs.join("  "),style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),),
                       ), 
                     ],
                   ),
@@ -207,11 +207,11 @@ Widget build(BuildContext context) {
                     children: [
                       const Text(
                         "相關文件:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        test[0].files.join("\n"),
+                        test[0].files.join("\n"),style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -234,10 +234,10 @@ Widget _buildInfoRow(String label, String value) {
       children: [
         Text(
           label,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize:16,fontWeight: FontWeight.bold),
         ),
         const SizedBox(width: 4),
-        Expanded(child: Text(value)),
+        Expanded(child: Text(value,style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),),),
       ],
     ),
   );
