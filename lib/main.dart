@@ -29,35 +29,35 @@ Future<void> main() async{
 }
 
 //正式版
-//class MyApp extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return  MaterialApp.router(
-//      routerConfig: webRouter,
-//      debugShowCheckedModeBanner: false,
-//    );
-//  }
-//}
-
-
- class MyApp extends StatelessWidget {
-  @override
-   Widget build(BuildContext context) {
-     return  MaterialApp(
-       //home: SignUpPage(),
-      //home: HomeWithAnnPage(),
-
-       //home: TeacherViewProjectPage(),
-
-       //home: ProjectVerifyListPage(),
-
-       //home:  ProjectVerifyDetailPage(),
-
-       //home:  TeamInfoPage(),
-
-       //home: TeacherProjectViewDetailPage(),
-
-       home: PastProjectDetailPage(),
-     );
-  }
+class MyApp extends StatelessWidget {
+ @override
+ Widget build(BuildContext context) {
+   return  MaterialApp.router(
+     routerConfig: webRouter,
+     debugShowCheckedModeBanner: false,
+   );
  }
+}
+
+
+//  class MyApp extends StatelessWidget {
+//   @override
+//    Widget build(BuildContext context) {
+//      return  MaterialApp(
+//        //home: SignUpPage(),
+//       //home: HomeWithAnnPage(),
+
+//        //home: TeacherViewProjectPage(),
+
+//        //home: ProjectVerifyListPage(),
+
+//        //home:  ProjectVerifyDetailPage(),
+
+//        //home:  TeamInfoPage(),
+
+//        //home: TeacherProjectViewDetailPage(),
+
+//        home: PastProjectDetailPage(),
+//      );
+//   }
+//  }
