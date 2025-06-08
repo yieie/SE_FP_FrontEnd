@@ -1,19 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/constants/constants.dart';
 import 'package:front_end/cores/error/handleError.dart';
+import 'package:front_end/features/domain/entity/identity/Attendee.dart';
 import 'package:front_end/features/domain/entity/identity/Judge.dart';
 import 'package:front_end/features/domain/entity/identity/Lecturer.dart';
 import 'package:front_end/features/domain/entity/identity/Student.dart';
 import 'package:front_end/features/domain/entity/identity/Teacher.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
-import 'package:front_end/features/presentation/bloc/user_management/search_user_bloc.dart';
-import 'package:front_end/features/presentation/bloc/user_management/search_user_event.dart';
-import 'package:front_end/features/presentation/bloc/user_management/search_user_state.dart';
+import 'package:front_end/features/presentation/bloc/user_management/profile_manage_bloc.dart';
+import 'package:front_end/features/presentation/bloc/user_management/profile_manage_event.dart';
+import 'package:front_end/features/presentation/bloc/user_management/profile_manage_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
+import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_dropdownButtonFormField.dart';
 import 'package:front_end/injection_container.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileManagePage extends StatefulWidget {
 
@@ -25,13 +29,20 @@ class ProfileManagePage extends StatefulWidget {
 
 class _ProfileManagePageState extends State<ProfileManagePage>{
   final TextEditingController _nameCtrl = TextEditingController();
-  final String? _sexualCtrl='';
+  String? _sexualCtrl='';
   final TextEditingController _phoneCtrl = TextEditingController();
+  final TextEditingController _emailCtrl = TextEditingController();
+  String? _studepartmentCtrl='';
+  String? _stugradeCtrl='';
+  final TextEditingController _departmentCtrl = TextEditingController();
+  final TextEditingController _organizationCtrl = TextEditingController();
+  final TextEditingController _titleCtrl = TextEditingController();
+  bool _readonly=true;
   @override
   Widget build(BuildContext context) {
     final authState = context.read<AuthBloc>().state;
     if(authState is Authenticated){
-      return BlocProvider<SearchUserBloc>(
+      return BlocProvider<ProfileManageBloc>(
         create: (context) => sl()..add(SearchUserbyUID(uid: authState.uid)),
         child: BasicScaffold(
           child: _buildbody(authState.usertype!,context)
@@ -44,26 +55,118 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
   }
 
   Widget _buildbody(String usertype,BuildContext context){
-    return BlocListener<SearchUserBloc,SearchUserState>(
+    return BlocListener<ProfileManageBloc,ProfileManageState>(
       listener: (context,state){
-        if(state is SearchError){
+        if(state is ProfileError){
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(handleDioError(state.error)),
             ),
           );
         }
+        if(state is ProfileEditting){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('修改個人資訊中'),
+            ),
+          );
+        }
+        if(state is ProfileSuccess){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('修改成功'),
+            ),
+          );
+          final authState = context.read<AuthBloc>().state;
+          if(authState is Authenticated){
+            context.read<ProfileManageBloc>().add(SearchUserbyUID(uid: authState.uid));
+          }
+          _readonly=  true;
+        }
+        if(state is ProfileLoaded){
+          setState(() {
+            _nameCtrl.text = state.user.name!;
+            _sexualCtrl = state.user.sexual!;
+            _phoneCtrl.text = state.user.phone!;
+            _emailCtrl.text = state.user.email!;
+
+            if((usertype == 'student' || usertype == 'attendee') && state.user is Student){
+              final stu = state.user as Student;
+              _studepartmentCtrl = stu.department;
+              _stugradeCtrl = stu.grade;
+            }
+            if(usertype == 'judge'){
+              final judge = state.user as Judge;
+              _titleCtrl.text = judge.title!;
+            }
+            if(usertype == 'lecturer'){
+              final lecturer = state.user as Lecturer;
+              _titleCtrl.text = lecturer.title!;
+            }
+            if(usertype == 'teacher'){
+              final teacher = state.user as Teacher;
+              _departmentCtrl.text = teacher.department!;
+              _organizationCtrl.text = teacher.organization!;
+              _titleCtrl.text = teacher.title!;
+            }
+          });
+        }
       },
-      child: BlocBuilder<SearchUserBloc,SearchUserState>(
+      child: BlocBuilder<ProfileManageBloc,ProfileManageState>(
         builder: (context,state){
-          if(state is SearchDone){
+          if(state is ProfileEditting){
+            return const Center(child: CupertinoActivityIndicator());
+          }
+          if(state is ProfileLoaded){
             return Container(
               margin: EdgeInsets.only(top: 20),
               width: 1120,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('個人資訊',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('個人資訊',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      if(_readonly)
+                        SizedBox(
+                          width: 200,
+                          height: 40,
+                          child: BasicWebButton(
+                            onPressed: (){
+                              setState(() {
+                                _readonly = false;
+                              });
+                            },
+                            title: '編輯個人檔案',
+                            fontSize: 16,
+                          ),
+                        )
+                      else
+                        SizedBox(
+                          width: 150,
+                          height: 40,
+                          child: BasicWebButton(
+                            onPressed: (){
+                              print(_sexualCtrl);
+                              if(state.user is Student){
+                                context.read<ProfileManageBloc>().add(
+                                  EditProfileEvent(original: state.user, name: _nameCtrl.text, sexual: _sexualCtrl!, phone: _phoneCtrl.text, email: _emailCtrl.text,
+                                                  department: _studepartmentCtrl,grade: _stugradeCtrl)
+                                );
+                              }else{
+                                context.read<ProfileManageBloc>().add(
+                                  EditProfileEvent(original: state.user, name: _nameCtrl.text, sexual: _sexualCtrl!, phone: _phoneCtrl.text, email: _emailCtrl.text,
+                                                  department: _departmentCtrl.text,organization: _organizationCtrl.text,title: _titleCtrl.text)
+                                );
+                              }
+                            },
+                            title:'確定變更',
+                            fontSize: 16,
+                          ),
+                        ),
+                    ],
+                  ),
                   SizedBox(height: 20,),
                   Wrap(
                     spacing: 8.0, 
@@ -132,15 +235,15 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                                   border: InputBorder.none, 
                                   contentPadding: EdgeInsets.symmetric(horizontal: 12),
                                 ),
-                                readOnly: true,
-                                controller: TextEditingController(text:state.user.name)
+                                readOnly: _readonly,
+                                controller: _nameCtrl
                               ),
                             ),
                           ],
                         ),
                       ),
                       Container(
-                        width: 100,
+                        width: 150,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(8),
@@ -160,16 +263,28 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                               child: Text('性別',style: TextStyle(fontWeight: FontWeight.bold),),
                             ),
                             Expanded(
-                              child: TextField(
+                              child: _readonly ? TextField(
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.grey.withAlpha(30),
                                   border: InputBorder.none, 
                                   contentPadding: EdgeInsets.symmetric(horizontal: 12),
                                 ),
-                                readOnly: true,
-                                controller: TextEditingController(text:state.user.sexual)
-                              ),
+                                readOnly: _readonly,
+                                controller: TextEditingController(text: state.user.sexual)
+                              ): BasicWebDropdownbuttonFormField(
+                                value: _sexualCtrl,
+                                items: <String>['男','女'].map<DropdownMenuItem<String>>((String value){
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                }).toList(),
+                                hint: Text("性別"),
+                                onChanged: (value) {
+                                  _sexualCtrl = value;
+                                },
+                            ),
                             ),
                           ],
                         ),
@@ -202,8 +317,8 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                                   border: InputBorder.none, 
                                   contentPadding: EdgeInsets.symmetric(horizontal: 12),
                                 ),
-                                readOnly: true,
-                                controller: TextEditingController(text:state.user.phone)
+                                readOnly: _readonly,
+                                controller: _phoneCtrl
                               ),
                             ),
                           ],
@@ -237,8 +352,8 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                                   border: InputBorder.none, 
                                   contentPadding: EdgeInsets.symmetric(horizontal: 12),
                                 ),
-                                readOnly: true,
-                                controller: TextEditingController(text:state.user.email)
+                                readOnly: _readonly,
+                                controller: _emailCtrl
                               ),
                             ),
                           ],
@@ -265,7 +380,7 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
   List<Widget> _buildStudetField(Student student){
     return [
       Container(
-        width: 200,
+        width: 300,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(8),
@@ -285,7 +400,17 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
               child: Text('系所',style: TextStyle(fontWeight: FontWeight.bold),),
             ),
             Expanded(
-              child: BasicWebDropdownbuttonFormField(
+              child: _readonly ? TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey.withAlpha(30),
+                  border: InputBorder.none, 
+                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                ),
+                readOnly: _readonly,
+                controller: TextEditingController(text: student.department)
+              ):BasicWebDropdownbuttonFormField(
+                value: _studepartmentCtrl,
                 items: [
                   const DropdownMenuItem<String>(
                     value: null,
@@ -335,7 +460,9 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                 ],
                 hint: Text("系所"),
                 onChanged: (value) {
-                  
+                  setState(() {
+                    _studepartmentCtrl = value;
+                  });
                 },
             )
             ),
@@ -363,20 +490,64 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
               child: Text('年級',style: TextStyle(fontWeight: FontWeight.bold),),
             ),
             Expanded(
-              child: TextField(
+              child: _readonly ? TextField(
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey.withAlpha(30),
                   border: InputBorder.none, 
                   contentPadding: EdgeInsets.symmetric(horizontal: 12),
                 ),
-                readOnly: true,
-                controller: TextEditingController(text:student.grade)
+                readOnly: _readonly,
+                controller: TextEditingController(text: student.grade)
+              ): BasicWebDropdownbuttonFormField(
+                value: _stugradeCtrl,
+                items: grade.map((grade) => DropdownMenuItem<String>
+                (
+                  value: grade,
+                  child: Text(grade)
+                )).toList(), 
+                hint: Text('年級'),
+                onChanged: (value){
+                  setState(() {
+                    _stugradeCtrl = value;
+                  });
+                }
               ),
             ),
           ],
         ),
       ),
+      if(student is Attendee)
+        Container(
+          width: 400,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(8),
+            
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    decoration: BoxDecoration(
+                      // color: Color(0xffd9d9d9),
+                      border: Border(right: BorderSide(color: Colors.black),bottom: BorderSide(color: Colors.black)),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        bottomLeft: Radius.circular(0),
+                        bottomRight: Radius.circular(8)
+                      ),
+                    ),
+                    child: Text('學生證',style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
+              Image.network(student.studentCard!,height: 200,)
+            ],
+          ),
+        ),
     ];
   }
 
@@ -409,8 +580,8 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                 border: InputBorder.none, 
                 contentPadding: EdgeInsets.symmetric(horizontal: 12),
               ),
-              readOnly: true,
-              controller: TextEditingController(text:judge.title)
+              readOnly: _readonly,
+              controller: _titleCtrl
             ),
           ),
         ],
@@ -447,8 +618,8 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                 border: InputBorder.none, 
                 contentPadding: EdgeInsets.symmetric(horizontal: 12),
               ),
-              readOnly: true,
-              controller: TextEditingController(text:lecturer.title)
+              readOnly: _readonly,
+              controller: _titleCtrl
             ),
           ),
         ],
@@ -486,8 +657,8 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                   border: InputBorder.none, 
                   contentPadding: EdgeInsets.symmetric(horizontal: 12),
                 ),
-                readOnly: true,
-                controller: TextEditingController(text:teacher.organization)
+                readOnly: _readonly,
+                controller: _organizationCtrl
               ),
             ),
           ],
@@ -521,8 +692,8 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                   border: InputBorder.none, 
                   contentPadding: EdgeInsets.symmetric(horizontal: 12),
                 ),
-                readOnly: true,
-                controller: TextEditingController(text:teacher.department)
+                readOnly: _readonly,
+                controller:_departmentCtrl
               ),
             ),
           ],
@@ -556,8 +727,8 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                   border: InputBorder.none, 
                   contentPadding: EdgeInsets.symmetric(horizontal: 12),
                 ),
-                readOnly: true,
-                controller: TextEditingController(text:teacher.title)
+                readOnly: _readonly,
+                controller: _titleCtrl
               ),
             ),
           ],

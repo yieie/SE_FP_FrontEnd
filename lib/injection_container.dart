@@ -23,6 +23,7 @@ import 'package:front_end/features/domain/repositories/user_management_repositor
 import 'package:front_end/features/domain/repositories/workshop_repository.dart';
 import 'package:front_end/features/domain/usecases/admin/add_new_announcement.dart';
 import 'package:front_end/features/domain/usecases/admin/edit_old_announcement.dart';
+import 'package:front_end/features/domain/usecases/edit_profile.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_competition_info_by_teamid.dart';
 import 'package:front_end/features/domain/usecases/get_competition_info_by_uid.dart';
@@ -47,7 +48,7 @@ import 'package:front_end/features/presentation/bloc/competition/sign_up_competi
 import 'package:front_end/features/presentation/bloc/score/score_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/score/score_list_event.dart';
 import 'package:front_end/features/presentation/bloc/score/score_team_bloc.dart';
-import 'package:front_end/features/presentation/bloc/user_management/search_user_bloc.dart';
+import 'package:front_end/features/presentation/bloc/user_management/profile_manage_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_bloc.dart';
 import 'package:front_end/mock/mock_response.dart';
@@ -129,6 +130,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SearchUserByUidUseCase>(
     SearchUserByUidUseCase(sl())
   );
+  sl.registerSingleton<EditProfileUseCase>(
+    EditProfileUseCase(sl())
+  );
   sl.registerSingleton<SignUpCompetitionUseCase>(
     SignUpCompetitionUseCase(sl())
   );
@@ -172,8 +176,8 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<WorkshopParticipationBloc>(
     () => WorkshopParticipationBloc(sl(),sl())
   );
-  sl.registerFactory<SearchUserBloc>(
-    () => SearchUserBloc(sl())
+  sl.registerFactory<ProfileManageBloc>(
+    () => ProfileManageBloc(sl(),sl())
   );
   sl.registerFactory<SignUpCompetitionBloc>(
     () => SignUpCompetitionBloc(sl(),sl())
