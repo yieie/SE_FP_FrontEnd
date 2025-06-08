@@ -21,9 +21,9 @@ class ProjectModel extends Project {
       abstract: json['teamInfo']?['workAbstract'] ?? '',
       sdgs: json['teamInfo']?['sdgs'] ?? '',
       url: (json['teamInfo']?['workUrls'] != null)? List<String>.from(json['teamInfo']?['workUrls']): [],
-      introductionFile: json['teamInfo']?['workintroduction'] ?? '',
-      affidavitFile: json['teamInfo']?['workaffidavit'] ?? '',
-      consentFile: json['teamInfo']?['workconsent'] ?? '',
+      introductionFile: json['teamInfo']?['workIntroduction'] ?? '',
+      affidavitFile: json['teamInfo']?['workAffidavit'] ?? '',
+      consentFile: json['teamInfo']?['workConsent'] ?? '',
       score: json['score']
     );
   }
