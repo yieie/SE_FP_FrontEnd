@@ -17,7 +17,6 @@ import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart
 import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_dropdownButtonFormField.dart';
 import 'package:front_end/injection_container.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfileManagePage extends StatefulWidget {
 
@@ -359,7 +358,7 @@ class _ProfileManagePageState extends State<ProfileManagePage>{
                           ],
                         ),
                       ),
-                      if(usertype == 'student' && state.user is Student)..._buildStudetField(state.user as Student),
+                      if((usertype == 'student' || usertype == 'attendee' )&& state.user is Student)..._buildStudetField(state.user as Student),
                       if(usertype == 'judge')
                         _buildJudgeField(state.user as Judge),
                       if(usertype == 'lecturer')
