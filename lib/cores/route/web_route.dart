@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/pages/admin/admin_overview_page.dart';
+import 'package:front_end/features/presentation/pages/admin/announcement_manage_list_page.dart';
 import 'package:front_end/features/presentation/pages/attendee/sign_up_competition_page.dart';
 import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
@@ -108,6 +109,24 @@ final GoRouter webRouter = GoRouter(
       path: '/overview',
       name: 'overview',
       builder: (context, state) => AdminOverviewPage(),
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'admin') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
+    ),
+    GoRoute(
+      path: '/annManageList/:page',
+      name: 'annManageList',
+      builder: (context, state){
+        final pageStr = state.pathParameters['page'];
+
+        final page = int.tryParse(pageStr ?? '') ?? 1;
+        print(page);
+        return AnnouncementManageListPage(page: page);
+      },
       redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;
       if (authState.usertype != 'admin') {

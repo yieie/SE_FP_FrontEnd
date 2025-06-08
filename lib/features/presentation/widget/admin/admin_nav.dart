@@ -80,7 +80,9 @@ class _AdminNavState extends State<AdminNav>{
                     fontSize: 16
                   ),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    context.go('/annManageList/1');
+                  },
                 ),
               ),
               Container(
