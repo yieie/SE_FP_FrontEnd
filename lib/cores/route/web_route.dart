@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/pages/attendee/sign_up_competition_page.dart';
 import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
 import 'package:front_end/features/presentation/pages/judge/project_view_list_page.dart';
+import 'package:front_end/features/presentation/pages/profile_manage_page.dart';
 import 'package:front_end/features/presentation/pages/sign_in_page.dart';
 import 'package:front_end/features/presentation/pages/sign_up_page.dart';
 import 'package:front_end/features/presentation/pages/workshop_page.dart';
@@ -84,6 +86,18 @@ final GoRouter webRouter = GoRouter(
       redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;
       if (authState.usertype != 'judge') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
+    ),
+    GoRoute(
+      path: '/profile',
+      name: 'profile',
+      builder: (context, state)=> ProfileManagePage(),
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState is Unauthenticated) {
         return '/homeWithAnn/1'; 
       }
       return null;
