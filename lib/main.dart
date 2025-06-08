@@ -6,6 +6,7 @@ import 'package:front_end/features/presentation/bloc/auth/auth_event.dart';
 
 
 import 'package:front_end/features/presentation/pages/past_project_list_page.dart';
+import 'package:front_end/features/presentation/pages/past_project_detail_page.dart';
 
 
 import 'package:front_end/features/presentation/pages/teacher/teacher_project_view_list.dart';
@@ -47,10 +48,16 @@ Future<void> main() async{
       //home: HomeWithAnnPage(),
 
        //home: TeacherViewProjectPage(),
+
        //home: ProjectVerifyListPage(),
+
        //home:  ProjectVerifyDetailPage(),
+
        //home:  TeamInfoPage(),
-       home: TeacherProjectViewDetailPage(),
+
+       //home: TeacherProjectViewDetailPage(),
+
+       home: PastProjectDetailPage(),
      );
   }
  }
