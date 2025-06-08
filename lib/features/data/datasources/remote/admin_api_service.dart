@@ -13,7 +13,4 @@ abstract class AdminApiService {
 
   @GET('/admin/getAdminMainPage.php')
   Future<HttpResponse<ResponseMessage>> getOverview();
-
-  @POST('/ann/addAnn.php')
-  Future<HttpResponse<ResponseMessage>> addNewAnnouncement(@Body() Map<String,dynamic> body);
 }

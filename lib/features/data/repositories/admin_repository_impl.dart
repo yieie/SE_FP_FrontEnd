@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:file_picker/src/platform_file.dart';
 import 'package:front_end/cores/resources/ResponseMessage.dart';
 import 'package:front_end/cores/resources/data_state.dart';
 import 'package:front_end/features/data/datasources/remote/admin_api_service.dart';
@@ -38,14 +39,6 @@ class AdminRepositoryImpl implements AdminRepository{
       return DataFailed(e);
     }
   }
-  
-  @override
-  Future<DataState<ResponseMessage>> addNewAnnouncement(Announcement ann, String adminid) {
-    // TODO: implement addNewAnnouncement
-    throw UnimplementedError();
-  }
 
-  
-
-
+ 
 }
