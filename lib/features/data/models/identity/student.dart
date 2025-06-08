@@ -23,4 +23,30 @@ class StudentModel extends Student {
     );
   }
 
+  factory StudentModel.fromEntity(Student student){
+    return StudentModel(
+      uid: student.uid,
+      name: student.name,
+      email: student.email,
+      sexual: student.sexual,
+      phone: student.phone,
+      department: student.department,
+      grade: student.grade
+    );
+  }
+
+  Map<String,dynamic> toJson(){
+    return {
+      "uId": uid,
+      "name": name,
+      "email": email,
+      "phone": phone,
+      "sexual": sexual,
+      "studentInfo": {
+        "department": department,
+        "grade": grade
+      },
+    };
+  }
+
 }

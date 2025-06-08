@@ -28,4 +28,30 @@ class AttendeeModel extends Attendee{
       workID: json['attendeeInfo']['workId'] as String?
     );
   }
+
+  factory AttendeeModel.fromEntity(AttendeeModel attendee){
+    return AttendeeModel(
+      uid: attendee.uid,
+      name: attendee.name,
+      email: attendee.email,
+      sexual: attendee.sexual,
+      phone: attendee.phone,
+      department: attendee.department,
+      grade: attendee.grade
+    );
+  }
+
+  Map<String,dynamic> toJson(){
+    return {
+      "uId": uid,
+      "name": name,
+      "email": email,
+      "phone": phone,
+      "sexual": sexual,
+      "studentInfo": {
+          "department": department,
+          "grade": grade
+      },
+    };
+  }
 }

@@ -24,4 +24,32 @@ class TeacherModel extends Teacher{
       title: json['teacherInfo']['title'] as String?
     );
   }
+
+  factory TeacherModel.fromEntity(Teacher teacher){
+    return TeacherModel(
+      uid: teacher.uid,
+      name: teacher.name,
+      email: teacher.email,
+      sexual: teacher.sexual,
+      phone: teacher.phone,
+      department: teacher.department,
+      organization: teacher.organization,
+      title: teacher.title
+    );
+  }
+
+  Map<String,dynamic> toJson(){
+    return {
+      "uId": uid,
+      "name": name,
+      "email": email,
+      "phone": phone,
+      "sexual": sexual,
+      "teacherInfo": {
+        "department": department,
+        "organization": organization,
+        "title": title
+      },
+    };
+  }
 }

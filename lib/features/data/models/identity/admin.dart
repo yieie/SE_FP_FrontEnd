@@ -18,4 +18,24 @@ class AdminModel extends Admin{
       phone: json['phone'] as String?,
     );
   }
+
+  factory AdminModel.fromEntity(Admin admin){
+    return AdminModel(
+      uid: admin.uid,
+      name: admin.name,
+      email: admin.email,
+      sexual: admin.sexual,
+      phone: admin.phone,
+    );
+  }
+
+  Map<String,dynamic> toJson(){
+    return {
+      "uId": uid,
+      "name": name,
+      "email": email,
+      "phone": phone,
+      "sexual": sexual,
+    };
+  }
 }

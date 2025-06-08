@@ -20,4 +20,28 @@ class JudgeModel extends Judge{
       title: json['judgeInfo']['title'] as String?
     );
   }
+
+  factory JudgeModel.fromEntity(Judge judge){
+    return JudgeModel(
+      uid: judge.uid,
+      name: judge.name,
+      email: judge.email,
+      sexual: judge.sexual,
+      phone: judge.phone,
+      title: judge.title
+    );
+  }
+
+  Map<String,dynamic> toJson(){
+    return {
+      "uId": uid,
+      "name": name,
+      "email": email,
+      "phone": phone,
+      "sexual": sexual,
+      "judgeInfo": {
+          "title": title
+      },
+    };
+  }
 }

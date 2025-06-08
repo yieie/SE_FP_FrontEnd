@@ -20,4 +20,28 @@ class LecturerModel extends Lecturer{
       title: json['lecturerInfo']['title'] as String?
     );
   }
+
+  factory LecturerModel.fromEntity(Lecturer lecturer){
+    return LecturerModel(
+      uid: lecturer.uid,
+      name: lecturer.name,
+      email: lecturer.email,
+      sexual: lecturer.sexual,
+      phone: lecturer.phone,
+      title: lecturer.title
+    );
+  }
+
+  Map<String,dynamic> toJson(){
+    return {
+      "uId": uid,
+      "name": name,
+      "email": email,
+      "phone": phone,
+      "sexual": sexual,
+      "lecturerInfo": {
+          "title": title
+      },
+    };
+  }
 }
