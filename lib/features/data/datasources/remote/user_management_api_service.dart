@@ -11,4 +11,7 @@ abstract class UserManagementApiService {
 
   @GET('/profile/getUserInfo.php')
   Future<HttpResponse<ResponseMessage>> searchUserbyUID(@Query("uId") String uid);
+  
+  @PUT('/profile/updateUserProfile.php')
+  Future<HttpResponse<ResponseMessage>> editProfile(@Body() Map<String,dynamic> body);
 }
