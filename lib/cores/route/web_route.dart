@@ -96,13 +96,13 @@ final GoRouter webRouter = GoRouter(
       }
     ),
     GoRoute(
-      path: '/projectViewDetail/:teamid',
+      path: '/projectViewDetail/:teamid/:workid',
       name: 'projectViewDetail',
       builder: (context, state){
         final teamid = state.pathParameters['teamid'];
-        if(teamid != null){
-          print(teamid);
-          return ProjectViewDetailPage(teamid: teamid);
+        final workid = state.pathParameters['workid'];
+        if(teamid != null && workid != null){
+          return ProjectViewDetailPage(teamid: teamid, workid: workid);
         }else{
           return ProjectViewListPage(page: 1); 
         }
