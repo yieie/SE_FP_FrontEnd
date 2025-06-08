@@ -20,7 +20,7 @@ class teamInfo {
   final String workName;//作品名      
   final String workAbstract;//作品摘要          
   final List<String> workUrls;//作品連結:yt和github
-  final List<int> sdgs;//sdgs
+  final String sdgs;//sdgs
   final String workIntroduction;//作品說明書 
   final String workConsent;//個資同意書     
   final String workAffidavit;//提案切結書 
@@ -93,7 +93,7 @@ final List<teacher_project_view_detail> test2 = [
         "作品名稱", 
         "作品摘要",
         ["https://example.com/work1", "https://example.com/work2"],
-        [1, 2], // SDGs 列表
+        "1, 2",
         "作品說明書檔案路徑",
         "個資同意書檔案路徑",
         "提案切結書檔案路徑"
@@ -293,10 +293,10 @@ class _TeamInfoPageState extends State<TeamInfoPage> {
                     children: [
                       const Text(
                         "作品摘要:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      Text(team.workAbstract),
+                      Text(team.workAbstract,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -315,11 +315,11 @@ class _TeamInfoPageState extends State<TeamInfoPage> {
                     children: [
                       const Text(
                         "SDGs相關:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 4),
                       Expanded(
-                        child: Text(team.sdgs.join("  "),style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                        child: Text(team.sdgs,style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                       ), 
                     ],
                   ),

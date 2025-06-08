@@ -53,10 +53,10 @@ Future<void> main() async{
        //home: ProjectVerifyListPage(),
        //home: ProjectVerifyDetailPage(),
 
-       //home:  TeamInfoPage(),
+       home:  TeamInfoPage(),
 
     
-       home: PastProjectListPage(),
+       //home: PastProjectListPage(),
        //home: PastProjectDetailPage(),
      );
   }
