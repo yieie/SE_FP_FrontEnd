@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
+import 'package:front_end/features/presentation/widget/admin/admin_nav.dart';
 import 'package:front_end/features/presentation/widget/attendee/attendee_nav.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_nav.dart';
 import 'package:front_end/features/presentation/widget/judge/judge_nav.dart';
 import 'package:front_end/features/presentation/widget/student/student_nav.dart';
+import 'package:front_end/features/presentation/widget/teacher/teahcer_nav.dart';
 
 class BasicScaffold extends StatelessWidget {
   final Widget child;
@@ -47,8 +49,10 @@ class BasicScaffold extends StatelessWidget {
                     StudentNav(),
                   if(authstate.usertype == "attendee")
                     AttendeeNav(),
-                  // if(authstate.usertype == "admin")
-                  // if(authstate.usertype == "teacher")
+                  if(authstate.usertype == "admin")
+                    AdminNav(),
+                  if(authstate.usertype == "teacher")
+                    TeahcerNav(),
                   if(authstate.usertype == "judge")
                     JudgeNav(),
                   // if(authstate.usertype == "lecturer")
