@@ -1,3 +1,5 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/pages/attendee/sign_up_competition_page.dart';
 import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
@@ -60,18 +62,32 @@ final GoRouter webRouter = GoRouter(
     GoRoute(
       path: '/signupCompetiton',
       name: 'signupCompetition',
-      builder: (context, state)=> SignUpCompetitionPage()
+      builder: (context, state)=> SignUpCompetitionPage(),
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'student') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+  }
     ),
     GoRoute(
-      path: '/projectviewlist/:page',
-      name: 'projectviewlist',
+      path: '/projectViewList/:page',
+      name: 'projectViewList',
       builder: (context, state){
         final pageStr = state.pathParameters['page'];
 
         final page = int.tryParse(pageStr ?? '') ?? 1;
         print(page);
         return ProjectViewListPage(page: page);
-      } 
+      } ,
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'judge') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
     ),
   ]
 );

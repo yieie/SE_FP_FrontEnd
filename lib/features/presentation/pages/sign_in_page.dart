@@ -49,7 +49,7 @@ class _SignInPageState extends State<SignInPage>{
         if(state is SignInSuccess){
             context.read<AuthBloc>().add(LoggedIn(usertype: state.responseMessage!.extraData?['userType'], uid: accountCtrl.text));
             if(state.responseMessage!.extraData?['userType'] == "judge"){
-              context.go('/projectviewlist/1');
+              context.go('/projectViewList/1');
             }else{
               context.go('/homeWithAnn/1');
             }
