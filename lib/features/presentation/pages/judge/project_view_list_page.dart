@@ -21,6 +21,7 @@ class ProjectViewListPage extends StatelessWidget{
     bool isLoggedIn = authState is Authenticated;
     if(isLoggedIn){
       return BlocProvider<ScoreListBloc>(
+      key: ValueKey(page),
       create: (context) => sl()..add(GetScoreList(page)),
       child: BasicScaffold(
               child: _buildBody(context)
