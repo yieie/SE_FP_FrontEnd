@@ -15,7 +15,6 @@ class SearchUserBloc extends Bloc<SearchUserEvent, SearchUserState> {
     final datastate = await _searchUserByUidUseCase(params: event.uid);
 
     if(datastate is DataSuccess){
-      print("got it");
       emit(
         SearchDone(user: datastate.data!)
       );
