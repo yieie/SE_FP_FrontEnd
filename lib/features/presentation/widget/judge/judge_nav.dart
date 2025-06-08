@@ -113,7 +113,9 @@ class _JudgeNavState extends State<JudgeNav>{
                     fontSize: 16
                   ),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    context.go('/pastProjects');
+                  },
                 ),
               ),
               GestureDetector(

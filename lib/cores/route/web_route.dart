@@ -9,6 +9,8 @@ import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
 import 'package:front_end/features/presentation/pages/judge/project_view_detail_page.dart';
 import 'package:front_end/features/presentation/pages/judge/project_view_list_page.dart';
+import 'package:front_end/features/presentation/pages/past_project_detail_page.dart';
+import 'package:front_end/features/presentation/pages/past_project_list_page.dart';
 import 'package:front_end/features/presentation/pages/profile_manage_page.dart';
 import 'package:front_end/features/presentation/pages/sign_in_page.dart';
 import 'package:front_end/features/presentation/pages/sign_up_page.dart';
@@ -41,11 +43,23 @@ final GoRouter webRouter = GoRouter(
       name: 'workshops',
       builder: (context, state) => WorkshopPage(),
     ),
-    // GoRoute(
-    //   path: '/pastProjects',
-    //   name: 'pastProjects',
-    //   builder: (context, state) => SignUpPage(),
-    // ),
+    GoRoute(
+      path: '/pastProjects',
+      name: 'pastProjects',
+      builder: (context, state) => PastProjectPage(),
+    ),
+    GoRoute(
+      path: '/pastProjectsDetail/:teamid',
+      name: 'pastProjectsDetail',
+      builder: (context, state){
+        final teamid = state.pathParameters['teamid'];
+        if(teamid != null){
+          return PastProjectDetailPage(teamid: teamid);
+        }else{
+          return PastProjectPage();
+        }
+      } 
+    ),
     GoRoute(
       path: '/register',
       name: 'register',

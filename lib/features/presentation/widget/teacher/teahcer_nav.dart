@@ -96,7 +96,9 @@ class _TeahcerNavState extends State<TeahcerNav>{
                     fontSize: 16
                   ),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    context.go('/pastProjects');
+                  },
                 ),
               ),
               Container(

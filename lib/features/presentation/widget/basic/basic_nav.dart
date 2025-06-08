@@ -41,7 +41,9 @@ Widget buildBasicNav(BuildContext context){
                 fontSize: 16
               ),
               ),
-              onPressed: (){},
+              onPressed: (){
+                context.go('/pastProjects');
+              },
             ),
           ),
           Container(

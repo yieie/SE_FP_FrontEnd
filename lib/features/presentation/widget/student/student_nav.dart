@@ -96,7 +96,9 @@ class _StudentNavState extends State<StudentNav>{
                     fontSize: 16
                   ),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    context.go('/pastProjects');
+                  },
                 ),
               ),
               Container(
