@@ -16,14 +16,14 @@ class ProjectModel extends Project {
   // 待確認API文件欄位名稱
   factory ProjectModel.fromJson(Map<String , dynamic> json){
     return ProjectModel(
-      name: json['teaminfo']?['workName'] ?? json['workName'] ?? '',
+      name: json['teamInfo']?['workName'] ?? json['workName'] ?? '',
       workID: json['workId'] ?? '' , 
-      abstract: json['teaminfo']?['workAbstract'] ?? '',
-      sdgs: json['teaminfo']?['sdgs'] ?? '',
-      url: json['teaminfo']?['workUrls'] ,
-      introductionFile: json['teaminfo']?['workintroduction'] ?? '',
-      affidavitFile: json['teaminfo']?['workaffidavit'] ?? '',
-      consentFile: json['teaminfo']?['workconsent'] ?? ''
+      abstract: json['teamInfo']?['workAbstract'] ?? '',
+      sdgs: json['teamInfo']?['sdgs'] ?? '',
+      url: (json['teamInfo']?['workUrls'] != null)? List<String>.from(json['teamInfo']?['workUrls']): [],
+      introductionFile: json['teamInfo']?['workintroduction'] ?? '',
+      affidavitFile: json['teamInfo']?['workaffidavit'] ?? '',
+      consentFile: json['teamInfo']?['workconsent'] ?? ''
     );
   }
 }

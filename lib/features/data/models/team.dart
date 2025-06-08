@@ -16,11 +16,11 @@ class TeamModel extends Team{
   factory TeamModel.fromJson(Map<String, dynamic> json){
     return TeamModel(
       teamID: json['teamId'] ?? '', 
-      name: json['teaminfo']?['teamName'] ?? json['teamName'] ?? '',
-      type: json['teaminfo']?['teamType'] ?? json['teamType'] ?? '',
+      name: json['teamInfo']?['teamName'] ?? json['teamName'] ?? '',
+      type: json['teamInfo']?['teamType'] ?? json['teamType'] ?? '',
       rank: json['rank'],
       teacher: json['advisorInfo'] != null ? TeacherModel.fromJson(json['advisorInfo']) : null,
-      members:  json['memberInfo']?.map((json) => AttendeeModel.fromJson(json)).toList() 
+      members:  (json['memberInfo'] as List<dynamic>?)?.map((json) => AttendeeModel.fromJson(json as Map<String, dynamic>)).toList()
     );
   }
   
