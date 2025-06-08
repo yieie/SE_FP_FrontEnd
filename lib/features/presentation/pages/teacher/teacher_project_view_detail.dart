@@ -135,46 +135,6 @@ final List<teacher_project_view_detail> test2 = [
   ),
 ];
 
-
-
-class Member {
-  final String department; //科系
-  final String name;      //隊員名字
-  Member(this.department,this.name);
-}
-
-class ProjectVerifyDetail {
-  final String advisor_name;//指導老師名字
-  final String advisor_title;//指導老職稱
-  final String advisor_school; //指導老師所屬機構
-  final List<Member> members; //成員的各個資訊
-
-  final String group; //參賽組別
-  final String team_name; //團隊名稱
-  final String project_name; //團隊名稱
-  final String summary; //摘要
-  final String yt_url; //youtube連結
-  final String github_url; //github連結
-  final List<String> sdgs;//sdgs
-  final List<String> files;//相關文件
-
-  ProjectVerifyDetail({
-    required this.advisor_name,
-    required this.advisor_title,
-    required this.advisor_school,
-    required this.members,
-
-    required this.group,
-    required this.team_name,
-    required this.project_name,
-    required this.summary,
-    required this.yt_url,
-    required this.github_url,
-    required this.sdgs,
-    required this.files,
-  });
-}
-
 class TeacherProjectViewDetailPage extends StatefulWidget {
   const TeacherProjectViewDetailPage({super.key});
   

@@ -30,8 +30,6 @@ class teamInfo {
   );
 }
 
-
-
 class teacherInfo {
   final String title;//職位 
   final String department;//系所      
@@ -70,18 +68,6 @@ class memberInfo {
 
   memberInfo(this.uId, this.name, this.email, 
   this.phone, this.student_Info, this.attendee_Info);
-}
-
-
-
-class Member {
-  final String department; // 系所
-  final String name;      // 名字
-
-  Member(this.department, this.name);
-
-  @override
-  String toString() => "$department $name";
 }
 
 class teacher_project_view_list {

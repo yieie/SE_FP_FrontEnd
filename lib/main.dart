@@ -48,13 +48,13 @@ Future<void> main() async{
       //home: HomeWithAnnPage(),
 
        //home: TeacherViewProjectPage(),
-       home: TeacherProjectViewDetailPage(),
+       //home: TeacherProjectViewDetailPage(),
 
        //home: ProjectVerifyListPage(),
 
        //home:  ProjectVerifyDetailPage(),
 
-       //home:  TeamInfoPage(),
+       home:  TeamInfoPage(),
 
       
 
