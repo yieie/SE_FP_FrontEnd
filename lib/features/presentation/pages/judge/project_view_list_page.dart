@@ -153,7 +153,7 @@ class ProjectViewListPage extends StatelessWidget{
                           icon: const Icon(Icons.chevron_left),
                           onPressed: currentPage > 1
                               ? () {
-                                  context.pushReplacement('/projectviewlist/${currentPage - 1}');
+                                  context.pushReplacement('/projectViewList/${currentPage - 1}');
                                 }
                               : null,
                         ),
@@ -162,7 +162,7 @@ class ProjectViewListPage extends StatelessWidget{
                           icon: const Icon(Icons.chevron_right),
                           onPressed: currentPage < totalPages
                               ? () {
-                                  context.pushReplacement('/projectviewlist/${currentPage + 1}');
+                                  context.pushReplacement('/projectViewList/${currentPage + 1}');
                                 }
                               : null,
                         ),
