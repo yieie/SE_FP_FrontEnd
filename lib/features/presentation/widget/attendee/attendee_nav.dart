@@ -39,7 +39,9 @@ class _AttendeeNavState extends State<AttendeeNav>{
                     fontSize: 12
                   ),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    context.go('/profile');
+                  },
                 ),
                 TextButton(
                   child: Text("登出",
@@ -49,6 +51,7 @@ class _AttendeeNavState extends State<AttendeeNav>{
                   ),
                   ),
                   onPressed: (){
+                    context.go('/homeWithAnn/1');
                     context.read<AuthBloc>().add(LoggedOut());
                   },
                 ),

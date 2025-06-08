@@ -39,7 +39,9 @@ class _JudgeNavState extends State<JudgeNav>{
                     fontSize: 12
                   ),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    context.go('/profile');
+                  },
                 ),
                 TextButton(
                   child: Text("登出",
@@ -49,7 +51,9 @@ class _JudgeNavState extends State<JudgeNav>{
                   ),
                   ),
                   onPressed: (){
+                    
                     context.read<AuthBloc>().add(LoggedOut());
+                    context.go('/homeWithAnn/1');
                   },
                 ),
                 SizedBox(height: 10,)
