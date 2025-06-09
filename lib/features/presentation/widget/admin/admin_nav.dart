@@ -85,34 +85,34 @@ class _AdminNavState extends State<AdminNav>{
                   },
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 17.5),
-                child: TextButton(
-                  child: Text("工作坊管理",
-                  style: TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 3.2,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                  ),
-                  ),
-                  onPressed: (){},
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 17.5),
-                child: TextButton(
-                  child: Text("使用者管理",
-                  style: TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 3.2,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                  ),
-                  ),
-                  onPressed: (){},
-                ),
-              ),
+              // Container(
+              //   margin: EdgeInsets.symmetric(horizontal: 17.5),
+              //   child: TextButton(
+              //     child: Text("工作坊管理",
+              //     style: TextStyle(
+              //       color: Colors.white,
+              //       letterSpacing: 3.2,
+              //       fontWeight: FontWeight.bold,
+              //       fontSize: 16
+              //     ),
+              //     ),
+              //     onPressed: (){},
+              //   ),
+              // ),
+              // Container(
+              //   margin: EdgeInsets.symmetric(horizontal: 17.5),
+              //   child: TextButton(
+              //     child: Text("使用者管理",
+              //     style: TextStyle(
+              //       color: Colors.white,
+              //       letterSpacing: 3.2,
+              //       fontWeight: FontWeight.bold,
+              //       fontSize: 16
+              //     ),
+              //     ),
+              //     onPressed: (){},
+              //   ),
+              // ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 17.5),
                 width: 160,

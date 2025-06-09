@@ -116,15 +116,15 @@ Widget buildTeamMemberInfo(BuildContext context, SignUpCompetitionState state,{b
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('隊員 ${index + 1}${isLeader ? "（代表人）" : ""}', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
-                  if(isLeader == false && !editmode) 
-                    BasicWebButton(
-                      width: 60,
-                      height: 40,
-                      onPressed: (){},
-                      title: '刪除隊員',
-                      fontSize: 16,
-                      backgroundColor: Color(0xffF96D4E),
-                    )
+                  // if(isLeader == false && !editmode) 
+                  //   BasicWebButton(
+                  //     width: 60,
+                  //     height: 40,
+                  //     onPressed: (){},
+                  //     title: '刪除隊員',
+                  //     fontSize: 16,
+                  //     backgroundColor: Color(0xffF96D4E),
+                  //   )
                 ],
               ),
               SizedBox(height: 12,),
