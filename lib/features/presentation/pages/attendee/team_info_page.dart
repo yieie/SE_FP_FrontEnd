@@ -1,205 +1,226 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:front_end/cores/constants/constants.dart';
 import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/data/models/announcement.dart';
+import 'package:front_end/features/domain/entity/TeamWithProject.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/ann_event.dart';
 import 'package:front_end/features/presentation/bloc/ann_state.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
+import 'package:front_end/features/presentation/bloc/competition/get_competition_info_bloc.dart';
+import 'package:front_end/features/presentation/bloc/competition/get_competition_info_event.dart';
+import 'package:front_end/features/presentation/bloc/competition/get_competition_info_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
 import 'package:front_end/injection_container.dart';
 import 'package:go_router/go_router.dart';
-
-class Member {
-  final String name;      //隊員名字
-  final String uid;      //隊員學號
-  final String grade;      //年級
-  final String department; //科系
-  final String phone; //電話
-  final String email; //信箱
-  final String student_iD_card;//學生證
-  Member(this.name, this.uid, this.grade, this.department, this.phone, this.email,this.student_iD_card);
-}
-
-class TeamInfo {
-  final String advisor_name;//指導老師名字
-  final String advisor_title;//指導老職稱
-  final String advisor_school; //指導老師所屬機構
-  final List<Member> members; //成員的各個資訊
-
-  final String group; //參賽組別
-  final String team_name; //團隊名稱
-  final String project_name; //團隊名稱
-  final String summary; //摘要
-  final String yt_url; //youtube連結
-  final String github_url; //github連結
-  final List<String> sdgs;//sdgs
-  final List<String> files;//相關文件
-
-  TeamInfo({
-    required this.advisor_name,
-    required this.advisor_title,
-    required this.advisor_school,
-    required this.members,
-
-    required this.group,
-    required this.team_name,
-    required this.project_name,
-    required this.summary,
-    required this.yt_url,
-    required this.github_url,
-    required this.sdgs,
-    required this.files,
-  });
-}
+import 'package:url_launcher/url_launcher.dart';
+import 'package:web/web.dart' as web;
 
 class TeamInfoPage extends StatefulWidget {
-  const TeamInfoPage({super.key});
+  final String uid;
+  const TeamInfoPage({super.key,required this.uid});
 
   @override
   State<TeamInfoPage> createState() => _TeamInfoPageState();
 }
 
 class _TeamInfoPageState extends State<TeamInfoPage> {
-  // 測試假資料
-  final List<TeamInfo> test = [
-    TeamInfo(
-      advisor_name: "老師名字test1",
-      advisor_title: "老師職稱test1",
-      advisor_school: "老師所屬機構test1",
-      members: [
-        Member("學生1", "A111111", "大四", "資訊工程學系", "090001", "1@gmail.com","學生證1.jpg"),
-        Member("學生2", "A111112", "大四", "資訊工程學系", "090002", "2@gmail.com","學生證2.jpg"),
-        Member("學生3", "A111113", "大四", "資訊工程學系", "090003", "3@gmail.com","學生證3.jpg"),
-      ], 
-      group:"創意發想組",
-      team_name:"Future seeker",
-      project_name: "guradian",
-      summary: "test123456789asdfghjklqwryiopoiuy",
-      yt_url: "https://123456789",
-      github_url: "https://123456789",
-      sdgs: ["1", "2"],
-      files: ["作品說明書.pdf", "提案切結書.pdf", "個茲同意書.pdf"],
-    ),
-  ];
 
-
-  String _selectedStatus = '待審核'; // 預設選中"待審核"
-  final List<String> _statusOptions = ['待審核', '已審核', '需補件'];
-
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw '無法開啟連結：$url';
+    }
+  }
 
 
   String _selectedTab = '隊伍資料'; //當前選中的
 
   @override
-Widget build(BuildContext context) {
-  return BasicScaffold(
-    child: Center( 
-      child: Container(
-        constraints: BoxConstraints(maxWidth: 800),
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "隊伍狀態: $_selectedStatus",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  
-                  SizedBox(
-                    width: 100,
-                    height: 40,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 221, 99, 78),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: EdgeInsets.zero, 
-                      ),
-                      onPressed: () {
-                        // 編輯資料的邏輯
-                      },
-                      child: const Text(
-                        "編輯資料",
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            
-            const SizedBox(height: 10),
-            
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+  Widget build(BuildContext context) {
+    final authState = context.read<AuthBloc>().state;
+    bool isLoggedIn = authState is Authenticated;
+    if(isLoggedIn){
+      return BlocProvider<GetCompetitionInfoBloc>(
+      create: (context) => sl()..add(GetInfoByUIDEvent(authState.uid)),
+      child: BasicScaffold(
+              child: _buildBody(context)
+            )
+      );
+    }
+    return BasicScaffold(
+        child: Text('你才不能進來這個頁面')
+    );
+  }
+
+  Widget _buildBody(BuildContext context){
+    return BlocListener<GetCompetitionInfoBloc, GetCompetitionInfoState>(
+    listener: (context,state){
+      if(state is InfoError){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(handleDioError(state.error)),
+          ),
+        );
+      }
+      if(state is InfoLoading){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('載入中'),
+          ),
+        );
+      }
+    },
+    child: BlocBuilder<GetCompetitionInfoBloc, GetCompetitionInfoState>(
+      builder:(context, state){
+        if(state is InfoLoading){
+          return const Center(child: CupertinoActivityIndicator());
+        }
+        if(state is InfoLoaded){
+          return Container(
+            constraints: BoxConstraints(maxWidth: 1120),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () => setState(() => _selectedTab = '隊伍資料'),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: Text(
-                      "隊伍資料",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: _selectedTab == '隊伍資料' ? Colors.blue : Colors.black,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "隊伍狀態: ${state.info.project.state!}",
+                        style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
                       ),
-                    ),
+                      
+                      SizedBox(
+                        width: 100,
+                        height: 40,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(255, 221, 99, 78),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: EdgeInsets.zero, 
+                          ),
+                          onPressed: () {
+                            // 編輯資料的邏輯
+                          },
+                          child: const Text(
+                            "編輯資料",
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 
-                const SizedBox(width: 30),
+                const SizedBox(height: 10),
+                if(state.info.project.state == '需補件')
+                  Text('需補件原因：${state.info.project.message}',style: const TextStyle(fontSize: 16),),
+                const SizedBox(height: 10),
                 
-                GestureDetector(
-                  onTap: () => setState(() => _selectedTab = '隊員暨指導老師資料'),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: Text(
-                      "隊員暨指導老師資料",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: _selectedTab == '隊員暨指導老師資料' ? Colors.blue : Colors.black,
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => setState(() => _selectedTab = '隊伍資料'),
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 540,
+                        height: 40,
+                        decoration: _selectedTab == '隊伍資料' ?  BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomRight,
+                            end: Alignment.topLeft,
+                            colors: [
+                              const Color.fromRGBO(254, 228, 37, 1),
+                              const Color.fromRGBO(250, 186, 86, 1),
+                            ],
+                          ),
+                        ):null,
+                        child: Text(
+                          "隊伍資料",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: _selectedTab == '隊伍資料' ? FontWeight.bold:FontWeight.normal,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    
+                    GestureDetector(
+                      onTap: () => setState(() => _selectedTab = '隊員暨指導老師資料'),
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 540,
+                        height: 40,
+                        decoration:_selectedTab == '隊員暨指導老師資料' ? BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomRight,
+                            end: Alignment.topLeft,
+                            colors: [
+                              const Color.fromRGBO(254, 228, 37, 1),
+                              const Color.fromRGBO(250, 186, 86, 1),
+                            ],
+                          ),
+                        ):null,
+                        child: Text(
+                          "隊員暨指導老師資料",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: _selectedTab == '隊員暨指導老師資料' ? FontWeight.bold:FontWeight.normal,
+                            color:Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+                
+                //分隔線
+                Divider(
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  thickness: 2,
+                ),
+                
+                //內容部分
+                if (_selectedTab == '隊伍資料') 
+                  _buildTeamInfoContent(state.info),
+                
+                if (_selectedTab == '隊員暨指導老師資料') 
+                  _buildMemberInfoContent(state.info),
               ],
             ),
-            
-            //分隔線
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Divider(
-                color: Color.fromARGB(255, 0, 0, 0),
-                thickness: 2,
-              ),
-            ),
-            
-            //內容部分
-            if (_selectedTab == '隊伍資料') 
-              _buildTeamInfoContent(),
-            
-            if (_selectedTab == '隊員暨指導老師資料') 
-              _buildMemberInfoContent(),
-          ],
-        ),
-      ),
-    ),
-  );
-}
+          );
+        }
+        return SizedBox();
+      }
+    ));
+  }
+
 
   // 隊伍資料內容
-  Widget _buildTeamInfoContent() {
+  Widget _buildTeamInfoContent(TeamWithProject teamwithproject) {
+    final ScrollController _scrollController = ScrollController();
+    final List<int> sdgs = teamwithproject.project.sdgs!.split(',').map((e) => int.parse(e.trim())).toList();
+
+    final String? yturl = teamwithproject.project.url!.firstWhere(
+                  (url) => url.contains('youtube.com') || url.contains('youtu.be'),
+                  orElse: () => '',
+                );
+    final String? githuburl = teamwithproject.project.url!.firstWhere(
+                    (url) => url.contains('github.com'),
+                    orElse: () => '',);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Container(
@@ -211,16 +232,16 @@ Widget build(BuildContext context) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 參賽隊伍
-                  _buildInfoRow("參賽隊伍:", test[0].group),
+                  // 參賽組別：
+                  _buildInfoRow("參賽組別：", teamwithproject.team.type!),
                   const SizedBox(height: 10),
                   
                   // 團隊名稱
-                  _buildInfoRow("團隊名稱:", test[0].team_name),
+                  _buildInfoRow("團隊名稱:", teamwithproject.team.name!),
                   const SizedBox(height: 10),
                   
                   // 作品名稱
-                  _buildInfoRow("作品名稱:", test[0].project_name),
+                  _buildInfoRow("作品名稱:", teamwithproject.project.name!),
                   const SizedBox(height: 10),
                   
                   // 作品摘要
@@ -232,32 +253,64 @@ Widget build(BuildContext context) {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      Text(test[0].summary),
+                      Text(teamwithproject.project.abstract!),
                     ],
                   ),
 
                   const SizedBox(height: 10),
                   
                   // YouTube連結
-                  _buildInfoRow("YouTube連結:", test[0].yt_url),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text('Youtube影片'),
+                      TextButton(
+                        onPressed: () => yturl != null ? _launchURL(yturl) : null,
+                        child: Text(yturl ?? '無YT'),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 10),
                   
                   // GitHub連結
-                  _buildInfoRow("GitHub連結:", test[0].github_url),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text('GitHub連結'),
+                      TextButton(
+                        onPressed: () => githuburl != null ? _launchURL(githuburl) : null,
+                        child: Text(githuburl ?? '無github'),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 10),
                                     
                   // SDGs 相關
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Text(
-                        "SDGs相關:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                       child: Text(test[0].sdgs.join("  ")),
-                      ), 
+                      Text('SDGs:'),
+                      Scrollbar(
+                        controller: _scrollController,
+                        thumbVisibility: true, 
+                        trackVisibility: true, 
+                        interactive: true,
+                        thickness: 6,          
+                        radius: Radius.circular(4),
+                        child: SingleChildScrollView(
+                          controller: _scrollController,
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                          children: sdgsList.map((sdg) {
+                            final had = sdgs.contains(sdg.id);
+                              return SizedBox(
+                                height: 100,
+                                child: had ? Image.asset(sdg.imagePath,width: 100,height: 100): null,
+                              );
+                          }).toList(),
+                          )
+                        )
+                      )
                     ],
                   ),
 
@@ -271,7 +324,33 @@ Widget build(BuildContext context) {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      Text(test[0].files.join("\n")),
+                      TextButton(
+                        onPressed: () {
+                          web.window.open(teamwithproject.project.introductionFile!, '_blank');
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.black, 
+                        ),
+                        child: Text('作品說明書(點擊查看)'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          web.window.open(teamwithproject.project.affidavitFile!, '_blank');
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.black, 
+                        ),
+                        child: Text('提案切結書(點擊查看)'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          web.window.open(teamwithproject.project.consentFile!, '_blank');
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.black, 
+                        ),
+                        child: Text('個資同意書(點擊查看)'),
+                      ),
                     ],
                   ),
 
@@ -286,7 +365,7 @@ Widget build(BuildContext context) {
   }
 
   // 隊員暨指導老師資料內容
-  Widget _buildMemberInfoContent() {
+  Widget _buildMemberInfoContent(TeamWithProject teamwithproject) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Container(
@@ -312,9 +391,9 @@ Widget build(BuildContext context) {
                         ),
                         Row(
                           children: [
-                            Expanded(flex: 2, child: _buildInfoRow("姓名:", test[0].advisor_name)),
-                            Expanded(flex: 2, child: _buildInfoRow("職稱:", test[0].advisor_title)),
-                            Expanded(flex: 3, child: _buildInfoRow("所屬機構:", test[0].advisor_school)),
+                            Expanded(flex: 2, child: _buildInfoRow("姓名:", teamwithproject.team.teacher!.name!)),
+                            Expanded(flex: 2, child: _buildInfoRow("職稱:", teamwithproject.team.teacher!.title!)),
+                            Expanded(flex: 3, child: _buildInfoRow("所屬機構:", teamwithproject.team.teacher!.organization! + teamwithproject.team.teacher!.department!)),
                           ],
                         ),
                       ],
@@ -323,7 +402,7 @@ Widget build(BuildContext context) {
 
                   //隊員列表
                   _buildPlainSection([
-                    for (int i = 0; i < test[0].members.length; i++)
+                    for (int i = 0; i < teamwithproject.team.members!.length; i++)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -336,22 +415,23 @@ Widget build(BuildContext context) {
                           ),
                           Row(
                             children: [
-                              Expanded(flex: 2, child: _buildInfoRow("姓名:", test[0].members[i].name)),
-                              Expanded(flex: 2, child: _buildInfoRow("學號:", test[0].members[i].uid)),
-                              Expanded(flex: 2, child: _buildInfoRow("年級:", test[0].members[i].grade)),
-                              Expanded(flex: 3, child: _buildInfoRow("科系:", test[0].members[i].department)),
+                              Expanded(flex: 2, child: _buildInfoRow("姓名:", teamwithproject.team.members![i].name!)),
+                              Expanded(flex: 2, child: _buildInfoRow("學號:", teamwithproject.team.members![i].uid!)),
+                              Expanded(flex: 2, child: _buildInfoRow("年級:", teamwithproject.team.members![i].grade!)),
+                              Expanded(flex: 3, child: _buildInfoRow("科系:", teamwithproject.team.members![i].department!)),
                             ],
                           ),
                           Row(
                             children: [
-                              Expanded(flex: 3, child: _buildInfoRow("電話:", test[0].members[i].phone)),
-                              Expanded(flex: 7, child: _buildInfoRow("Email:", test[0].members[i].email)),
+                              Expanded(flex: 3, child: _buildInfoRow("電話:", teamwithproject.team.members![i].phone!)),
+                              Expanded(flex: 7, child: _buildInfoRow("Email:", teamwithproject.team.members![i].email!)),
                             ],
                           ),
                           const SizedBox(height: 10),
 
                           //學生證
-                          _buildInfoRow("學生證:", test[0].members[i].student_iD_card),
+                          Text('學生證',style: const TextStyle(fontWeight: FontWeight.bold),),
+                          Image.network(teamwithproject.team.members![i].studentCard!,width: 500,),
                           const SizedBox(height: 10),
 
                         ],
