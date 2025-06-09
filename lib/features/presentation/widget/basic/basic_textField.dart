@@ -9,7 +9,7 @@ class BasicTextfield extends StatelessWidget{
   final Color ? errorBorderColor;
   final ValueChanged<String>? onChanged;
   final int? maxLines;
-  
+  final bool? readOnly;
 
   const BasicTextfield({
     required this.controller,
@@ -19,12 +19,14 @@ class BasicTextfield extends StatelessWidget{
     this.errorText,
     this.errorBorderColor,
     this.onChanged,
-    this.maxLines
+    this.maxLines,
+    this.readOnly
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+        readOnly: readOnly ?? false,
         controller: controller,
         maxLines: maxLines ?? 1,
         decoration: InputDecoration(

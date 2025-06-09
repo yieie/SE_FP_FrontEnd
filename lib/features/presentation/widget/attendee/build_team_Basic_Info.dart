@@ -7,7 +7,7 @@ import 'package:front_end/features/presentation/bloc/competition/sign_up_competi
 import 'package:front_end/features/presentation/widget/basic/basic_textField.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_dropdownButtonFormField.dart';
 
-Widget buildTeamBasicInfo(BuildContext context, SignUpCompetitionState state){
+Widget buildTeamBasicInfo(BuildContext context, SignUpCompetitionState state,{bool editmode = false}){
     final ScrollController _scrollController = ScrollController();
     return Column(
       children: [
@@ -18,6 +18,7 @@ Widget buildTeamBasicInfo(BuildContext context, SignUpCompetitionState state){
             SizedBox(
               width: 352,
               child: BasicTextfield(
+                readOnly: editmode,
                 hintText: '隊伍名稱',
                 controller: TextEditingController(text: state.teamName)..selection = TextSelection.collapsed(offset: state.teamName.length),
                 onChanged: (value){
@@ -27,7 +28,8 @@ Widget buildTeamBasicInfo(BuildContext context, SignUpCompetitionState state){
             ),
             SizedBox(
               width: 352,
-              child: BasicWebDropdownbuttonFormField(
+              child: editmode ? Text(state.teamType, style: TextStyle(fontWeight: FontWeight.bold))
+              : BasicWebDropdownbuttonFormField(
                 hint: Text('參賽組別'),
                 items: [
                   const DropdownMenuItem<String>(
@@ -47,6 +49,7 @@ Widget buildTeamBasicInfo(BuildContext context, SignUpCompetitionState state){
             SizedBox(
               width: 352,
               child: BasicTextfield(
+                readOnly: editmode,
                 hintText: '作品名稱',
                 controller: TextEditingController(text: state.projectName)..selection = TextSelection.collapsed(offset: state.projectName.length),
                 onChanged: (value){

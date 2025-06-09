@@ -2,11 +2,16 @@ import 'package:front_end/features/domain/entity/CompetitionForm.dart';
 import 'package:file_picker/file_picker.dart';
 
 abstract class SignUpCompetitionEvent {}
+
 class ResetSubmissionStatus extends SignUpCompetitionEvent {}
 
 class LoadMainUserEvent extends SignUpCompetitionEvent {
   final String uid;
   LoadMainUserEvent(this.uid);
+}
+class LoadTeamInfoEvent extends SignUpCompetitionEvent {
+  final String uid;
+  LoadTeamInfoEvent(this.uid);
 }
 
 class AddTeammateEvent extends SignUpCompetitionEvent {
@@ -20,6 +25,11 @@ class AddTeacherEvent extends SignUpCompetitionEvent {
 }
 
 class SubmitCompetitionFormEvent extends SignUpCompetitionEvent {}
+
+class EditCompetitionFormEvent extends SignUpCompetitionEvent{
+  final String uid;
+  EditCompetitionFormEvent(this.uid);
+}
 
 class GoToPreviousPage extends SignUpCompetitionEvent{}
 

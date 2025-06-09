@@ -14,6 +14,7 @@ import 'package:front_end/features/presentation/bloc/competition/get_competition
 import 'package:front_end/features/presentation/bloc/competition/get_competition_info_event.dart';
 import 'package:front_end/features/presentation/bloc/competition/get_competition_info_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
+import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:front_end/injection_container.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -59,6 +60,7 @@ class _TeamInfoPageState extends State<TeamInfoPage> {
   }
 
   Widget _buildBody(BuildContext context){
+    final authState = context.read<AuthBloc>().state;
     return BlocListener<GetCompetitionInfoBloc, GetCompetitionInfoState>(
     listener: (context,state){
       if(state is InfoError){
@@ -86,42 +88,32 @@ class _TeamInfoPageState extends State<TeamInfoPage> {
             constraints: BoxConstraints(maxWidth: 1120),
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "隊伍狀態: ${state.info.project.state!}",
-                        style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
-                      ),
-                      
-                      SizedBox(
-                        width: 100,
-                        height: 40,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 221, 99, 78),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "隊伍狀態: ${state.info.project.state!}",
+                      style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                    ),
+                
+                    if(state.info.project.state == '需補件')                      
+                      if(authState is Authenticated)
+                        if(authState.uid.toLowerCase() == state.info.team.members![0].uid!.toLowerCase())
+                          SizedBox(
+                            width: 200,
+                            height: 40,
+                            child: BasicWebButton(
+                              onPressed: (){
+                                context.go('/editCompetitionInfo');
+                              },
+                              backgroundColor: Color(0xFFF96D4E),
+                              title: '編輯資訊',
+                              fontSize: 16,
                             ),
-                            padding: EdgeInsets.zero, 
                           ),
-                          onPressed: () {
-                            // 編輯資料的邏輯
-                          },
-                          child: const Text(
-                            "編輯資料",
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
                 
                 const SizedBox(height: 10),

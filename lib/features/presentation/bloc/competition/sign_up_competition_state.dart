@@ -21,6 +21,7 @@ class SignUpCompetitionState {
   final Set<int> sdgs;
   final List<Student> members;
   final List<PlatformFile?> studentCard;
+  final List<Attendee?> cloudmembers;
   final String teacherID;
   final String teacherName;
   final String teacherTitle;
@@ -29,6 +30,9 @@ class SignUpCompetitionState {
   final PlatformFile? introductionFile;
   final PlatformFile? consentFile;
   final PlatformFile? affidavitFile;
+  final String? cloudIntroductionFile;
+  final String? cloudConsentFile;
+  final String? cloudAffidavitFile;
 
   SignUpCompetitionState({
     this.status = SubmissionStatus.initial,
@@ -42,8 +46,9 @@ class SignUpCompetitionState {
     this.ytUrl = '',
     this.githubUrl='',
     this.sdgs = const <int>{},
-    this.members = const <Attendee>[],
+    this.members = const <Student>[],
     this.studentCard = const <PlatformFile>[],
+    this.cloudmembers = const <Attendee>[],
     this.teacherID='',
     this.teacherName = '',
     this.teacherTitle = '',
@@ -52,6 +57,9 @@ class SignUpCompetitionState {
     this.introductionFile,
     this.consentFile,
     this.affidavitFile,
+    this.cloudIntroductionFile='',
+    this.cloudAffidavitFile='',
+    this.cloudConsentFile=''
   });
 
   SignUpCompetitionState copyWith({
@@ -68,6 +76,7 @@ class SignUpCompetitionState {
     Set<int>? sdgs,
     List<Student>? members,
     List<PlatformFile?>? studentCard,
+    List<Attendee>? cloudmembers,
     String? teacherID,
     String? teacherName,
     String? teacherTitle,
@@ -76,6 +85,9 @@ class SignUpCompetitionState {
     PlatformFile? introductionFile,
     PlatformFile? consentFile,
     PlatformFile? affidavitFile,
+    String? cloudIntroductionFile,
+    String? cloudConsentFile,
+    String? cloudAffidavitFile
   }) {
     return SignUpCompetitionState(
       status: status ?? this.status,
@@ -91,6 +103,7 @@ class SignUpCompetitionState {
       sdgs: sdgs ?? this.sdgs,
       members: members ?? this.members,
       studentCard: studentCard ?? this.studentCard,
+      cloudmembers: cloudmembers ?? this.cloudmembers,
       teacherID: teacherID ?? this.teacherID,
       teacherName: teacherName ?? this.teacherName,
       teacherTitle: teacherTitle ?? this.teacherTitle,
@@ -99,6 +112,9 @@ class SignUpCompetitionState {
       introductionFile: introductionFile ?? this.introductionFile,
       consentFile: consentFile ?? this.consentFile,
       affidavitFile: affidavitFile ?? this.affidavitFile,
+      cloudAffidavitFile: cloudAffidavitFile ?? this.cloudAffidavitFile,
+      cloudIntroductionFile: cloudIntroductionFile ?? this.cloudIntroductionFile,
+      cloudConsentFile: cloudConsentFile ?? this.cloudConsentFile
     );
   }
 

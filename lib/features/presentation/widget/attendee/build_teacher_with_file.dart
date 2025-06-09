@@ -5,7 +5,7 @@ import 'package:front_end/features/presentation/bloc/competition/sign_up_competi
 import 'package:front_end/features/presentation/bloc/competition/sign_up_competition_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:file_picker/file_picker.dart';
-
+import 'package:web/web.dart' as web;
 
 Future<String?> _showInputDialog(BuildContext context) async {
   final TextEditingController controller = TextEditingController();
@@ -53,7 +53,7 @@ Future<String?> _showInputDialog(BuildContext context) async {
 
 
 
-Widget buildTeacherInfoWithFiles(BuildContext context, SignUpCompetitionState state){
+Widget buildTeacherInfoWithFiles(BuildContext context, SignUpCompetitionState state,{bool editmode = false}){
     final AddTeacherIsAble = state.teacherID == '';
 
     Future<PlatformFile?> pickFile() async {
@@ -74,7 +74,7 @@ Widget buildTeacherInfoWithFiles(BuildContext context, SignUpCompetitionState st
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('指導老師/顧問', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
-              if(AddTeacherIsAble)
+              if(AddTeacherIsAble && !editmode)
                 BasicWebButton(
                   onPressed:() async {
                     final result = await _showInputDialog(context);
@@ -247,6 +247,18 @@ Widget buildTeacherInfoWithFiles(BuildContext context, SignUpCompetitionState st
                         readOnly: true,
                         controller: TextEditingController(text: state.introductionFile!.name)
                       ),
+                    )
+                  else if(state.cloudIntroductionFile != null && editmode)
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          web.window.open(state.cloudIntroductionFile!, '_blank');
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.black, 
+                        ),
+                        child: Text('作品說明書(點擊查看)'),
+                      )
                     ),
                   SizedBox(
                     width: 150,
@@ -298,6 +310,18 @@ Widget buildTeacherInfoWithFiles(BuildContext context, SignUpCompetitionState st
                         readOnly: true,
                         controller: TextEditingController(text: state.affidavitFile!.name)
                       ),
+                    )
+                  else if(state.cloudAffidavitFile != null && editmode)
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          web.window.open(state.cloudAffidavitFile!, '_blank');
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.black, 
+                        ),
+                        child: Text('提案切結書(點擊查看)'),
+                      )
                     ),
                   SizedBox(
                     width: 150,
@@ -348,6 +372,18 @@ Widget buildTeacherInfoWithFiles(BuildContext context, SignUpCompetitionState st
                         readOnly: true,
                         controller: TextEditingController(text: state.consentFile!.name)
                       ),
+                    )
+                  else if(state.cloudConsentFile != null && editmode)
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          web.window.open(state.cloudConsentFile!, '_blank');
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.black, 
+                        ),
+                        child: Text('個資同意書(點擊查看)'),
+                      )
                     ),
                   SizedBox(
                     width: 150,

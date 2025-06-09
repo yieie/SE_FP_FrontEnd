@@ -54,7 +54,7 @@ Future<String?> _showInputDialog(BuildContext context) async {
 }
 
 
-Widget buildTeamMemberInfo(BuildContext context, SignUpCompetitionState state){
+Widget buildTeamMemberInfo(BuildContext context, SignUpCompetitionState state,{bool editmode = false}){
 
   Future<PlatformFile?> pickImageFile() async {
     final result = await FilePicker.platform.pickFiles(
@@ -64,11 +64,7 @@ Widget buildTeamMemberInfo(BuildContext context, SignUpCompetitionState state){
 
     return result?.files.first;
   }
-  final test = [
-    Attendee(uid: 'A1115524',name: '黃大禎',department: '資訊工程學系',grade: '大三',email: 'a1115524@gmail.com',phone: '0911122233'),
-    Attendee(uid: 'A1115566',name: '黃大禎',department: '資訊工程學系',grade: '大三',email: 'a1115524@gmail.com',phone: '0911122233'),
-    Attendee(uid: 'A1115577',name: '黃大禎',department: '資訊工程學系',grade: '大三',email: 'a1115524@gmail.com',phone: '0911122233'),
-  ];
+
   return Column(
     children: [
       Row(
@@ -76,9 +72,9 @@ Widget buildTeamMemberInfo(BuildContext context, SignUpCompetitionState state){
         children: [
           SizedBox(
             width: 150,
-            child: Text('隊員人數 ${state.members.length} 人',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+            child: Text('隊員人數 ${editmode ?state.cloudmembers.length : state.members.length} 人',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
           ),
-          if(state.members.length <= 6)
+          if(state.members.length <= 6 && !editmode)
             BasicWebButton(
               onPressed:() async {
                 final result = await _showInputDialog(context);
@@ -108,9 +104,9 @@ Widget buildTeamMemberInfo(BuildContext context, SignUpCompetitionState state){
       ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: state.members.length,
+        itemCount: editmode ? state.cloudmembers.length : state.members.length,
         itemBuilder: (context, index) {
-          final member = state.members[index];
+          final member = editmode ? state.cloudmembers[index] : state.members[index];
           final isLeader = index == 0;
 
           return Column(
@@ -120,7 +116,7 @@ Widget buildTeamMemberInfo(BuildContext context, SignUpCompetitionState state){
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('隊員 ${index + 1}${isLeader ? "（代表人）" : ""}', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
-                  if(isLeader == false) 
+                  if(isLeader == false && !editmode) 
                     BasicWebButton(
                       width: 60,
                       height: 40,
@@ -166,7 +162,7 @@ Widget buildTeamMemberInfo(BuildContext context, SignUpCompetitionState state){
                               contentPadding: EdgeInsets.symmetric(horizontal: 12),
                             ),
                             readOnly: true,
-                            controller: TextEditingController(text: member.name)
+                            controller: TextEditingController(text: member!.name)
                           ),
                         ),
                       ],
@@ -395,6 +391,8 @@ Widget buildTeamMemberInfo(BuildContext context, SignUpCompetitionState state){
                         ),
                         if(state.studentCard[index] != null) 
                           Image.memory(state.studentCard[index]!.bytes!,height: 200,)
+                        else if(editmode)
+                          Image.network(state.cloudmembers[index]!.studentCard!,height: 200,)
                       ],
                     ),
                   ),
