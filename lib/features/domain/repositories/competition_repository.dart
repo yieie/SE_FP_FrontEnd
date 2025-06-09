@@ -3,6 +3,7 @@ import 'package:front_end/cores/resources/data_state.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:front_end/features/domain/entity/CompetitionForm.dart';
 import 'package:front_end/features/domain/entity/TeamWithProject.dart';
+import 'package:front_end/features/domain/entity/TeamWithProjectList.dart';
 
 abstract class CompetitionRepository {
   Future<DataState<ResponseMessage>> signUpCompetition(CompetitionForm data);
@@ -16,4 +17,6 @@ abstract class CompetitionRepository {
   Future<DataState<TeamWithProject>> getCompetitionInfoByTeamID(String teamid);
   
   Future<DataState<List<TeamWithProject>>> getPastProjectList(String year, String teamType);
+
+  Future<DataState<TeamWithProjectList>> getTeachTeam(int page, String teacherid);
 }

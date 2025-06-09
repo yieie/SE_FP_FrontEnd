@@ -36,4 +36,7 @@ abstract class CompetitionApiService {
   @POST('/work/getPrevWorkList.php')
   Future<HttpResponse<ResponseMessage<TeamWithProjectModel>>> getPastProjectList(@Body() Map<String, dynamic> body);
 
+  @GET('/teacher/teacherMainPage.php')
+  Future<HttpResponse<ResponseMessage<TeamWithProjectModel>>> getTeachTeam(@Query('page') int page,@Query('teacherId') String teacherId);
+
 }

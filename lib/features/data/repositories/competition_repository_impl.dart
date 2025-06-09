@@ -10,6 +10,7 @@ import 'package:front_end/features/data/models/competitionForm.dart';
 import 'package:front_end/features/data/models/team_with_project.dart';
 import 'package:front_end/features/domain/entity/CompetitionForm.dart';
 import 'package:front_end/features/domain/entity/TeamWithProject.dart';
+import 'package:front_end/features/domain/entity/TeamWithProjectList.dart';
 import 'package:front_end/features/domain/repositories/competition_repository.dart';
 
 class CompetitionRepositoryImpl implements CompetitionRepository {
@@ -180,6 +181,33 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
         );
       }
     } on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<TeamWithProjectList>> getTeachTeam(int page, String teacherid) async {
+    final httpResponse = await _competitionApiService.getTeachTeam(page, teacherid);
+    try{
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        TeamWithProjectList list = TeamWithProjectList(
+          page: httpResponse.data.extraData!['page'], 
+          totalPages: httpResponse.data.extraData!['totalPage'], 
+          teamwithprojectlist: httpResponse.data.data!
+        );
+        return DataSuccess(list);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusCode,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
+          )
+        );
+      }
+    }on DioException catch(e){
       return DataFailed(e);
     }
   }
