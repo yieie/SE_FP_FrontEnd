@@ -137,58 +137,62 @@ class TeachTeamViewListPage extends StatelessWidget{
   
   _buildBody(BuildContext context) {
     return BlocListener<TeachTeamBloc, TeachTeamState>(
-        listener: (context, state){
-          if(state is TeamError){
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(handleDioError(state.error)),
-              ),
-            );
-          }
-          if(state is TeamLoading){
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('載入中'),
-              ),
-            );
-          }
-        },
-        child: BlocBuilder<TeachTeamBloc, TeachTeamState>(
-          builder: (_, state) {
-            if (state is TeamListLoaded) {
+      listener: (context, state){
+        if(state is TeamError){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(handleDioError(state.error)),
+            ),
+          );
+        }
+        // if(state is TeamLoading){
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(
+        //       content: Text('載入中'),
+        //     ),
+        //   );
+        // }
+      },
+      child: BlocBuilder<TeachTeamBloc, TeachTeamState>(
+        builder: (_, state) {
+          if (state is TeamListLoaded) {
 
-              final int totalPages = state.teamWithProjectList.totalPages;
-              final int currentPage = page;
+            final int totalPages = state.teamWithProjectList.totalPages;
+            final int currentPage = page;
 
-              // 取出當前頁的資料
-              final currentItems = state.teamWithProjectList.teamwithprojectlist;
-              
-              return Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                    
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 750), // 想往哪邊移就加哪邊
-                      child: Text(
-                        "指導隊伍列表",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+            // 取出當前頁的資料
+            final currentItems = state.teamWithProjectList.teamwithprojectlist;
+            
+            return Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                  
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 750), // 想往哪邊移就加哪邊
+                    child: Text(
+                      "指導隊伍列表",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      width: 900,
-                      height: 400,
-                      
-                      child: ListView.builder(
-                        itemCount: currentItems.length,
-                        itemBuilder: (context, index) {
-                          final teamwithproject = currentItems[index];
-                          return Container(
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    width: 900,
+                    height: 950,
+                    
+                    child: ListView.builder(
+                      itemCount: currentItems.length,
+                      itemBuilder: (context, index) {
+                        final teamwithproject = currentItems[index];
+                        return GestureDetector(
+                          onTap: () {
+                            context.go('/teachTeamViewDetail/${teamwithproject.team.teamID}');
+                          },
+                          child: Container(
                             width: 900,
                             margin: EdgeInsets.only(bottom: 20),
                             padding: EdgeInsets.all(16),
@@ -215,7 +219,7 @@ class TeachTeamViewListPage extends StatelessWidget{
                                 SizedBox(height: 4),
                                 Text("作品名稱：${teamwithproject.project.name}", style: TextStyle(fontSize: 16)),
                                 SizedBox(height: 8),
-
+                          
                                 //隊員2個2個排
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,52 +260,53 @@ class TeachTeamViewListPage extends StatelessWidget{
                                     ),
                                   ],
                                 ),
-
+                          
                               ],
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    // 分頁按鈕
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 300), // 可調整為你想要的位置
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.chevron_left),
-                                onPressed: currentPage > 1
-                                    ? () {
-                                        context.pushReplacement('/projectViewList/${currentPage - 1}');
-                                      }
-                                    : null,
-                              ),
-                              Text('$currentPage / $totalPages'),
-                              IconButton(
-                                icon: const Icon(Icons.chevron_right),
-                                onPressed: currentPage < totalPages
-                                    ? () {
-                                        context.pushReplacement('/projectViewList/${currentPage + 1}');
-                                      }
-                                    : null,
-                              ),
-                            ],
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
-                  ],
-                ),
-              );
-            }
-            return const SizedBox();
-          },
-        )
+                  ),
+                  SizedBox(height: 5),
+                  // 分頁按鈕
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 300), // 可調整為你想要的位置
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.chevron_left),
+                              onPressed: currentPage > 1
+                                  ? () {
+                                      context.pushReplacement('/teachTeamViewList/${currentPage - 1}');
+                                    }
+                                  : null,
+                            ),
+                            Text('$currentPage / $totalPages'),
+                            IconButton(
+                              icon: const Icon(Icons.chevron_right),
+                              onPressed: currentPage < totalPages
+                                  ? () {
+                                      context.pushReplacement('/teachTeamViewList/${currentPage + 1}');
+                                    }
+                                  : null,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }
+          return const SizedBox();
+        },
+      )
     );
 }
 

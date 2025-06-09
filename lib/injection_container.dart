@@ -33,6 +33,7 @@ import 'package:front_end/features/domain/usecases/get_detail_announcement.dart'
 import 'package:front_end/features/domain/usecases/get_overview.dart';
 import 'package:front_end/features/domain/usecases/get_past_project.dart';
 import 'package:front_end/features/domain/usecases/get_score_list.dart';
+import 'package:front_end/features/domain/usecases/get_teach_team_list.dart';
 import 'package:front_end/features/domain/usecases/get_workshop.dart';
 import 'package:front_end/features/domain/usecases/get_workshop_participation.dart';
 import 'package:front_end/features/domain/usecases/join_workshop.dart';
@@ -54,6 +55,7 @@ import 'package:front_end/features/presentation/bloc/past_project_bloc.dart';
 import 'package:front_end/features/presentation/bloc/score/score_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/score/score_list_event.dart';
 import 'package:front_end/features/presentation/bloc/score/score_team_bloc.dart';
+import 'package:front_end/features/presentation/bloc/teacher/teach_team_bloc.dart';
 import 'package:front_end/features/presentation/bloc/user_management/profile_manage_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_list_bloc.dart';
 import 'package:front_end/features/presentation/bloc/workshop/workshop_participation_bloc.dart';
@@ -172,6 +174,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<UpdateTeamStateUseCase>(
     UpdateTeamStateUseCase(sl())
   );
+  sl.registerSingleton<GetTeachTeamListUseCase>(
+    GetTeachTeamListUseCase(sl())
+  );
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -215,7 +220,10 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<VertifyTeamBloc>(
     () => VertifyTeamBloc(sl(),sl(),sl())
   );
-   sl.registerFactory<GetCompetitionInfoBloc>(
+  sl.registerFactory<GetCompetitionInfoBloc>(
     () => GetCompetitionInfoBloc(sl())
+  );
+  sl.registerFactory<TeachTeamBloc>(
+    () => TeachTeamBloc(sl(),sl())
   );
 }
