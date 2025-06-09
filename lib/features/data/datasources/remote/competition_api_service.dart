@@ -23,9 +23,20 @@ abstract class CompetitionApiService {
   @POST('/upload/uploadWorkFile.php')
   Future<HttpResponse<ResponseMessage>> uploadFiles(@Body() FormData formData);
 
-  // @POST('')
-  // Future<HttpResponse<ResponseMessage>> editCompetitionInfo(@Body() Map<String, dynamic> body);
+  @PUT('/competition/updateSignUpInfo.php')
+  Future<HttpResponse<ResponseMessage>> editCompetitionInfo(@Body() Map<String, dynamic> body);
 
+  @DELETE('/competition/deleteWorkAffidavit.php')
+  Future<HttpResponse<ResponseMessage>> deleteAffidavitFile(@Query('workId') String workid);
+
+  @DELETE('/competition/deleteWorkConsent.php')
+  Future<HttpResponse<ResponseMessage>> deleteConsentFile(@Query('workId') String workid);
+  
+  @DELETE('/competition/deleteWorkIntro.php')
+  Future<HttpResponse<ResponseMessage>> deleteIntroductionFile(@Query('workId') String workid);
+
+  @DELETE('/competition/deleteStudentCard.php')
+  Future<HttpResponse<ResponseMessage>> deleteStudentCard(@Query('uId') String uid);
   
   @GET('/competition/getSignUpInfo.php')
   Future<HttpResponse<ResponseMessage>> getCompetitionInfoByUID(@Query("uId") String uid);

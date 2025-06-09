@@ -43,22 +43,25 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
   }
 
   @override
-  Future<DataState<ResponseMessage>> uploadFiles(String workid, PlatformFile consent, PlatformFile introduction, PlatformFile affidavit) async {
+  Future<DataState<ResponseMessage>> uploadFiles(String workid, PlatformFile? consent, PlatformFile? introduction, PlatformFile? affidavit) async {
     try{
       final formData = FormData.fromMap({
         // 每个文件有不同的字段名
-        'consent': MultipartFile.fromBytes(
-          consent.bytes!,
-          filename: consent.name,
-        ),
-        'introduction': MultipartFile.fromBytes(
-          introduction.bytes!,
-          filename: introduction.name,
-        ),
-        'affidavit': MultipartFile.fromBytes(
-          affidavit.bytes!,
-          filename: affidavit.name,
-        ),
+        if(consent != null)
+          'consent': MultipartFile.fromBytes(
+            consent.bytes!,
+            filename: consent.name,
+          ),
+        if(introduction !=null)
+          'introduction': MultipartFile.fromBytes(
+            introduction.bytes!,
+            filename: introduction.name,
+          ),
+        if(affidavit != null)
+          'affidavit': MultipartFile.fromBytes(
+            affidavit.bytes!,
+            filename: affidavit.name,
+          ),
         'workId': workid,
       });
       final httpResponse = await _competitionApiService.uploadFiles(formData);
@@ -196,6 +199,123 @@ class CompetitionRepositoryImpl implements CompetitionRepository {
           teamwithprojectlist: httpResponse.data.data!
         );
         return DataSuccess(list);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusCode,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
+          )
+        );
+      }
+    }on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
+  
+  @override
+  Future<DataState<ResponseMessage>> deleteAffidavitFile(String workid) async {
+    final httpResponse = await _competitionApiService.deleteAffidavitFile(workid);
+    try{
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        return DataSuccess(httpResponse.data);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusCode,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
+          )
+        );
+      }
+    }on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
+  
+  @override
+  Future<DataState<ResponseMessage>> deleteConsentFile(String workid) async {
+    final httpResponse = await _competitionApiService.deleteConsentFile(workid);
+    try{
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        return DataSuccess(httpResponse.data);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusCode,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
+          )
+        );
+      }
+    }on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
+  
+  @override
+  Future<DataState<ResponseMessage>> deleteIntroductionFile(String workid) async {
+    final httpResponse = await _competitionApiService.deleteIntroductionFile(workid);
+    try{
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        return DataSuccess(httpResponse.data);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusCode,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
+          )
+        );
+      }
+    }on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
+  
+  @override
+  Future<DataState<ResponseMessage>> deleteStudentCard(String uid) async {
+    final httpResponse = await _competitionApiService.deleteStudentCard(uid);
+    try{
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        return DataSuccess(httpResponse.data);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusCode,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
+          )
+        );
+      }
+    }on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
+  
+  @override
+  Future<DataState<ResponseMessage>> editCompetitionInfo(String teamid,String workid,CompetitionForm data) async {
+    final httpResponse = await _competitionApiService.editCompetitionInfo(
+      {
+        "teamId":teamid,
+        "workId":workid,
+        "workAbstract":data.abstract,
+        "workUrls":data.url,
+        "sdgs":data.sdgs
+      });
+    try{
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        return DataSuccess(httpResponse.data);
       }else {
         return DataFailed(
           DioException(

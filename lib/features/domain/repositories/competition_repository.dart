@@ -10,8 +10,18 @@ abstract class CompetitionRepository {
 
   Future<DataState<ResponseMessage>> uploadStudentIDCard(String uid, PlatformFile filePath);
 
-  Future<DataState<ResponseMessage>> uploadFiles(String workid, PlatformFile consent, PlatformFile introduction, PlatformFile affidavit);
-  
+  Future<DataState<ResponseMessage>> uploadFiles(String workid, PlatformFile? consent, PlatformFile? introduction, PlatformFile? affidavit);
+
+  Future<DataState<ResponseMessage>> editCompetitionInfo(String teamid,String workid,CompetitionForm data);
+
+  Future<DataState<ResponseMessage>> deleteAffidavitFile(String workid);
+
+  Future<DataState<ResponseMessage>> deleteConsentFile(String workid);
+
+  Future<DataState<ResponseMessage>> deleteIntroductionFile(String workid);
+
+  Future<DataState<ResponseMessage>> deleteStudentCard(String uid);
+
   Future<DataState<TeamWithProject>> getCompetitionInfoByUID(String uid);
   
   Future<DataState<TeamWithProject>> getCompetitionInfoByTeamID(String teamid);

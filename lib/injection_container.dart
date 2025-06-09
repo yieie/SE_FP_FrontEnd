@@ -25,6 +25,7 @@ import 'package:front_end/features/domain/usecases/admin/add_new_announcement.da
 import 'package:front_end/features/domain/usecases/admin/edit_old_announcement.dart';
 import 'package:front_end/features/domain/usecases/admin/get_vertify_team.dart';
 import 'package:front_end/features/domain/usecases/admin/update_team_state.dart';
+import 'package:front_end/features/domain/usecases/edit_competition_info.dart';
 import 'package:front_end/features/domain/usecases/edit_profile.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_competition_info_by_teamid.dart';
@@ -144,6 +145,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SignUpCompetitionUseCase>(
     SignUpCompetitionUseCase(sl())
   );
+  sl.registerSingleton<EditCompetitionInfoUseCase>(
+    EditCompetitionInfoUseCase(sl())
+  );
   sl.registerSingleton<GetScoreListUseCase>(
     GetScoreListUseCase(sl())
   );
@@ -177,6 +181,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetTeachTeamListUseCase>(
     GetTeachTeamListUseCase(sl())
   );
+  
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -200,7 +205,7 @@ Future<void> initializeDependencies() async {
     () => ProfileManageBloc(sl(),sl())
   );
   sl.registerFactory<SignUpCompetitionBloc>(
-    () => SignUpCompetitionBloc(sl(),sl())
+    () => SignUpCompetitionBloc(sl(),sl(),sl(),sl())
   );
   sl.registerFactory<ScoreListBloc>(
     () => ScoreListBloc(sl(),sl())
