@@ -10,4 +10,6 @@ abstract class AdminRepository {
   Future<DataState<TeamWithProjectList>> getVertifyTeam(int page, int year);
 
   Future<DataState<ResponseMessage>> updateTeamState(String teamid, String state, String? message);
+
+  Future<DataState<TeamWithProjectList>> getScoreResults(int page,String year,String teamType);
 }

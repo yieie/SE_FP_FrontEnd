@@ -21,4 +21,7 @@ abstract class AdminApiService {
 
   @PUT('/admin/updateTeamState.php')
   Future<HttpResponse<ResponseMessage>> updateTeamState(@Body() Map<String, dynamic> body);
+
+  @GET('/admin/getScoreInfo.php')
+  Future<HttpResponse<ResponseMessage<TeamWithProjectModel>>> getScoreResults(@Query('page') int page, @Query('year') String year,@Query('teamType') String teamType);
 }

@@ -90,6 +90,33 @@ class AdminRepositoryImpl implements AdminRepository{
       return DataFailed(e);
     }
   }
+  
+  @override
+  Future<DataState<TeamWithProjectList>> getScoreResults(int page, String year, String teamType) async {
+    final httpResponse = await _adminApiService.getScoreResults(page, year, teamType);
+    try{
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        TeamWithProjectList list = TeamWithProjectList(
+          page: httpResponse.data.extraData!['page'], 
+          totalPages: httpResponse.data.extraData!['totalPage'], 
+          teamwithprojectlist: httpResponse.data.data!
+        );
+        return DataSuccess(list);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusCode,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
+          )
+        );
+      }
+    }on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
 
  
 }
