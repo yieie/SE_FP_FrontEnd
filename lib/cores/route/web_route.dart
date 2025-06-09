@@ -7,6 +7,7 @@ import 'package:front_end/features/presentation/pages/admin/announcement_manage_
 import 'package:front_end/features/presentation/pages/admin/project_verify_detail_page.dart';
 import 'package:front_end/features/presentation/pages/admin/project_verify_list_page.dart';
 import 'package:front_end/features/presentation/pages/attendee/sign_up_competition_page.dart';
+import 'package:front_end/features/presentation/pages/attendee/team_info_page.dart';
 import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
 import 'package:front_end/features/presentation/pages/judge/project_view_detail_page.dart';
@@ -224,6 +225,25 @@ final GoRouter webRouter = GoRouter(
       redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;
       if (authState.usertype != 'admin') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
+    ),
+    GoRoute(
+      path: '/getTeamInfo',
+      name: 'getTeamInfo',
+      builder: (context, state){
+        final authState = context.read<AuthBloc>().state;
+        if(authState is Authenticated && authState.usertype == 'attendee'){
+          return TeamInfoPage(uid: authState.uid);
+        }else{
+          return HomeWithAnnPage(page: 1);
+        }
+      } ,
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'attendee') {
         return '/homeWithAnn/1'; 
       }
       return null;

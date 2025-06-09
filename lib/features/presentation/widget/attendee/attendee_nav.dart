@@ -109,7 +109,9 @@ class _AttendeeNavState extends State<AttendeeNav>{
                   backgroundColor: Color(0xFF76C919),
                   title: '管理隊伍',
                   fontSize: 16,
-                  onPressed: (){}
+                  onPressed: (){
+                    context.go('/getTeamInfo');
+                  }
                 )
               ),
               GestureDetector(
