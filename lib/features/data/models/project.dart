@@ -10,7 +10,8 @@ class ProjectModel extends Project {
     super.introductionFile,
     super.affidavitFile,
     super.consentFile,
-    super.score
+    super.score,
+    super.state
   });
 
   // 待確認API文件欄位名稱
@@ -24,7 +25,8 @@ class ProjectModel extends Project {
       introductionFile: json['teamInfo']?['workIntroduction'] ?? '',
       affidavitFile: json['teamInfo']?['workAffidavit'] ?? '',
       consentFile: json['teamInfo']?['workConsent'] ?? '',
-      score: json['score']
+      score: json['score'],
+      state: json['state'] ?? json['teamInfo']?['workState']
     );
   }
 }
