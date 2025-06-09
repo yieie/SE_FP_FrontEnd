@@ -1,10 +1,13 @@
 import 'package:front_end/cores/resources/ResponseMessage.dart';
 import 'package:front_end/cores/resources/data_state.dart';
-import 'package:front_end/features/domain/entity/Announcement.dart';
 import 'package:front_end/features/domain/entity/Admin_Overview.dart';
+import 'package:front_end/features/domain/entity/TeamWithProjectList.dart';
 
 
 abstract class AdminRepository {
   Future<DataState<AdminOverview>> getOverview();
 
+  Future<DataState<TeamWithProjectList>> getVertifyTeam(int page, int year);
+
+  Future<DataState<ResponseMessage>> updateTeamState(String teamid, String state, String? message);
 }
