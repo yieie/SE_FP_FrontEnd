@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_event.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/bloc/competition/sign_up_competition_bloc.dart';
 import 'package:front_end/features/presentation/bloc/competition/sign_up_competition_event.dart';
@@ -12,6 +13,7 @@ import 'package:front_end/features/presentation/widget/attendee/build_team_membe
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:front_end/injection_container.dart';
+import 'package:go_router/go_router.dart';
 
 //TODO: 驗證各欄位有效性 e.g. email、yt網址 等
 
@@ -73,6 +75,11 @@ class _SignUpCompetitionPageState extends State<SignUpCompetitionPage>{
             content: Text('報名成功'),
           ),
         );
+        final authState = context.read<AuthBloc>().state;
+        if(authState is Authenticated){
+           context.read<AuthBloc>().add(LoggedIn(usertype: "attendee", uid: authState.uid));
+        }
+        context.go("/homeWithAnn/1")
       }
     },
     child: BlocBuilder<SignUpCompetitionBloc, SignUpCompetitionState>(
