@@ -6,6 +6,7 @@ import 'package:front_end/features/presentation/pages/admin/announcement_add_or_
 import 'package:front_end/features/presentation/pages/admin/announcement_manage_list_page.dart';
 import 'package:front_end/features/presentation/pages/admin/project_verify_detail_page.dart';
 import 'package:front_end/features/presentation/pages/admin/project_verify_list_page.dart';
+import 'package:front_end/features/presentation/pages/attendee/edit_competition_page.dart';
 import 'package:front_end/features/presentation/pages/attendee/sign_up_competition_page.dart';
 import 'package:front_end/features/presentation/pages/attendee/team_info_page.dart';
 import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
@@ -89,13 +90,25 @@ final GoRouter webRouter = GoRouter(
       path: '/signupCompetiton',
       name: 'signupCompetition',
       builder: (context, state)=> SignUpCompetitionPage(),
-      redirect: (context, state) {
-      final authState = context.read<AuthBloc>().state;
-      if (authState.usertype != 'student') {
-        return '/homeWithAnn/1'; 
+        redirect: (context, state) {
+        final authState = context.read<AuthBloc>().state;
+        if (authState.usertype != 'student') {
+          return '/homeWithAnn/1'; 
+        }
+        return null;
       }
-      return null;
-  }
+    ),
+    GoRoute(
+      path: '/editCompetitionInfo',
+      name: 'editCompetitionInfo',
+      builder: (context, state)=> EditCompetitionPage(),
+        redirect: (context, state) {
+        final authState = context.read<AuthBloc>().state;
+        if (authState.usertype != 'attendee') {
+          return '/homeWithAnn/1'; 
+        }
+        return null;
+      }
     ),
     GoRoute(
       path: '/projectViewList/:page',
