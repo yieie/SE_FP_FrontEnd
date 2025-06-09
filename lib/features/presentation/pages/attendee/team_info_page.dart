@@ -99,7 +99,7 @@ class _TeamInfoPageState extends State<TeamInfoPage> {
                     ),
 
                     Text(
-                      "總分: ${state.info.project.score}",
+                      "總分: ${state.info.project.score == -1 ?'無分數' : state.info.project.score}",
                       style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
                     ),
                 
