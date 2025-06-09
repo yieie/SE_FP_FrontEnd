@@ -23,6 +23,8 @@ import 'package:front_end/features/domain/repositories/user_management_repositor
 import 'package:front_end/features/domain/repositories/workshop_repository.dart';
 import 'package:front_end/features/domain/usecases/admin/add_new_announcement.dart';
 import 'package:front_end/features/domain/usecases/admin/edit_old_announcement.dart';
+import 'package:front_end/features/domain/usecases/admin/get_vertify_team.dart';
+import 'package:front_end/features/domain/usecases/admin/update_team_state.dart';
 import 'package:front_end/features/domain/usecases/edit_profile.dart';
 import 'package:front_end/features/domain/usecases/get_10_announcement.dart';
 import 'package:front_end/features/domain/usecases/get_competition_info_by_teamid.dart';
@@ -41,6 +43,7 @@ import 'package:front_end/features/domain/usecases/sign_up.dart';
 import 'package:front_end/features/domain/usecases/sign_up_competition.dart';
 import 'package:front_end/features/presentation/bloc/admin/ann_modify_add_bloc.dart';
 import 'package:front_end/features/presentation/bloc/admin/overview_bloc.dart';
+import 'package:front_end/features/presentation/bloc/admin/vertify_team_bloc.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_bloc.dart';
@@ -162,6 +165,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetPastProjectUseCase>(
     GetPastProjectUseCase(sl())
   );
+  sl.registerSingleton<GetVertifyTeamUseCase>(
+    GetVertifyTeamUseCase(sl())
+  );
+  sl.registerSingleton<UpdateTeamStateUseCase>(
+    UpdateTeamStateUseCase(sl())
+  );
 
   sl.registerFactory<AuthBloc>(
     ()=> AuthBloc()
@@ -201,5 +210,8 @@ Future<void> initializeDependencies() async {
   );
   sl.registerFactory<PastProjectBloc>(
     () => PastProjectBloc(sl(),sl())
+  );
+  sl.registerFactory<VertifyTeamBloc>(
+    () => VertifyTeamBloc(sl(),sl(),sl())
   );
 }

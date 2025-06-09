@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/error/handleError.dart';
 import 'package:front_end/features/data/models/announcement.dart';
+import 'package:front_end/features/presentation/bloc/admin/vertify_team_bloc.dart';
+import 'package:front_end/features/presentation/bloc/admin/vertify_team_event.dart';
+import 'package:front_end/features/presentation/bloc/admin/vertify_team_state.dart';
 import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/ann_event.dart';
 import 'package:front_end/features/presentation/bloc/ann_state.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
 import 'package:front_end/injection_container.dart';
 import 'package:go_router/go_router.dart';
@@ -26,7 +31,8 @@ class ProjectVerify {
 }
 
 class ProjectVerifyListPage extends StatefulWidget {
-  const ProjectVerifyListPage({super.key});
+  final int page;
+  const ProjectVerifyListPage({super.key,required this.page});
 
   @override
   State<ProjectVerifyListPage> createState() => _ProjectVerifyListPageState();
@@ -53,144 +59,170 @@ class _ProjectVerifyListPageState extends State<ProjectVerifyListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = context.read<AuthBloc>().state;
+    bool isLoggedIn = authState is Authenticated;
+    if(isLoggedIn){
+      return BlocProvider<VertifyTeamBloc>(
+      key: ValueKey(widget.page),
+      create: (context) => sl()..add(GetVertifyTeamListEvent(widget.page)),
+      child: BasicScaffold(
+              child: _buildBody(context)
+            )
+      );
+    }
     return BasicScaffold(
-      child: _buildBody(context),
+        child: Text('你才不能進來這個頁面')
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    const itemsPerPage = 10;
-    final totalItems = test2.length;
-    final totalPages = (totalItems / itemsPerPage).ceil();
-    final startIndex = (_currentPage - 1) * itemsPerPage;
-    final endIndex = startIndex + itemsPerPage;
-    final currentPageItems = test2.sublist(
-      startIndex,
-      endIndex > totalItems ? totalItems : endIndex,
-    );
-
-    return Container(
-      width: 1120,
-      height: 520,
-      padding: const EdgeInsets.all(4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "報名審核",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          
-          const SizedBox(height: 14),
-
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 4), 
-            child: const Row(
-              children: [
-                Expanded(flex: 1, child: Text("點擊查看", style: TextStyle(fontSize: 14))),
-                Expanded(flex: 2, child: Text("隊伍ID", style: TextStyle(fontSize: 14))),
-                Expanded(flex: 2, child: Text("隊伍名稱", style: TextStyle(fontSize: 14))),
-                Expanded(flex: 2, child: Text("作品名稱", style: TextStyle(fontSize: 14))),
-                Expanded(flex: 1, child: Text("報名狀態", style: TextStyle(fontSize: 14))),
-              ],
+    return BlocListener<VertifyTeamBloc,VertifyTeamState>(
+      listener: (context,state){
+        if(state is VertifyTeamError){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(handleDioError(state.error)),
             ),
-          ),
+          );
+        }
+        if(state is VertifyTeamLoading){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('載入中'),
+            ),
+          );
+        }
+      },
+      child: BlocBuilder<VertifyTeamBloc,VertifyTeamState>(
+        builder: (context,state){
+          if(state is VertifyTeamListLoaded){
+            final currentPage = state.teamwithprojectlist.page;
+            final totalPages = state.teamwithprojectlist.totalPages;
+            final currentlist = state.teamwithprojectlist.teamwithprojectlist;
 
-          const Divider(thickness: 2, color: Colors.black),
+            return Container(
+              width: 1120,
+              height: 520,
+              padding: const EdgeInsets.all(4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "報名審核",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  
+                  const SizedBox(height: 14),
 
-          // 表格内容
-          Expanded(
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemExtent: 38.0,  //每行高度            
-              itemCount: currentPageItems.length,
-              itemBuilder: (context, index) {
-                final item = currentPageItems[index];
-                return MouseRegion(
-                  onEnter: (_) => setState(() => _hoverIndex = index),
-                  onExit: (_) => setState(() => _hoverIndex = null),
-                  child: Container(
-                    child: GestureDetector(
-                      onTap: () {
-                        context.go('/projectDetail/${item.tid}');
-                      },
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: IconButton(
-                              icon: const Icon(Icons.search, size: 15),
-                              onPressed: () {
-                                context.go('/projectDetail/${item.tid}');
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(item.tid, style: const TextStyle(fontSize: 15)),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(item.teamName, style: const TextStyle(fontSize: 15)),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(item.projectName, style: const TextStyle(fontSize: 15)),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: _getStatusBackgroundColor(item.status),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(
-                                item.status,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 4), 
+                    child: const Row(
+                      children: [
+                        Expanded(flex: 1, child: Align(alignment: Alignment.center, child: Text("點擊查看", style: TextStyle(fontSize: 14)),)),
+                        Expanded(flex: 1, child: Text("隊伍ID", style: TextStyle(fontSize: 14))),
+                        Expanded(flex: 3, child: Text("隊伍名稱", style: TextStyle(fontSize: 14))),
+                        Expanded(flex: 3, child: Text("作品名稱", style: TextStyle(fontSize: 14))),
+                        Expanded(flex: 1, child: Text("報名狀態", style: TextStyle(fontSize: 14))),
+                      ],
                     ),
                   ),
-                );
-              },
-            ),
-          ),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.chevron_left),
-                onPressed: _currentPage > 1
-                    ? () {
-                        setState(() {
-                          _currentPage--;
-                        });
-                      }
-                    : null,
+                  const Divider(thickness: 2, color: Colors.black),
+
+                  // 表格内容
+                  Expanded(
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemExtent: 38.0,  //每行高度            
+                      itemCount: currentlist.length,
+                      itemBuilder: (context, index) {
+                        final item = currentlist[index];
+                        return MouseRegion(
+                          onEnter: (_) => setState(() => _hoverIndex = index),
+                          onExit: (_) => setState(() => _hoverIndex = null),
+                          child: Container(
+                            child: GestureDetector(
+                              onTap: () {
+                                context.go('/projectVertifyDetail/${item.team.teamID}');
+                              },
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.search, size: 15),
+                                      onPressed: () {
+                                        context.go('/projectVertifyDetail/${item.team.teamID}');
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(item.team.teamID!, style: const TextStyle(fontSize: 15)),
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text(item.team.name!, style: const TextStyle(fontSize: 15)),
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text(item.project.name!, style: const TextStyle(fontSize: 15)),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: _getStatusBackgroundColor(item.project.state!),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Text(
+                                        item.project.state!,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.chevron_left),
+                        onPressed: _currentPage > 1
+                            ? () {
+                                context.pushReplacement('/projectVertifyList/${currentPage - 1}');
+                              }
+                            : null,
+                      ),
+                      Text('$_currentPage / $totalPages'),
+                      IconButton(
+                        icon: const Icon(Icons.chevron_right),
+                        onPressed: _currentPage < totalPages
+                            ? () {
+                                context.pushReplacement('/projectVertifyList/${currentPage + 1}');
+                              }
+                            : null,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Text('$_currentPage / $totalPages'),
-              IconButton(
-                icon: const Icon(Icons.chevron_right),
-                onPressed: _currentPage < totalPages
-                    ? () {
-                        setState(() {
-                          _currentPage++;
-                        });
-                      }
-                    : null,
-              ),
-            ],
-          ),
-        ],
+            );
+          }
+          return SizedBox();
+        }
       ),
     );
   }
@@ -199,11 +231,11 @@ class _ProjectVerifyListPageState extends State<ProjectVerifyListPage> {
   Color _getStatusBackgroundColor(String status) {
     switch (status) {
       case '待審核':
-        return Colors.grey[300]!;
+        return Color(0xFFF96D4E);
       case '已審核':
-        return const Color.fromARGB(255, 89, 220, 93);
+        return Color(0xFF76C919);
       case '需補件':
-        return const Color.fromARGB(255, 236, 66, 83);
+        return Color(0xFFD2F1FF);
       default:
         return Colors.grey[300]!;
     }
