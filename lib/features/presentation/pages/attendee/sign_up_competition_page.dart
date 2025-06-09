@@ -79,7 +79,7 @@ class _SignUpCompetitionPageState extends State<SignUpCompetitionPage>{
         if(authState is Authenticated){
            context.read<AuthBloc>().add(LoggedIn(usertype: "attendee", uid: authState.uid));
         }
-        context.go("/homeWithAnn/1")
+        context.go("/homeWithAnn/1");
       }
     },
     child: BlocBuilder<SignUpCompetitionBloc, SignUpCompetitionState>(
