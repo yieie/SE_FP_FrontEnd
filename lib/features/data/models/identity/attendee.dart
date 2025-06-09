@@ -21,11 +21,11 @@ class AttendeeModel extends Attendee{
       email: json['email'] as String?,
       sexual: json['sexual'] as String?,
       phone: json['phone'] as String?,
-      department: json['studentInfo']['department'] as String?,
-      grade: json['studentInfo']['grade'] as String?,
-      studentCard: json['attendeeInfo']['studentCard'] as String?,
-      teamID: json['attendeeInfo']['teamId'] as String?,
-      workID: json['attendeeInfo']['workId'] as String?
+      department: json['studentInfo']?['department'] ?? json['department']as String?,
+      grade: json['studentInfo']?['grade'] as String?,
+      studentCard: json['attendeeInfo']?['studentCard'] as String?,
+      teamID: json['attendeeInfo']?['teamId'] as String?,
+      workID: json['attendeeInfo']?['workId'] as String?
     );
   }
 

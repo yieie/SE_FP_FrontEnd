@@ -20,7 +20,8 @@ class TeamModel extends Team{
       type: json['teamInfo']?['teamType'] ?? json['teamType'] ?? '',
       rank: json['teamRank'] ?? json['teamInfo']?['rank'],
       teacher: json['advisorInfo'] != null ? TeacherModel.fromJson(json['advisorInfo']) : json['advisor'] != null ? TeacherModel(name: json["advisor"]) : null,
-      members:  (json['memberInfo'] as List<dynamic>?)?.map((json) => AttendeeModel.fromJson(json as Map<String, dynamic>)).toList()
+      members:  (json['memberInfo'] as List<dynamic>?)?.map((json) => AttendeeModel.fromJson(json as Map<String, dynamic>)).toList() ?? 
+                (json['members'] as List<dynamic>?)?.map((json) => AttendeeModel.fromJson(json as Map<String, dynamic>)).toList()
     );
   }
   
