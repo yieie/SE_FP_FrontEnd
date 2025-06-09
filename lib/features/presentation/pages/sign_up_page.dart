@@ -12,6 +12,7 @@ import 'package:front_end/features/presentation/widget/basic/basic_web_dropdownB
 import 'package:front_end/injection_container.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_up_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_up_state.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -54,20 +55,45 @@ class _SignUpPageState extends State<SignUpPage>{
   }
 
   _buildBody(BuildContext context) {
-    return BlocBuilder<SignUpBloc,SignUpState>(
-      builder: (context,state){
-        if(state is SignUpLoading){
-          return const Center(child: CupertinoActivityIndicator());
-        }
+    return BlocListener<SignUpBloc,SignUpState>(
+      listener: (context,state){
         if(state is SignUpFailure){
-          return Text(handleDioError(state.error!),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(handleDioError(state.error!)),
+            ),
+          );
         }
-        if(state is SignUpInitial){
-          return _buildSignUpForm(context);
+        if(state is SignUpLoading){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("載入中"),
+            ),
+          );
         }
-        return const SizedBox();
-      }
+        if(state is SignUpSuccess){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("註冊成功"),
+            ),
+          );
+          context.go('/login');
+        }
+      },
+      child: BlocBuilder<SignUpBloc,SignUpState>(
+        builder: (context,state){
+          if(state is SignUpLoading){
+            return const Center(child: CupertinoActivityIndicator());
+          }
+          if(state is SignUpInitial){
+            return _buildSignUpForm(context);
+          }
+          return const SizedBox();
+        }
+      )
     );
+    
+    
   }
 
   _buildSignUpForm(BuildContext context){
