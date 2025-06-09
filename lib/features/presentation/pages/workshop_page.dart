@@ -34,10 +34,10 @@ class _WorkshopPageState extends State<WorkshopPage>{
   @override
   Widget build(BuildContext context) {
     final authState = context.read<AuthBloc>().state;
-    bool isLoggedIn = authState is Authenticated;
+    bool isLoggedInWithStudent = authState is Authenticated && (authState.usertype =='student' || authState.usertype =='attendee');
     return BlocProvider<WorkshopBloc>(
       create: (context) => sl()..add(GetWorkshop()),
-      child: isLoggedIn ? 
+      child: isLoggedInWithStudent ? 
               BlocProvider<WorkshopParticipationBloc>(
                   create: (context) => sl()..add(GetWorkshopParticipation(uid: authState.uid)),
                   child: BasicScaffold(
@@ -52,19 +52,19 @@ class _WorkshopPageState extends State<WorkshopPage>{
 
   Widget _buildBody(BuildContext context){
     final authState = context.watch<AuthBloc>().state;
-    final isLoggedIn = authState is Authenticated;
+    bool isLoggedInWithStudent = authState is Authenticated && (authState.usertype =='student' || authState.usertype =='attendee');
     return BlocBuilder<WorkshopBloc,WorkshopState>(
       builder: (_, state) {
         if(state is WorkshopListInitial){
           return const Center(child: CupertinoActivityIndicator());
         }
         if(state is WorkshopListError) {
-          return Text(handleDioError(state.error!),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
+          return Text(handleDioError(state.error),style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),);
         }
         if(state is WorkshopListDone) {
           final workshops = state.workshop;
           
-          if(isLoggedIn){
+          if(isLoggedInWithStudent){
             return BlocBuilder<WorkshopParticipationBloc, WorkshopParticipationState>(
               builder: (context, regState) {
                 final registeredIds = regState is ParticipationLoaded
@@ -152,25 +152,31 @@ class _WorkshopPageState extends State<WorkshopPage>{
                         child: Text("${workshops[index].lecturerName} / ${workshops[index].lecturerTitle}", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                       ),
                       if(authState is Authenticated)
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(
-                            height: 30,
-                            child: participation.contains(workshops[index].wsid) ?
-                            BasicWebButton(
-                              title: "已報名",
-                              fontSize: 16,
-                              backgroundColor: Color(0x99D9D9D9),
-                              onPressed: null,
-                            ) :
-                            BasicWebButton(
-                              title: vacancy ? "報名" : "已額滿",
-                              fontSize: 16,
-                              backgroundColor: vacancy ? Color(0xFF76C919) : Color(0xFFF96D4E),
-                              onPressed: vacancy ? () => context.read<WorkshopParticipationBloc>().add(JoinWorkshop(uid: authState.uid, wsid: workshops[index].wsid!)) : null,
+                        if(authState.usertype == 'student')
+                          Expanded(
+                            flex: 2,
+                            child: SizedBox(
+                              height: 30,
+                              child: participation.contains(workshops[index].wsid) ?
+                              BasicWebButton(
+                                title: "已報名",
+                                fontSize: 16,
+                                backgroundColor: Color(0x99D9D9D9),
+                                onPressed: null,
+                              ) :
+                              BasicWebButton(
+                                title: vacancy ? "報名" : "已額滿",
+                                fontSize: 16,
+                                backgroundColor: vacancy ? Color(0xFF76C919) : Color(0xFFF96D4E),
+                                onPressed: vacancy ? () => context.read<WorkshopParticipationBloc>().add(JoinWorkshop(uid: authState.uid, wsid: workshops[index].wsid!)) : null,
+                              )
                             )
                           )
-                        )
+                        else
+                          Expanded(
+                            flex: 2,
+                            child: Text("您的身分無法報名",style: TextStyle(color: Colors.grey.shade800,fontSize: 16))
+                          )
                       else
                         Expanded(
                           flex: 2,
