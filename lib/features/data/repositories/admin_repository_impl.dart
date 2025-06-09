@@ -7,10 +7,12 @@ import 'package:front_end/cores/resources/data_state.dart';
 import 'package:front_end/features/data/datasources/remote/admin_api_service.dart';
 import 'package:front_end/features/data/models/admin_overview.dart';
 import 'package:front_end/features/data/models/announcement.dart';
+import 'package:front_end/features/data/models/user_list.dart';
 import 'package:front_end/features/domain/entity/Announcement.dart';
 import 'package:front_end/features/domain/entity/Admin_Overview.dart';
 import 'package:front_end/features/domain/entity/TeamWithProject.dart';
 import 'package:front_end/features/domain/entity/TeamWithProjectList.dart';
+import 'package:front_end/features/domain/entity/UserList.dart';
 import 'package:front_end/features/domain/repositories/admin_repository.dart';
 
 class AdminRepositoryImpl implements AdminRepository{
@@ -102,6 +104,33 @@ class AdminRepositoryImpl implements AdminRepository{
           teamwithprojectlist: httpResponse.data.data!
         );
         return DataSuccess(list);
+      }else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusCode,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+            message: httpResponse.data.errorMessage
+          )
+        );
+      }
+    }on DioException catch(e){
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<UserList>> getUserList(int page, String usertype) async {
+    final httpResponse = await _adminApiService.getUserList(page,usertype);
+    try{
+      if(httpResponse.response.statusCode == HttpStatus.ok && httpResponse.data.success){
+        final UserListModel userList = UserListModel(
+          page: httpResponse.data.extraData!['page'], 
+          totalpage: httpResponse.data.extraData!['totalPage'], 
+          userlist: httpResponse.data.data!
+        );
+        return DataSuccess(userList);
       }else {
         return DataFailed(
           DioException(

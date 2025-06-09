@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:front_end/cores/constants/constants.dart';
 import 'package:front_end/cores/resources/ResponseMessage.dart';
+import 'package:front_end/features/data/models/identity/user.dart';
 import 'package:front_end/features/data/models/team_with_project.dart';
 import 'package:front_end/features/data/models/team_with_project_list.dart';
 import 'package:retrofit/retrofit.dart';
@@ -24,4 +25,7 @@ abstract class AdminApiService {
 
   @GET('/admin/getScoreInfo.php')
   Future<HttpResponse<ResponseMessage<TeamWithProjectModel>>> getScoreResults(@Query('page') int page, @Query('year') String year,@Query('teamType') String teamType);
+
+  @GET('/admin/getUserList.php')
+  Future<HttpResponse<ResponseMessage<UserModel>>> getUserList(@Query('page') int page, @Query('userType') String usertype);
 }
