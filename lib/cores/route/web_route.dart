@@ -4,6 +4,8 @@ import 'package:front_end/features/presentation/bloc/auth/auth_state.dart';
 import 'package:front_end/features/presentation/pages/admin/admin_overview_page.dart';
 import 'package:front_end/features/presentation/pages/admin/announcement_add_or_modify_page.dart';
 import 'package:front_end/features/presentation/pages/admin/announcement_manage_list_page.dart';
+import 'package:front_end/features/presentation/pages/admin/project_verify_detail_page.dart';
+import 'package:front_end/features/presentation/pages/admin/project_verify_list_page.dart';
 import 'package:front_end/features/presentation/pages/attendee/sign_up_competition_page.dart';
 import 'package:front_end/features/presentation/pages/detail_ann_page.dart';
 import 'package:front_end/features/presentation/pages/home_with_ann_page.dart';
@@ -182,6 +184,43 @@ final GoRouter webRouter = GoRouter(
         final aid = int.tryParse(aidStr ?? '');
         return AnnouncementAddOrModifyPage(aid: aid,);
       },
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'admin') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
+    ),
+    GoRoute(
+      path: '/projectVertifyList/:page',
+      name: 'projectVertifyList',
+      builder: (context, state){
+        final pageStr = state.pathParameters['page'];
+
+        final page = int.tryParse(pageStr ?? '') ?? 1;
+        print(page);
+        return ProjectVerifyListPage(page: page);
+      } ,
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'admin') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
+    ),
+    GoRoute(
+      path: '/projectVertifyDetail/:teamid',
+      name: 'projectVertifyDetail',
+      builder: (context, state){
+        final teamid = state.pathParameters['teamid'];
+        if(teamid!=null){
+          return ProjectVerifyDetailPage(teamid: teamid);
+        }else{
+          return ProjectVerifyListPage(page: 1);
+        }
+      } ,
       redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;
       if (authState.usertype != 'admin') {

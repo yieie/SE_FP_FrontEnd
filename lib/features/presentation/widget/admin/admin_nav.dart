@@ -121,7 +121,9 @@ class _AdminNavState extends State<AdminNav>{
                   backgroundColor: Color(0xFFF96D4E),
                   title: '報名審核',
                   fontSize: 16,
-                  onPressed: (){}
+                  onPressed: (){
+                    context.go('/projectVertifyList/1');
+                  }
                 )
               ),
               GestureDetector(
