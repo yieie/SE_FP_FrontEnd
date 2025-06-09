@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/cores/error/handleError.dart';
@@ -10,7 +9,9 @@ import 'package:front_end/injection_container.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web/web.dart' as web;
 
-class DetailAnnPage extends StatelessWidget{
+
+/// 詳細公告頁面 
+class DetailAnnPage extends StatelessWidget {
   final int aid;
 
   DetailAnnPage({super.key,required this.aid});
