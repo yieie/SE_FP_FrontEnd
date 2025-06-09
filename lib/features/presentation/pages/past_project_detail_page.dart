@@ -83,10 +83,10 @@ class _PastProjectDetailPageState extends State< PastProjectDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: EdgeInsets.all(5),
-                    child: Text("名次：${state.teamWithProject.team.rank == -1 ? '無' : state.teamWithProject.team.rank}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                  ),
+                  // Container(
+                  //   margin: EdgeInsets.all(5),
+                  //   child: Text("名次：${state.teamWithProject.team.rank == -1 ? '無' : state.teamWithProject.team.rank}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                  // ),
                   Container(
                     margin: EdgeInsets.all(5),
                     child: Text("參賽組別：${state.teamWithProject.team.type}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),

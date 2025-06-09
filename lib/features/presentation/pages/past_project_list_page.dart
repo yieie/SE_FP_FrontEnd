@@ -244,7 +244,7 @@ class _HoverableTableState extends State<_HoverableTable> {
           //標題
           const Row(
             children: [
-              Expanded(flex: 1, child: Text("名次", style: TextStyle(fontSize: 14))),
+              // Expanded(flex: 1, child: Text("名次", style: TextStyle(fontSize: 14))),
               Expanded(flex: 3, child: Text("作品名稱", style: TextStyle(fontSize: 14))),
               Expanded(flex: 2, child: Text("隊伍名稱", style: TextStyle(fontSize: 14))),
               Expanded(flex: 2, child: Text("指導教授/顧問", style: TextStyle(fontSize: 14))),
@@ -270,7 +270,7 @@ class _HoverableTableState extends State<_HoverableTable> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Row(
                     children: [
-                      Expanded(flex: 1, child: Text('${item.team.rank}', style: TextStyle(fontSize: 14))),
+                      // Expanded(flex: 1, child: Text('${item.team.rank}', style: TextStyle(fontSize: 14))),
                       Expanded(flex: 3, child: Text(item.project.name!, style: TextStyle(fontSize: 14))),
                       Expanded(flex: 2, child: Text(item.team.name!, style: TextStyle(fontSize: 14))),
                       Expanded(flex: 2, child: Text(item.team.teacher!.name!, style: TextStyle(fontSize: 14))),
