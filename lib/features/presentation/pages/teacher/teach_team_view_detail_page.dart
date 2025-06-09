@@ -176,7 +176,7 @@ class _TeachTeamViewDetailPageState extends State<TeachTeamViewDetailPage> {
                         // 隊員列表
                         _buildInfoRow(
                           "隊員:",
-                          test[0].members.map((member) => 
+                          state.teamWithProject.team.members!.map((member) => 
                             "${member.department} ${member.name}"
                           ).join("、"),
                         ),
