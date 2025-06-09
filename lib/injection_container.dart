@@ -48,6 +48,7 @@ import 'package:front_end/features/presentation/bloc/ann_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_in_bloc.dart';
 import 'package:front_end/features/presentation/bloc/auth/sign_up_bloc.dart';
+import 'package:front_end/features/presentation/bloc/competition/get_competition_info_bloc.dart';
 import 'package:front_end/features/presentation/bloc/competition/sign_up_competition_bloc.dart';
 import 'package:front_end/features/presentation/bloc/past_project_bloc.dart';
 import 'package:front_end/features/presentation/bloc/score/score_list_bloc.dart';
@@ -213,5 +214,8 @@ Future<void> initializeDependencies() async {
   );
   sl.registerFactory<VertifyTeamBloc>(
     () => VertifyTeamBloc(sl(),sl(),sl())
+  );
+   sl.registerFactory<GetCompetitionInfoBloc>(
+    () => GetCompetitionInfoBloc(sl())
   );
 }
