@@ -12,6 +12,7 @@ import 'package:front_end/features/presentation/widget/attendee/build_team_membe
 import 'package:front_end/features/presentation/widget/basic/basic_scaffold.dart';
 import 'package:front_end/features/presentation/widget/basic/basic_web_button.dart';
 import 'package:front_end/injection_container.dart';
+import 'package:go_router/go_router.dart';
 
 //TODO: 驗證各欄位有效性 e.g. email、yt網址 等
 
@@ -64,16 +65,17 @@ class _EditCompetitionPageState extends State<EditCompetitionPage>{
       if(state.status == SubmissionStatus.submitting){
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('送出報名中'),
+            content: Text('送出修改中'),
           ),
         );
       }
       if(state.status == SubmissionStatus.success){
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('報名成功'),
+            content: Text('修改成功'),
           ),
         );
+        context.go('/getTeamInfo');
       }
     },
     child: BlocBuilder<SignUpCompetitionBloc, SignUpCompetitionState>(
