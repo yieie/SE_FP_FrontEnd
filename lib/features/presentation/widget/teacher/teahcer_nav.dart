@@ -66,7 +66,7 @@ class _TeahcerNavState extends State<TeahcerNav>{
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                onPressed: ()=>context.go('/homeWithAnn/1'), 
+                onPressed: ()=>context.go('/projectViewList/1'), 
                 icon: Image.asset("assets/images/weblogo.png",width: 150,height: 100,)),
               Spacer(),
               Container(

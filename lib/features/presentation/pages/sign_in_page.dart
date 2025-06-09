@@ -63,6 +63,9 @@ class _SignInPageState extends State<SignInPage>{
               else if(state.usertype == 'admin'){
                 context.go('/overview');
               }
+              else if(state.usertype =='teacher'){
+                context.go('/teachTeamViewList/1');
+              }
               else{
                 context.go('/homeWithAnn/1');
               }

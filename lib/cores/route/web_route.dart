@@ -17,6 +17,8 @@ import 'package:front_end/features/presentation/pages/past_project_list_page.dar
 import 'package:front_end/features/presentation/pages/profile_manage_page.dart';
 import 'package:front_end/features/presentation/pages/sign_in_page.dart';
 import 'package:front_end/features/presentation/pages/sign_up_page.dart';
+import 'package:front_end/features/presentation/pages/teacher/teach_team_view_detail_page.dart';
+import 'package:front_end/features/presentation/pages/teacher/teach_team_view_list_page.dart';
 import 'package:front_end/features/presentation/pages/workshop_page.dart';
 
 import 'package:go_router/go_router.dart';
@@ -244,6 +246,42 @@ final GoRouter webRouter = GoRouter(
       redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;
       if (authState.usertype != 'attendee') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
+    ),
+    GoRoute(
+      path: '/teachTeamViewList/:page',
+      name: 'teachTeamViewList',
+      builder: (context, state){
+        final pageStr = state.pathParameters['page'];
+
+        final page = int.tryParse(pageStr ?? '') ?? 1;
+        return TeachTeamViewListPage(page: page);
+      } ,
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'teacher') {
+        return '/homeWithAnn/1'; 
+      }
+      return null;
+      }
+    ),
+    GoRoute(
+      path: '/teachTeamViewDetail/:teamid',
+      name: 'teachTeamViewDetail',
+      builder: (context, state){
+        final teamid = state.pathParameters['teamid'];
+        if(teamid != null){
+          return TeachTeamViewDetailPage(teamid: teamid);
+        }else{
+          return TeachTeamViewListPage(page: 1);
+        }
+      } ,
+      redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      if (authState.usertype != 'teacher') {
         return '/homeWithAnn/1'; 
       }
       return null;
