@@ -66,9 +66,25 @@ class _TeahcerNavState extends State<TeahcerNav>{
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                onPressed: ()=>context.go('/projectViewList/1'), 
+                onPressed: ()=>context.go('/teachTeamViewList/1'), 
                 icon: Image.asset("assets/images/weblogo.png",width: 150,height: 100,)),
               Spacer(),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 17.5),
+                child: TextButton(
+                  child: Text("最新公告",
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 3.2,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  ),
+                  ),
+                  onPressed: (){
+                    context.go('/homeWithAnn/1');
+                  },
+                ),
+              ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 17.5),
                 child: TextButton(
@@ -85,6 +101,7 @@ class _TeahcerNavState extends State<TeahcerNav>{
                   },
                 ),
               ),
+              
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 17.5),
                 child: TextButton(
@@ -103,14 +120,14 @@ class _TeahcerNavState extends State<TeahcerNav>{
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 17.5),
-                width: 160,
+                width: 180,
                 height: 48,
                 child: BasicWebButton(
                   backgroundColor: Color(0xFFF96D4E),
-                  title: '立刻報名',
+                  title: '指導隊伍列表',
                   fontSize: 16,
                   onPressed: (){
-                    context.go('/signupCompetiton');
+                    context.go('/teachTeamViewList/1');
                   }
                 )
               ),
