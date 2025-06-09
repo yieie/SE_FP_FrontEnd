@@ -101,53 +101,43 @@ class AnnouncementManageListPage extends StatelessWidget{
                 child: ListView.builder(
                   itemCount: currentList.length,
                   itemBuilder: (context, index) {
-                    return MouseRegion(
-                      child: GestureDetector(
-                        onTap: () {
-                          context.go('/detailAnn/${currentList[index].aid ?? 0}');
-                          print("你選的是：${currentList[index].title}和${currentList[index].aid}");//測試用
-                        },
-
-
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: IconButton(
-                                  onPressed: (){
-                                    context.go('/annModifyOrAdd?aid=${currentList[index].aid}');
-                                  }, 
-                                  icon: Icon(Icons.edit_outlined)
-                                )
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Align(
-                                  alignment: Alignment.center, 
-                                  child: Text("${currentList[index].aid}"),
-                                )
-                              ),
-                              Expanded(
-                                flex: 6,
-                                child: Text(
-                                  currentList[index].title ?? '無標題',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(color: Colors.black, fontSize: 15),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  currentList[index].time ?? '無時間',
-                                  style: const TextStyle(color: Colors.black, fontSize: 15),
-                                ),
-                              )
-                            ],
+                    return Container(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              onPressed: (){
+                                context.go('/annModifyOrAdd?aid=${currentList[index].aid}');
+                              }, 
+                              icon: Icon(Icons.edit_outlined)
+                            )
                           ),
-                        ),
+                          Expanded(
+                            flex: 1,
+                            child: Align(
+                              alignment: Alignment.center, 
+                              child: Text("${currentList[index].aid}"),
+                            )
+                          ),
+                          Expanded(
+                            flex: 6,
+                            child: Text(
+                              currentList[index].title ?? '無標題',
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(color: Colors.black, fontSize: 15),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              currentList[index].time ?? '無時間',
+                              style: const TextStyle(color: Colors.black, fontSize: 15),
+                            ),
+                          )
+                        ],
                       ),
                     );
                   },
