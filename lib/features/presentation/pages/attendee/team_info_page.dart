@@ -97,6 +97,11 @@ class _TeamInfoPageState extends State<TeamInfoPage> {
                       "隊伍狀態: ${state.info.project.state!}",
                       style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
                     ),
+
+                    Text(
+                      "總分: ${state.info.project.score}",
+                      style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                    ),
                 
                     if(state.info.project.state == '需補件')                      
                       if(authState is Authenticated)
