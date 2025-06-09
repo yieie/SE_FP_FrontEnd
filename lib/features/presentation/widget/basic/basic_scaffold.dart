@@ -77,7 +77,7 @@ class BasicScaffold extends StatelessWidget {
                         Image.asset("assets/images/NUKlogo.png"),
                         SizedBox(width: 40),
                         Text(
-                          '© 2025 國立高雄大學 軟體工程課程專案 | Developed by：陳冠霖、張卜驊、黃羿禎、涂哲偉、黃政諭、熊竣蔚、張哲與'
+                          '© 2025 國立高雄大學 軟體工程課程專案 | Developed by：陳冠霖、張卜驊、黃羿禎、涂哲偉、張哲與'
                         )
                       ], 
                     ),
