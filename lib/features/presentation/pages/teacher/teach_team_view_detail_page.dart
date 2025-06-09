@@ -14,44 +14,6 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web/web.dart' as web;
 
-class Member {
-  final String department; //科系
-  final String name;      //隊員名字
-  Member(this.department,this.name);
-}
-
-class ProjectVerifyDetail {
-  final String advisor_name;//指導老師名字
-  final String advisor_title;//指導老職稱
-  final String advisor_school; //指導老師所屬機構
-  final List<Member> members; //成員的各個資訊
-
-  final String group; //參賽組別
-  final String team_name; //團隊名稱
-  final String project_name; //團隊名稱
-  final String summary; //摘要
-  final String yt_url; //youtube連結
-  final String github_url; //github連結
-  final List<String> sdgs;//sdgs
-  final List<String> files;//相關文件
-
-  ProjectVerifyDetail({
-    required this.advisor_name,
-    required this.advisor_title,
-    required this.advisor_school,
-    required this.members,
-
-    required this.group,
-    required this.team_name,
-    required this.project_name,
-    required this.summary,
-    required this.yt_url,
-    required this.github_url,
-    required this.sdgs,
-    required this.files,
-  });
-}
-
 class TeachTeamViewDetailPage extends StatefulWidget {
   final String teamid;
   const TeachTeamViewDetailPage({super.key ,required this.teamid});
@@ -69,28 +31,6 @@ class _TeachTeamViewDetailPageState extends State<TeachTeamViewDetailPage> {
       throw '無法開啟連結：$url';
     }
   }
-
-  // 測試假資料
-  final List<ProjectVerifyDetail> test = [
-    ProjectVerifyDetail(
-      advisor_name: "老師名字test1",
-      advisor_title: "老師職稱test1",
-      advisor_school: "老師所屬機構test1",
-      members: [
-        Member("資訊工程學系","學生1"),
-        Member("資訊工程學系","學生2"),
-        Member("資訊工程學系","學生3"),
-      ], 
-      group:"創意發想組",
-      team_name:"Future seeker",
-      project_name: "guradian",
-      summary: "test123456789asdfghjklqwryiopoiuy",
-      yt_url: "https://123456789",
-      github_url: "https://123456789",
-      sdgs: ["1", "2"],
-      files: ["作品說明書.pdf", "提案切結書.pdf", "個茲同意書.pdf"],
-    ),
-  ];
 
 
   @override
@@ -170,7 +110,7 @@ class _TeachTeamViewDetailPageState extends State<TeachTeamViewDetailPage> {
                         const SizedBox(height: 10),
                         
                         // 團隊名稱
-                        _buildInfoRow("團隊名稱:", state.teamWithProject.team.type!),
+                        _buildInfoRow("團隊名稱:", state.teamWithProject.team.name!),
                         const SizedBox(height: 10),
                         
                         // 隊員列表
