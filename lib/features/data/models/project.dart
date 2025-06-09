@@ -26,7 +26,7 @@ class ProjectModel extends Project {
       introductionFile: json['teamInfo']?['workIntroduction'] ?? '',
       affidavitFile: json['teamInfo']?['workAffidavit'] ?? '',
       consentFile: json['teamInfo']?['workConsent'] ?? '',
-      score: json['score'],
+      score: json['score'] ?? json['teamInfo']?['score'],
       state: json['state'] ?? json['teamInfo']?['workState'],
       message: json['teamInfo']?['workMessage']
     );
